@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_alignParentStart="true" android:layout_alignParentTop="true">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+        >
+
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/neuf_tech_card_commande"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    >
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp">
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="12"
+                            >
+                        <ImageView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="14dp"
+                                android:id="@+id/neuf_tech_menu"
+                                android:src="@drawable/ic_favoris"
+                                android:layout_gravity="center"
+
+                        />
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_nom_car"
+                                android:text="nom_voiture"
+                                android:textSize="18dp"
+                                android:textColor="#000"
+                        />
+                        <Button
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_commande_button"
+                                android:background="@drawable/item_button_commande"
+                                android:text="Commnader"
+                                android:textColor="@color/colorWhite" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_description"
+                                android:text="some_description"
+                                android:textSize="12sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:weightSum="10"
+                            >
+                        <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp">
+                            <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:id="@+id/neuf_tech_card_suivi"
+                                    android:src="@drawable/heart_empty"
+                                    android:tag="nonSuivi"
+                            />
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/neuf_tech_card_prix"
+                                    android:textSize="18sp"
+                                    android:textColor="#000"
+
+                                    android:gravity="center"
+
+                            />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/neuf_tech_rv"
+                    android:layout_marginBottom="50dp"
+                    android:layout_gravity="center"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/neuf_tech_rv_couleur"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+            <com.alespero.expandablecardview.ExpandableCardView
+                    android:id="@+id/profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:title="Option"
+                    app:icon="@drawable/ic_favoris"
+                    app:inner_view="@layout/item_option"
+                    app:expandOnClick="true"
+                    app:animationDuration="300"
+                    app:startExpanded="false"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="20dp"
+            android:background="#000"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

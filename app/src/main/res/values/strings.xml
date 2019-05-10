@@ -1,0 +1,46 @@
+<resources>
+    // Sign in strings
+    <string name="app_name" translatable="false">sayaradzMb</string>
+    <string name="signout">SignOut</string>
+    <string name="facebook_app_id">2168870339822661</string> <string name="fb_login_protocol_scheme">fb2168870339822661</string>
+
+
+
+    // Announce strings
+    <string name="general">Information principales</string>
+    <string name="options">Options</string>
+    <string name="picture">Photos</string>
+    <string name="colors">Couleur</string>
+    <string name="kilometrage">Kilométrage</string>
+    <string name="storage_permition_rationale_message">----</string>
+    <string name="aperçu" translatable="false">Aperçu</string>
+    
+    <string name="year">Année</string>
+    <string name="Fuel">Fuel</string>
+    <string name="price_sign" translatable="false">DZA</string>
+    <string name="distance_sign" translatable="false">KM</string>
+
+    <string name="confirming_question">Voulez-vous supprimer cette annonce ?</string>
+
+
+    // for test
+    <string-array name="city_list">
+        <item>Bangkok</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Singapore</item>
+        <item>New York</item>
+        <item>Istanbul</item>
+        <item>Dubai</item>
+        <item>Kuala Lumpur</item>
+        <item>Hong Kong</item>
+        <item>Barcelona</item>
+
+    </string-array>
+
+
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
+    <string name="prix">Prix</string>
+
+</resources>

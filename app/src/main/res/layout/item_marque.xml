@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:id="@+id/item_marque"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp">
+    <ImageView
+            android:id="@+id/im_image_logomarque"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:src="@drawable/annonce"
+            android:layout_gravity="center"/>
+    <TextView
+            android:id="@+id/im_text_nommarque"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            />
+
+</LinearLayout>

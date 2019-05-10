@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+android:layout_marginTop="20dp">
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/scrollView2" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical">
+            <com.alespero.expandablecardview.ExpandableCardView
+                    android:id="@+id/fnt_ecv_marque"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:title="Marque"
+                    app:inner_view="@layout/item_marque_dropdown"
+                    app:expandOnClick="true"
+                    app:animationDuration="300"
+                    app:startExpanded="false"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#000"
+            />
+            <com.alespero.expandablecardview.ExpandableCardView
+                    android:id="@+id/fnt_ecv_modele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:title="Modele"
+                    app:inner_view="@layout/item_modele_dropdown"
+                    app:expandOnClick="true"
+                    app:animationDuration="300"
+                    app:startExpanded="false"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#000"
+            android:visibility="gone"/>
+            <com.alespero.expandablecardview.ExpandableCardView
+                    android:id="@+id/fnt_ecv_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:title="Version"
+                    app:inner_view="@layout/item_version_dropdown"
+                    app:expandOnClick="true"
+                    app:animationDuration="300"
+                    app:startExpanded="false"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#000"
+                    android:visibility="gone"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_gravity="center"
+                          android:textAlignment="center">
+                <Button
+                        android:text="search"
+                        android:layout_width="131dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/search_button"
+                        android:background="@drawable/costum_search_button"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15dp"
+                        android:visibility="gone"
+
+                />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

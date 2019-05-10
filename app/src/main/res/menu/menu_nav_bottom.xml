@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/nouelle_voiture"
+            android:title="Nouvelle"
+            android:icon="@drawable/nouvelle_voiture"
+    />
+    <item
+            android:id="@+id/occasion_voiture"
+            android:title="Occasion"
+            android:icon="@drawable/ic_directions_car_black_24dp"/>
+    <item
+            android:id="@+id/accuuille_voiture"
+            android:title="Accuille"
+            android:icon="@drawable/ic_home_black_24dp"/>
+    <item
+            android:id="@+id/annoce_voiture"
+            android:title="Annonce"
+            android:icon="@drawable/ic_local_offer_black_24dp"/>
+    <item
+            android:id="@+id/favoris_voiture"
+            android:title="Favoris"
+            android:icon="@drawable/ic_star_black_24dp"
+    />
+
+</menu>

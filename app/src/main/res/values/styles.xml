@@ -1,0 +1,50 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="CostumToolbarPopup" parent="AppTheme.NoActionBar">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">-12dp</item>
+    </style>
+    <style name="AppTheme.nonTitle">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme.nonTitle">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorGrey</item>
+        <item name="android:textAppearanceButton">@android:style/TextAppearance.Material</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="spinner_style">
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:innerRadius">0dp</item>
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:shape">ring</item>
+        <item name="android:thicknessRatio">1.9</item>
+    </style>
+
+    /** Buttons **/
+    <style name="Widget.ButtonSecondary" parent="android:Widget">
+        <item name="android:background">@drawable/secondary_button</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+</resources>
