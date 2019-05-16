@@ -27,6 +27,7 @@ import me.relex.circleindicator.CircleIndicator2
 
 
 
+@Suppress("UNCHECKED_CAST")
 @SuppressLint("ValidFragment")
 class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     var version: version
@@ -50,6 +51,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var imagePhoto = ArrayList<cheminImage>()
     private var couleurs = ArrayList<String>()
     private var options = ArrayList<Option>()
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf_tech,container,false)
         val context = v.context
@@ -131,7 +133,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
      */
     interface OnCommandPressed{
-        public fun envoyerFragment(int : Int)
+        fun envoyerFragment(int : Int)
     }
 
     /**
@@ -149,7 +151,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      */
     private fun initVoituresImage(v : View){
         voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context)
-        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL,voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
         couleurAdapter = CouleurAdapter(couleurs,v.context)

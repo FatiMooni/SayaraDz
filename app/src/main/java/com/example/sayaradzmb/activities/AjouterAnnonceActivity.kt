@@ -50,6 +50,7 @@ import java.io.File
 * Cette classe assure l'ajout d'une nouvelle annonces par un automobiliste
 *
 * */
+@Suppress("DEPRECATION")
 class AjouterAnnonceActivity : AppCompatActivity() {
 
 

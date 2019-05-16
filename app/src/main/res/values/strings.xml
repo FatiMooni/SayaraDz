@@ -2,8 +2,8 @@
     // Sign in strings
     <string name="app_name" translatable="false">sayaradzMb</string>
     <string name="signout">SignOut</string>
-    <string name="facebook_app_id">2168870339822661</string> <string name="fb_login_protocol_scheme">fb2168870339822661</string>
-
+    <string name="facebook_app_id">2168870339822661</string>
+    <string name="fb_login_protocol_scheme">fb2168870339822661</string>
 
 
     // Announce strings
@@ -14,7 +14,7 @@
     <string name="kilometrage">Kilométrage</string>
     <string name="storage_permition_rationale_message">----</string>
     <string name="aperçu" translatable="false">Aperçu</string>
-    
+
     <string name="year">Année</string>
     <string name="Fuel">Fuel</string>
     <string name="price_sign" translatable="false">DZA</string>
@@ -42,5 +42,19 @@
     <string name="open" translatable="false">Open</string>
     <string name="close" translatable="false">Close</string>
     <string name="prix">Prix</string>
+    <string name="title_activity_side_menu">SideMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 
 </resources>

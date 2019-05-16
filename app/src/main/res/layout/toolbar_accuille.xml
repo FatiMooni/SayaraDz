@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="?attr/actionBarSize"
-                                   android:background="@drawable/header"
-                                   app:title=" "
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
->
-
+<android.support.design.widget.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        app:popupTheme="@style/ActionBarSpecialStyle"
+        android:foregroundTint="@color/colorWhite"
+        android:layout_height="?attr/actionBarSize">
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            app:title=" "
+            app:popupTheme="@style/ActionBarSpecialStyle"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/header"
+            android:id="@+id/acc_toolbar"
+            android:foregroundTint="@color/colorWhite"
+    >
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,7 +24,7 @@
             android:textAlignment="textStart"
             android:layout_marginLeft="0dp"
             android:textStyle="bold"
-            android:textColor="@color/colorWhite"
-            app:popupTheme="@style/CostumToolbarPopup"/>
+            android:textColor="@color/colorWhite"/>
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.AppBarLayout>
 
-</android.support.v7.widget.Toolbar>

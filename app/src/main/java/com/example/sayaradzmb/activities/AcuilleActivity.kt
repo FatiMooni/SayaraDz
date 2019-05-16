@@ -5,8 +5,12 @@ import android.content.Context
 import android.content.Intent
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView
 
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar
@@ -30,7 +34,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
-class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,NouveauAfficheTechnique.OnCommandPressed{
+class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed, NavigationView.OnNavigationItemSelectedListener,NouveauAfficheTechnique.OnCommandPressed{
+
     override fun envoyerFragment(int: Int) {
         var fragment : Fragment?=null
         when(int){
@@ -58,10 +63,19 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
 
     override fun onCreate(savedInstanceState: Bundle?) {
           super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_accuille)
+        setContentView(R.layout.activity_side_menu)
         navigationTest()
-        setSupportActionBar(acc_toolbar as Toolbar)
-        (acc_toolbar as Toolbar).setNavigationIcon(R.drawable.menu_icon)
+        val toolbar : Toolbar = findViewById(R.id.acc_toolbar)
+        setSupportActionBar(toolbar)
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, R.string.open, R.string.app_name
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener(this)
         chargerFagment(NouveauRechercheCars())
 
     }
@@ -194,6 +208,31 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
             return@setOnNavigationItemSelectedListener chargerFagment(fragment)
         }
     }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_home -> {
+                // Handle the camera action
+            }
+            R.id.nav_gallery -> {
+
+            }
+            R.id.nav_slideshow -> {
+
+            }
+            R.id.nav_tools -> {
+
+            }
+            R.id.nav_share -> {
+
+            }
+            R.id.nav_send -> {
+
+            }
+        }
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true    }
+
 }
 
 
