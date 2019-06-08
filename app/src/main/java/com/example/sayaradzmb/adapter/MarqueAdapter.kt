@@ -21,12 +21,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+
 class MarqueAdapter(
     private val marqueList: ArrayList<Marque>,
     internal var context: Context,
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
-) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper {
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
+    private var marqueListFiltree : ArrayList<Marque>
+) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable {
+
+
+
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -36,6 +42,7 @@ class MarqueAdapter(
     private var currentCodeMarque : Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarqueViewHolder {
         //inflate the layout file
         val marqueView =
@@ -44,15 +51,13 @@ class MarqueAdapter(
     }
 
     override fun onBindViewHolder(holder: MarqueViewHolder, position: Int) {
-        val marque = marqueList.get(position)
-        holder.nomMarque.text = marqueList[position].NomMarque
+        val marque = marqueListFiltree.get(position)
+        holder.nomMarque.text = marque.NomMarque
 
         if(marque.images!!.isNotEmpty()){
-            Log.i("image",marque.images[0].CheminImage.toString())
             Picasso.get().load(marque.images[0].CheminImage).into(holder.logoImage)
         }
         holder.item.setOnClickListener(View.OnClickListener {
-            Log.i("marque",marque.CodeMarque.toString())
             currentCodeMarque = marque.CodeMarque!!
             search.visibility=View.GONE
             marqueDropDown.setTitle(marque.NomMarque)
@@ -67,7 +72,7 @@ class MarqueAdapter(
     }
 
     override fun getItemCount(): Int {
-        return marqueList.size
+        return marqueListFiltree.size
     }
 
     fun addAllwithclear(marqueLists : ArrayList<Marque>){
@@ -75,6 +80,7 @@ class MarqueAdapter(
         marqueList.addAll(marqueLists)
         notifyDataSetChanged()
     }
+
     inner class MarqueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             internal var item = view.findViewById<LinearLayout>(R.id.item_marque)
             internal var logoImage = view.findViewById<ImageView>(R.id.im_image_logomarque)
@@ -98,7 +104,7 @@ class MarqueAdapter(
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =
                 if(response.isSuccessful){
-                    println("mes modeles")
+
                     print(response.body()!!)
                     var lesModele = response.body()!!
                     lesModele.forEach{
@@ -111,6 +117,42 @@ class MarqueAdapter(
                 Log.w("failConnexion","la liste modele non reconnue ${t.message}")
             }
         })
+    }
+
+    /**
+     *
+     */
+    public override fun getFilter(): Filter {
+        return object : Filter() {
+            protected override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    marqueListFiltree = marqueList
+                    Log.i("marquefiltree",marqueListFiltree.toString())
+                } else {
+                    val filteredList = ArrayList<Marque>()
+                    for (row in marqueList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.NomMarque?.toLowerCase()?.contains(charString.toLowerCase())!!) {
+                            filteredList.add(row)
+                        }
+                    }
+
+                    marqueListFiltree = filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = marqueListFiltree
+                return filterResults
+            }
+
+            protected override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                marqueListFiltree = filterResults.values as ArrayList<Marque>
+                notifyDataSetChanged()
+            }
+        }
     }
 
 }

@@ -23,6 +23,11 @@ import com.example.sayaradzmb.servics.ViheculeService
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.support.v4.content.ContextCompat.getSystemService
+import android.app.SearchManager
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 
 
 class NouveauRechercheCars: Fragment(),RecycleViewHelper {
@@ -30,6 +35,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
     override var itemRecycleView : RecyclerView? = null
     private var marqueList = ArrayList<Marque>()
     private var marqueAdapter : MarqueAdapter? = null
+    private var searchView : SearchView? = null
 
     /**
      * la foncion onCreat
@@ -38,9 +44,34 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf,container,false)
         val pref = SharedPreferencesHelper(this.context!!,"facebook")
-        println("islem1 "+pref.sharedPreferences.getString("idUser",null))
+        //println("islem1 "+pref.sharedPreferences.getString("idUser",null))
         init(v)
         requeteMarque()
+
+        //essai
+        // Associate searchable configuration with the SearchView
+        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager?
+        searchView = v.findViewById<SearchView>(R.id.search_bar_marque)
+        searchView!!.setSearchableInfo(
+            searchManager!!
+                .getSearchableInfo(activity!!.getComponentName())
+        )
+        searchView!!.setMaxWidth(Integer.MAX_VALUE)
+
+        // listening to search query text change
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // filter recycler view when query submitted
+                marqueAdapter!!.getFilter().filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                // filter recycler view when text is changed
+                marqueAdapter!!.getFilter().filter(query)
+                return false
+            }
+        })
         return v
     }
 
@@ -91,7 +122,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
      */
 
     private fun init(v : View){
-        marqueAdapter = MarqueAdapter(marqueList,v.context,v,onSearchPressed)
+        marqueAdapter = MarqueAdapter(marqueList,v.context,v,onSearchPressed,marqueList)
         initLineaire(v,R.id.imd_rv_marque,LinearLayoutManager.VERTICAL,marqueAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 

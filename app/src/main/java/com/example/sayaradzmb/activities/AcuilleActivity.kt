@@ -31,29 +31,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 @Suppress("CAST_NEVER_SUCCEEDS")
 class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,NouveauAfficheTechnique.OnCommandPressed{
-    override fun envoyerFragment(int: Int) {
-        var fragment : Fragment?=null
-        when(int){
-        2->{
-            fragment=NouveauCommandeFragment()
-        }
-        }
-        chargerFagment(fragment)
-    }
+
 
     private var mGoogleSignInClient : GoogleSignInClient? = null
 
 
-    override fun envoyerFragment(int : Int,version: version) {
-        var fragment : Fragment?=null
-        when(int){
-            1->{
-                fragment=NouveauAfficheTechnique(version)
 
-            }
-        }
-        chargerFagment(fragment)
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +50,29 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
     }
 
 
+    /**
+     * la focntion qui aide a switche entre les fragment
+     */
+    override fun envoyerFragment(int: Int) {
+        var fragment : Fragment?=null
+        when(int){
+            2->{
+                fragment=NouveauCommandeFragment()
+            }
+        }
+        chargerFagment(fragment)
+    }
 
+    override fun envoyerFragment(int : Int,version: version) {
+        var fragment : Fragment?=null
+        when(int){
+            1->{
+                fragment=NouveauAfficheTechnique(version)
+
+            }
+        }
+        chargerFagment(fragment)
+    }
     /**
      * Pour Deconnecter
      */

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.example.sayaradzmb.R
+import com.facebook.login.Login
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         handler.postDelayed({
             // do something
-            val intent = Intent(this@MainActivity, AcuilleActivity::class.java)
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
             // If you just use this that is not a valid context. Use ActivityName.this
             startActivity(intent)
             this@MainActivity.finish()
