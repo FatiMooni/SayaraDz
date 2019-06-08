@@ -45,31 +45,16 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-     val handler = Handler()
-        handler.postDelayed({
-            // do something
-            val intent = Intent(this@LoginActivity, AjouterAnnonceActivity::class.java)
-            // If you just use this that is not a valid context. Use ActivityName.this
-            startActivity(intent)
-        }, 30)
-
-
-
 /*
          Google Authentification
 
           */
         setContentView(R.layout.activity_login)
-        //pauseActivity()
-        //avoirHashKeyFb()
-        //googleAutetiicato
-
         pauseActivity()
-        //googleAutetiicaton
-
         googleAuth()
-        //facebookAuthentification
-        // avoir une facon de gerer la prochaine fois que l'utilisateur est connecte
+        /**
+         * la gestion si l'utilisateur connecte un autre fois
+         */
         if(AccessToken.getCurrentAccessToken() == null) {
             val call = facebookInit()
             if (call != null) {
@@ -82,13 +67,12 @@ class LoginActivity : AppCompatActivity() {
 
     }// fin de OnCreat
 
-
+    /**
+     *
+     */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             super.onActivityResult(requestCode, resultCode, data)
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             println("un autre pb singin")
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)

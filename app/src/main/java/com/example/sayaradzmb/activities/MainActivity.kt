@@ -11,6 +11,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        /**
+         *  le code qui permet de passer a login activity
+         */
         val handler = Handler()
         handler.postDelayed({
             // do something
