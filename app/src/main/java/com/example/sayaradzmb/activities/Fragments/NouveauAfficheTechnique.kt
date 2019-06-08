@@ -50,6 +50,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var imagePhoto = ArrayList<cheminImage>()
     private var couleurs = ArrayList<String>()
     private var options = ArrayList<Option>()
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf_tech,container,false)
         val context = v.context
@@ -79,8 +80,9 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                 suiviImage!!.tag = "nonSuivi"
             }
         }
-        Log.i("prix version",version.lignetarif!!.Prix.toString())
-        prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()} DZD"
+        if(version.lignetarif != null) prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()!!} DZD"
+        else prixVoiture!!.text = "price not defined"
+
         if (!version.images!!.isEmpty()) imagePhoto.addAll(version.images as ArrayList<cheminImage>)
         if (!version.couleurs!!.isEmpty())couleurs.addAll(version.couleurs as ArrayList<String>)
         if (!version.options!!.isEmpty())options.addAll(version.options as ArrayList<Option>)

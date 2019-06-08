@@ -46,7 +46,6 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         setSupportActionBar(acc_toolbar as Toolbar)
         (acc_toolbar as Toolbar).setNavigationIcon(R.drawable.menu_icon)
         chargerFagment(NouveauRechercheCars())
-
     }
 
 

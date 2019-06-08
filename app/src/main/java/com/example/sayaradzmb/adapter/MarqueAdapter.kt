@@ -1,6 +1,8 @@
 package com.example.sayaradzmb.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -12,6 +14,7 @@ import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
+import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -28,11 +31,10 @@ class MarqueAdapter(
     internal var context: Context,
     internal var view : View,
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
-    private var marqueListFiltree : ArrayList<Marque>
-) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable {
-
-
-
+    private var marqueListFiltree : ArrayList<Marque>,
+    private val activity : FragmentActivity
+) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface {
+    var marqueview : View? = null
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -47,6 +49,7 @@ class MarqueAdapter(
         //inflate the layout file
         val marqueView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_marque, parent, false)
+        marqueview = marqueView;
         return MarqueViewHolder(marqueView)
     }
 
@@ -68,6 +71,8 @@ class MarqueAdapter(
             versionDropDown.visibility=View.GONE
             init(view)
             requeteModele()
+            if(marqueview == null) Log.i("marqueview","marqueview null")
+            initSearchView(activity,view!!,modeleAdapter!!,R.id.search_bar_modele)
         })
     }
 
@@ -93,7 +98,7 @@ class MarqueAdapter(
 
 
     private fun init(v : View){
-        modeleAdapter = ModeleAdapter(modeleList,v.context,view,onSearchPressed)
+        modeleAdapter = ModeleAdapter(modeleList,v.context,view,onSearchPressed,modeleList,activity!!)
         initLineaire(v,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
@@ -139,7 +144,6 @@ class MarqueAdapter(
                             filteredList.add(row)
                         }
                     }
-
                     marqueListFiltree = filteredList
                 }
 

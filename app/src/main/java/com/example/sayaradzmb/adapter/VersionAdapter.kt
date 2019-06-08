@@ -6,14 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.Item.modeleItem
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import com.squareup.picasso.Picasso
 
@@ -21,8 +19,9 @@ class VersionAdapter(
     private val versionList: ArrayList<version>,
     internal var context: Context,
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
-) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>() {
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
+    private var versionListFiltree : ArrayList<version>
+) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable {
 
     private var currentCodeVersion: Int = -1
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -38,7 +37,7 @@ class VersionAdapter(
     }
 
     override fun onBindViewHolder(holder: VersionViewHolder, position: Int) {
-        val version = versionList.get(position)
+        val version = versionListFiltree.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomVersion.text = version.NomVersion
         holder.nomVersion.setOnClickListener {
@@ -69,12 +68,44 @@ class VersionAdapter(
     }
 
     override fun getItemCount(): Int {
-        return versionList.size
+        return versionListFiltree.size
     }
 
     inner class VersionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal var item = view.findViewById<LinearLayout>(R.id.item_version)
         internal var suivieImage = view.findViewById<ImageView>(R.id.im_image_suiviversion)
         internal var nomVersion = view.findViewById<TextView>(R.id.im_text_nomversion)
+    }
+
+    public override fun getFilter(): Filter {
+        return object : Filter() {
+            protected override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    versionListFiltree= versionList
+                    Log.i("marquefiltree",versionListFiltree.toString())
+                } else {
+                    val filteredList = ArrayList<version>()
+                    for (row in versionList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.NomVersion?.toLowerCase()?.contains(charString.toLowerCase())!!) {
+                            filteredList.add(row)
+                        }
+                    }
+                    versionListFiltree = filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = versionListFiltree
+                return filterResults
+            }
+
+            protected override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                versionListFiltree = filterResults.values as ArrayList<version>
+                notifyDataSetChanged()
+            }
+        }
     }
 }
