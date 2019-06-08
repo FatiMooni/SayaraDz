@@ -36,40 +36,43 @@ import java.util.*
 
 
 const val RC_SIGN_IN=123
-const val googleToken = "213982533320-l5lfe2acv2uoqgb8j01oceqqsbvthor7.apps.googleusercontent.com"
-const val Cleint_Scret = " tbkhEAa1cL4qj7ngUvZTdmDx "
+
+/**
+ * avoir le client id de string.xml
+ */
+const val googleToken = "493881959162-0ccs4e44m4gr9e576crna4gcm659ah5d.apps.googleusercontent.com"
 class LoginActivity : AppCompatActivity() {
 
     var callbackManager : CallbackManager? =null
-    @SuppressLint("PackageManagerGetSignatures")
+    @SuppressLint("PackageMana gerGetSignatures")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        pauseActivity()
+        googleAuth()
+        dejaConnecteFacebook()
 
-     val handler = Handler()
+
+
+    }// fin de OnCreat
+
+    /**la fonction quimet un temps pour faire transition
+     *
+     */
+    private fun pauseActivity(){
+        val handler = Handler()
         handler.postDelayed({
             // do something
-            val intent = Intent(this@LoginActivity, AjouterAnnonceActivity::class.java)
+            val intent = Intent(this@LoginActivity, AcuilleActivity::class.java)
             // If you just use this that is not a valid context. Use ActivityName.this
             startActivity(intent)
-        }, 30)
-
-
-
-/*
-         Google Authentification
-
-          */
-        setContentView(R.layout.activity_login)
-        //pauseActivity()
-        //avoirHashKeyFb()
-        //googleAutetiicato
-
-        pauseActivity()
-        //googleAutetiicaton
-
-        googleAuth()
-        //facebookAuthentification
-        // avoir une facon de gerer la prochaine fois que l'utilisateur est connecte
+            this@LoginActivity.finish()
+        }, 3000)
+    }
+    /**
+     * test the next connection facebook
+     */
+    public fun dejaConnecteFacebook(){
         if(AccessToken.getCurrentAccessToken() == null) {
             val call = facebookInit()
             if (call != null) {
@@ -78,18 +81,16 @@ class LoginActivity : AppCompatActivity() {
         }else{
             dejaConnecte()
         }
+    }
 
 
-    }// fin de OnCreat
-
-
+    /**
+     *
+     */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             super.onActivityResult(requestCode, resultCode, data)
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            println("un autre pb singin")
+            println("sign 123")
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }else{
@@ -98,6 +99,9 @@ class LoginActivity : AppCompatActivity() {
         }
     } //fin onActivityResult
 
+    /**
+     * sign in of google called from onActivity result
+     */
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
@@ -113,7 +117,9 @@ class LoginActivity : AppCompatActivity() {
 
     } //fin handleSignInResult
 
-
+    /**
+     *
+     */
     fun connxionSuccefulGoogle(account : GoogleSignInAccount){
         // la communication
         val token = account.idToken
@@ -141,8 +147,12 @@ class LoginActivity : AppCompatActivity() {
 
 
     } // fin connxionSuccefulGoogle
+
+    /**
+     *
+     */
     fun connexionFailedGoogle(e : ApiException){
-        Log.w("tag", "signInResult:failed code=" + e.statusCode)
+        Log.w("tag", "signInResult:failed code=" + e.printStackTrace())
         if(e.statusCode == 12500) {
             println(12500)
          Toast.makeText(this@LoginActivity,"Update your Google play Account",Toast.LENGTH_LONG)
@@ -151,60 +161,9 @@ class LoginActivity : AppCompatActivity() {
         facebookButtonVisible()
     }// fin connexionFailedGoogle
 
-
-    fun connexionSuccessFace(loginResult : LoginResult){
-        val token =loginResult.accessToken
-        loginInformationUtilisateur(token)
-        val authService = ServiceBuilder.buildService(AuthService::class.java)
-        val pref = SharedPreferencesHelper(this@LoginActivity,"facebook")
-        val nom = pref.sharedPreferences.getString("userNom",null)
-        val prenom =pref.sharedPreferences.getString("userPrenom",null)
-        val requestCall = authService.setToken("Bearer F ${token.token}",Automobiliste(loginResult.accessToken?.userId!!,prenom,nom))
-        requestCall.enqueue(object : Callback<Automobiliste> {
-            override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
-                if(response.isSuccessful){
-                    dejaConnecte()
-                }else{
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
-                }
-
-            }
-            override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
-                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
-            }
-        })
-    }
-
-
-    fun connexionCancelFace(){
-
-        googleButtonVisible()
-        facebookButtonVisible()}
-
-    fun connexionErrorFace(exception : FacebookException){
-
-        Log.w("pb cnx", ""+ exception.message)
-        googleButtonVisible()
-        facebookButtonVisible()
-    }
-
-
-
-
-    fun googleButtonVisible(){
-        google_button.visibility =View.VISIBLE
-    }
-    fun googleButtonGone(){
-        google_button.visibility = View.GONE
-    }
-    fun facebookButtonVisible(){
-        facebook_button.visibility=View.VISIBLE
-    }
-    fun facebookButtonGone(){
-        facebook_button.visibility =View.GONE
-    }
-
-
+    /**
+     *
+     */
     private fun googleAuth(){
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -232,17 +191,81 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    /**la fonction quimet un temps pour faire transition
-    *
-    */
-    private fun pauseActivity(){
-        val handler = Handler()
-        handler.postDelayed({
-            // do something
-            val intent = Intent(this@LoginActivity, AcuilleActivity::class.java)
-            // If you just use this that is not a valid context. Use ActivityName.this
-            startActivity(intent)
-        }, 3000)
+    /******************************************************
+     *
+     *                      Facebook
+     *
+     ******************************************************/
+    /**
+     *
+     */
+    fun connexionSuccessFace(loginResult : LoginResult){
+        val token =loginResult.accessToken
+        loginInformationUtilisateur(token)
+        val authService = ServiceBuilder.buildService(AuthService::class.java)
+        val pref = SharedPreferencesHelper(this@LoginActivity,"facebook")
+        val nom = pref.sharedPreferences.getString("userNom",null)
+        val prenom =pref.sharedPreferences.getString("userPrenom",null)
+        val requestCall = authService.setToken("Bearer F ${token.token}",Automobiliste(loginResult.accessToken?.userId!!,prenom,nom))
+        requestCall.enqueue(object : Callback<Automobiliste> {
+            override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
+                if(response.isSuccessful){
+                    dejaConnecte()
+                }else{
+                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
+                }
+
+            }
+            override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
+                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
+            }
+        })
+    }
+
+    /**
+     *
+     */
+    fun connexionCancelFace(){
+        googleButtonVisible()
+        facebookButtonVisible()
+    }
+
+    /**
+     *
+     */
+    fun connexionErrorFace(exception : FacebookException){
+
+        Log.w("pb cnx", ""+ exception.message)
+        googleButtonVisible()
+        facebookButtonVisible()
+    }
+
+    /**
+     *
+     */
+    fun googleButtonVisible(){
+        google_button.visibility =View.VISIBLE
+    }
+
+    /**
+     *
+     */
+    fun googleButtonGone(){
+        google_button.visibility = View.GONE
+    }
+
+    /**
+     *
+     */
+    fun facebookButtonVisible(){
+        facebook_button.visibility=View.VISIBLE
+    }
+
+    /**
+     *
+     */
+    fun facebookButtonGone(){
+        facebook_button.visibility =View.GONE
     }
 
     /**
@@ -292,9 +315,6 @@ class LoginActivity : AppCompatActivity() {
         // soit avec LoginButton. Si vous enregistrez le rappel avec LoginButton, vous n’avez pas besoin d’enregistrer
         // le rappel dans le gestionnaire de connexion.
     }
-
-
-
 
     /**
      * l'initialisation des donnee qui sont necessaire pour la connexion facebook

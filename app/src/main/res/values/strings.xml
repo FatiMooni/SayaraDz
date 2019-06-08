@@ -1,8 +1,13 @@
 <resources>
+
+
+    // google sign in
+    <string name="server_client_id">1068948631206-iv07elujphauo3olr57d4jpm15p3ts8c.apps.googleusercontent.com</string>
     // Sign in strings
-    <string name="app_name" translatable="false">sayaradzMb</string>
+    <string name="app_name" translatable="false">sayaradz</string>
     <string name="signout">SignOut</string>
-    <string name="facebook_app_id">2168870339822661</string> <string name="fb_login_protocol_scheme">fb2168870339822661</string>
+    <string name="facebook_app_id">367651757216742</string>
+    <string name="fb_login_protocol_scheme">fb367651757216742</string>
 
 
 
