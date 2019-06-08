@@ -34,7 +34,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
-class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed, NavigationView.OnNavigationItemSelectedListener,NouveauAfficheTechnique.OnCommandPressed{
+class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,
+    NavigationView.OnNavigationItemSelectedListener,NouveauAfficheTechnique.OnCommandPressed{
 
     override fun envoyerFragment(int: Int) {
         var fragment : Fragment?=null
@@ -62,11 +63,16 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-          super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_side_menu)
         navigationTest()
         val toolbar : Toolbar = findViewById(R.id.acc_toolbar)
         setSupportActionBar(toolbar)
+
+
+        /*
+        adding a drawer ( side navigation menu )
+         */
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
@@ -76,6 +82,13 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        val headerView = navView.getHeaderView(R.layout.nav_header_side_menu)
+        headerView.findViewById<TextView>(R.id.UserName).text = "name"
+        headerView.findViewById<TextView>(R.id.UserEmail).text = "email"
+
+
+        //////
         chargerFagment(NouveauRechercheCars())
 
     }
@@ -207,25 +220,40 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
             }
             return@setOnNavigationItemSelectedListener chargerFagment(fragment)
         }
+
     }
+
+
+    /**
+     * for the side navigation menu
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_home -> {
+            R.id.nav_profile -> {
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
+            R.id.nav_offer -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_command -> {
 
             }
-            R.id.nav_tools -> {
+            R.id.nav_following -> {
+
+            }
+            R.id.nav_favoris -> {
+
+            }
+            R.id.nav_support -> {
 
             }
             R.id.nav_share -> {
 
             }
-            R.id.nav_send -> {
+            R.id.nav_us -> {
+
+            }
+            R.id.website_link -> {
 
             }
         }
