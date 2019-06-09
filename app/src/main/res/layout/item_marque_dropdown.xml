@@ -9,6 +9,8 @@ android:layout_marginTop="10dp">
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/secondary_button"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
     />
     <android.support.v7.widget.RecyclerView
             android:id="@+id/imd_rv_marque"

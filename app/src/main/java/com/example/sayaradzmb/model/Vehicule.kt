@@ -31,8 +31,13 @@ data class version(
 data class Couleur(
     val CodeCouleur : Int,
     val NomCouleur : String?,
-    val CodeHexa : String?
+    val CodeHexa : String?,
+    val rel_ver_coul : RelationVerCol
 )
+
+class RelationVerCol {
+
+}
 
 
 data class Option (
