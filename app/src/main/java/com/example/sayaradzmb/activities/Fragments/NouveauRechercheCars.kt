@@ -48,11 +48,11 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
      * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
      */
     interface OnSearchPressed{
-        public fun envoyerFragment(int : Int,version : version)
+        fun envoyerFragment(int : Int,version : version)
     }
 
     /**
-     * onAttach methode overrdin
+     * onAttach methode overriding
      */
     override fun onAttach(context: Context?) {
         super.onAttach(context)

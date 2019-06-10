@@ -1,95 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+<!--ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"-->
 
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
-        <RelativeLayout
-                android:layout_width="match_parent"
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/fnt_ecv_marque"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-            <Spinner android:layout_width="323dp"
-                     android:layout_height="59dp"
-                     android:id="@+id/marque_spinner"
-                     android:layout_alignParentStart="true"
-                     android:layout_marginStart="48dp" android:layout_alignParentLeft="true"
-                     android:layout_marginLeft="48dp"
-                     android:layout_marginTop="31dp"
-                     android:layout_alignParentTop="true"
-                     android:layout_alignParentEnd="true"
-                     android:layout_alignParentRight="true"
-                     android:layout_marginRight="48dp"
-                     android:layout_marginEnd="48dp"
-                     android:background="@drawable/costum_spinner"/>
-
-            <Spinner android:layout_width="322dp"
-                     android:layout_height="59dp"
-                     android:id="@+id/modele_spinner"
-                     android:layout_alignParentStart="true"
-                     android:layout_marginStart="48dp"
-                     android:layout_alignParentLeft="true"
-                     android:layout_marginLeft="48dp"
-                     android:layout_marginTop="43dp" android:layout_below="@+id/marque_spinner"
-                     android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
-                     android:layout_marginRight="48dp" android:layout_marginEnd="48dp"
-                     android:background="@drawable/costum_spinner"/>
-            <Spinner
-                    android:layout_width="324dp"
-                    android:layout_height="59dp"
-                    android:id="@+id/verion_spinner"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="50dp"
-                    android:clickable="false"
-                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
-                    android:layout_marginRight="46dp" android:layout_marginEnd="46dp"
-                    android:background="@drawable/costum_spinner"
-                    android:layout_marginTop="53dp" android:layout_below="@+id/modele_spinner"/>
-            <Spinner
-                    android:layout_width="324dp"
-                    android:layout_height="59dp"
-                    android:id="@+id/option_spinner"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="50dp"
-                    android:clickable="false"
-                    android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
-                    android:layout_marginRight="46dp" android:layout_marginEnd="46dp"
-                    android:background="@drawable/costum_spinner"
-                    android:layout_marginTop="53dp"
-                    android:layout_below="@+id/verion_spinner"/>
+                app:title="Marque"
+                app:inner_view="@layout/item_marque_dropdown"
+                app:expandOnClick="true"
+                app:animationDuration="300"
+                app:startExpanded="false"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+        />
+        <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/fnt_ecv_modele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:title="Modele"
+                app:inner_view="@layout/item_modele_dropdown"
+                app:expandOnClick="false"
+                app:animationDuration="300"
+                app:startExpanded="false"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+                android:clickable="false"/>
+        <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/fnt_ecv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:title="Version"
+                app:inner_view="@layout/item_version_dropdown"
+                app:expandOnClick="true"
+                app:animationDuration="300"
+                app:startExpanded="false"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+                android:clickable="false"
+        />
+        <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/fnt_ecv_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:title="Version"
+                app:inner_view="@layout/item_version_dropdown"
+                app:expandOnClick="true"
+                app:animationDuration="300"
+                app:startExpanded="false"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+                android:clickable="false"
+        />
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:layout_gravity="center"
+                      android:textAlignment="center">
             <Button
                     android:text="search"
                     android:layout_width="131dp"
-                    android:layout_height="wrap_content" android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" android:layout_marginEnd="138dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/search_button"
-                    android:layout_marginRight="138dp"
-                    android:layout_alignParentStart="true" android:layout_marginLeft="142dp"
-                    android:layout_marginStart="142dp"
-                    android:layout_alignParentLeft="true"
                     android:background="@drawable/costum_search_button"
                     android:textColor="@color/colorWhite"
                     android:textSize="15dp"
-                    android:layout_marginTop="77dp"
-                    android:layout_below="@+id/option_spinner"/>
+                    android:clickable="false"
+
+            />
+        </LinearLayout>
 
 
 
-        </RelativeLayout>
-    </ScrollView>
+    </LinearLayout>
 
-
-
-
-
-
-
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -8,12 +8,15 @@
                 android:color="#BDBDBD"
 
         />
-
+        <padding  android:bottom="6dp"
+                  android:top="5dp"
+                  android:left="5dp"
+                  android:right="5dp"/>
     </shape>
     </item>
     <item>
         <bitmap android:gravity="right|center"
-                android:src="@drawable/com_facebook_tooltip_black_bottomnub"
+                android:src="@drawable/down_spinner"
                 tools:ignore="VectorDrawableCompat"/>
 
     </item>

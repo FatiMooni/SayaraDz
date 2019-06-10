@@ -37,6 +37,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,
     NavigationView.OnNavigationItemSelectedListener,NouveauAfficheTechnique.OnCommandPressed{
 
+    var pref : SharedPreferencesHelper? = null
     override fun envoyerFragment(int: Int) {
         var fragment : Fragment?=null
         when(int){
@@ -83,9 +84,11 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
 
         navView.setNavigationItemSelectedListener(this)
 
-        val headerView = navView.getHeaderView(R.layout.nav_header_side_menu)
+       /* val headerView = navView.getHeaderView(R.layout.nav_header_side_menu)
         headerView.findViewById<TextView>(R.id.UserName).text = "name"
+                //pref!!.sharedPreferences.getString("userName", null)
         headerView.findViewById<TextView>(R.id.UserEmail).text = "email"
+            //pref!!.sharedPreferences.getString("userPrenom", null)*/
 
 
         //////
@@ -129,8 +132,8 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
     private fun facebookDeconnexion(){
         LoginManager.getInstance().logOut()
         AccessToken.setCurrentAccessToken(null)
-        val pref = SharedPreferencesHelper(this@AcuilleActivity,"facebook")
-        pref.sharedPreferences.edit().clear().apply()
+        pref = SharedPreferencesHelper(this@AcuilleActivity,"facebook")
+        pref!!.sharedPreferences.edit().clear().apply()
         deconnecter()
     }
 
@@ -141,8 +144,8 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         //signIn out from the the google account
         mGoogleSignInClient!!.signOut()
             .addOnCompleteListener(this) {
-                val pref = sharedPref(this@AcuilleActivity,"google")
-                pref.sharedPreferences.edit().clear().apply()
+                pref = sharedPref(this@AcuilleActivity,"google")
+                pref!!.sharedPreferences.edit().clear().apply()
                 deconnecter()
             }
 
@@ -198,15 +201,12 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
             when (it.itemId) {
                 R.id.nouelle_voiture -> {
                     fragment = NouveauRechercheCars()
-                    titre.text="Nouvelle Voiture"
                 }
                 R.id.occasion_voiture -> {
                     fragment = OccasionFragment()
-                    titre.text="Occasion Voiture"
                 }
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
-                    titre.text="Accuille"
                 }
                 R.id.annoce_voiture -> {
                     fragment = AnnonceFragment()

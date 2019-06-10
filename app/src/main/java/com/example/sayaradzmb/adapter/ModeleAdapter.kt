@@ -27,10 +27,9 @@ import retrofit2.Response
 class ModeleAdapter(
     private val modeleList: ArrayList<Modele>,
     internal var context: Context,
-    internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
+    internal var view : View
 ) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper {
-
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     private var versionAdapter : VersionAdapter? = null
@@ -41,7 +40,13 @@ class ModeleAdapter(
     var modeleVersions = HashMap<Int,ArrayList<version>>()
 
 
-
+    /**
+     * Second constructor
+     */
+    constructor( modeleList: ArrayList<Modele>, context: Context, view : View,
+                 onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view) {
+         this.onSearchPressed = onSearchPressed
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModeleViewHolder {
         //inflate the layout file
@@ -55,7 +60,7 @@ class ModeleAdapter(
         val modele = modeleList.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
-        holder.nomModele.setOnClickListener(View.OnClickListener {
+        holder.nomModele.setOnClickListener{
             currentCodeModele = modele.CodeModele!!
             search.visibility=View.GONE
             modeleDropDown.setTitle(modele.NomModele)
@@ -66,7 +71,7 @@ class ModeleAdapter(
             init(view)
             requeteVersion()
 
-        })
+        }
         holder.suivieImage.setOnClickListener {
             if (holder.suivieImage.tag == "nonSuivi"){
                 /**

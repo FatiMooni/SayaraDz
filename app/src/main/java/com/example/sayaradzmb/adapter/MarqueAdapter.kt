@@ -22,11 +22,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MarqueAdapter(
-    private val marqueList: ArrayList<Marque>,
+    private var marqueList: ArrayList<Marque>,
     internal var context: Context,
-    internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
+    internal var view : View
 ) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper {
+
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+
+    //
+    var frag = 0
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -35,6 +39,15 @@ class MarqueAdapter(
     override var itemRecycleView : RecyclerView? = null
     private var currentCodeMarque : Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
+
+    /**
+     * Second Constructor
+     */
+
+    constructor(marqueList: ArrayList<Marque>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(marqueList,context,view) {
+        this.onSearchPressed = onSearchPressed
+        frag = 1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarqueViewHolder {
         //inflate the layout file
@@ -51,19 +64,29 @@ class MarqueAdapter(
             Log.i("image",marque.images[0].CheminImage.toString())
             Picasso.get().load(marque.images[0].CheminImage).into(holder.logoImage)
         }
-        holder.item.setOnClickListener(View.OnClickListener {
+        holder.item.setOnClickListener {
             Log.i("marque",marque.CodeMarque.toString())
             currentCodeMarque = marque.CodeMarque!!
-            search.visibility=View.GONE
             marqueDropDown.setTitle(marque.NomMarque)
             marqueDropDown.collapse()
-            modeleDropDown.visibility=View.VISIBLE
-            modeleDropDown.collapse()
-            modeleDropDown.setTitle("Modele")
-            versionDropDown.visibility=View.GONE
-            init(view)
-            requeteModele()
-        })
+            when (frag) {
+                0 -> {
+                    Log.i("occasion",view.context.toString())
+                    modeleDropDown.isEnabled = true
+
+                }
+                1 -> {
+                    search.visibility=View.GONE
+                    modeleDropDown.visibility=View.VISIBLE
+                    modeleDropDown.collapse()
+                    modeleDropDown.setTitle("Modele")
+                    versionDropDown.visibility=View.GONE
+                    init(view)
+                    requeteModele()}
+
+            }
+
+        }
     }
 
     override fun getItemCount(): Int {
