@@ -1,7 +1,6 @@
 package com.example.sayaradzmb.activities
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +20,8 @@ import android.os.Handler
 import android.util.Base64
 import android.widget.Toast
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.constatnte.*
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Automobiliste
 import com.example.sayaradzmb.servics.AuthService
@@ -35,20 +36,19 @@ import java.security.NoSuchAlgorithmException
 import java.util.*
 
 
-const val RC_SIGN_IN=123
 
 /**
  * avoir le client id de string.xml
  */
 const val googleToken = "493881959162-0ccs4e44m4gr9e576crna4gcm659ah5d.apps.googleusercontent.com"
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
 
     var callbackManager : CallbackManager? =null
     @SuppressLint("PackageMana gerGetSignatures")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        pauseActivity()
+        //pauseActivity()
         googleAuth()
         dejaConnecteFacebook()
 
@@ -123,11 +123,18 @@ class LoginActivity : AppCompatActivity() {
     fun connxionSuccefulGoogle(account : GoogleSignInAccount){
         // la communication
         val token = account.idToken
-        val pref = sharedPref(this@LoginActivity,"google")
-        pref.setLoginDetails(account.id!!, account.givenName!!, account.familyName!!)
+
+        /**
+         * avoir id prenom nom
+         */
+        saveInfoGoogle(account)
         val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!)
+
+        /**
+         * la requete de retrofit
+         */
         val authService = ServiceBuilder.buildService(AuthService::class.java)
-        val requestCall = authService.setToken("Bearer G ${token}",automobiliste)
+        val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_GOOGLE_AUTH} ${token}",automobiliste)
         requestCall.enqueue(object : Callback<Automobiliste> {
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){
@@ -179,8 +186,7 @@ class LoginActivity : AppCompatActivity() {
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
-            val pref = sharedPref(this@LoginActivity,"google")
-            pref.setLoginDetails(account.id!!, account.givenName!!, account.familyName!!)
+            saveInfoGoogle(account)
             dejaConnecte()
         }
         google_button.setOnClickListener {
@@ -203,21 +209,28 @@ class LoginActivity : AppCompatActivity() {
         val token =loginResult.accessToken
         loginInformationUtilisateur(token)
         val authService = ServiceBuilder.buildService(AuthService::class.java)
-        val pref = SharedPreferencesHelper(this@LoginActivity,"facebook")
-        val nom = pref.sharedPreferences.getString("userNom",null)
-        val prenom =pref.sharedPreferences.getString("userPrenom",null)
-        val requestCall = authService.setToken("Bearer F ${token.token}",Automobiliste(loginResult.accessToken?.userId!!,prenom,nom))
+        /**
+         *
+         */
+        val automobiliste = avoirInfoUser(this@LoginActivity)
+        /**
+         *
+         */
+        val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_FACEBOOK_AUTH} ${token.token}",automobiliste)
         requestCall.enqueue(object : Callback<Automobiliste> {
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){
                     dejaConnecte()
+
                 }else{
                     Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
+                    Log.w("response !success","la connexion echouee"+response!!)
                 }
 
             }
             override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
                 Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
+                Log.w("facebook failure",t.message)
             }
         })
     }
@@ -340,8 +353,7 @@ class LoginActivity : AppCompatActivity() {
                 val id = jsonObject.getString("id")
                 val nom = jsonObject.getString("name")
                 val prenom = "surname"
-                val prefs = SharedPreferencesHelper(this@LoginActivity,"facebook")
-                prefs.setLoginDetails(id,nom,prenom)
+                saveInfoFacebook(id,prenom,nom)
             }
         }
         val parametre = Bundle()
@@ -360,12 +372,20 @@ class LoginActivity : AppCompatActivity() {
         this@LoginActivity.finish()
     }
 
-    /**
-     * retourne une instance de ShaeredPrefernceHelper en entrant le nom de Fichier
-     */
-    private fun sharedPref(context:Context,nomFichier : String) : SharedPreferencesHelper{
-        return SharedPreferencesHelper(context,nomFichier)
+    private fun saveInfoGoogle(account: GoogleSignInAccount) {
+        val pref = sharedPref(this@LoginActivity, NOM_FICHER_LOGIN)
+        pref.setLoginDetails(account.id!!, account.givenName!!, account.familyName!!)
     }
+
+    private fun saveInfoFacebook(id:String,nom:String,prenom:String) {
+        val pref = sharedPref(this@LoginActivity, NOM_FICHER_LOGIN)
+        pref.setLoginDetails(id, prenom, nom)
+    }
+
+
+
+
+
 
 }
 

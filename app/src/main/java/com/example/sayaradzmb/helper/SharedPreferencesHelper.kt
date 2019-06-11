@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.Context.MODE_PRIVATE
 import android.util.Log
+import com.example.sayaradzmb.model.Automobiliste
 
 
 class SharedPreferencesHelper(internal var context: Context,nom_fichier : String) {
@@ -23,6 +24,13 @@ class SharedPreferencesHelper(internal var context: Context,nom_fichier : String
         editor.apply()
     }
 
+    fun getAutomobilste() : Automobiliste{
+        val pref = sharedPreferences
+        val id = pref.getString("idUser",null)
+        val nom = pref.getString("userName",null)
+        val prenom = pref.getString("userPrenom",null)
+        return Automobiliste(id,nom,prenom)
+    }
     /**
      * To check and get login details
      * @param userName : name to validate
