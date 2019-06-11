@@ -20,13 +20,21 @@ import com.squareup.picasso.Picasso
 class VersionAdapter(
     private val versionList: ArrayList<version>,
     internal var context: Context,
-    internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
+    internal var view : View
 ) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>() {
-
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
     private var currentCodeVersion: Int = -1
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var search = view.findViewById<Button>(R.id.search_button)
+    var frag = 0
+    /**
+     * Second constrator
+     */
+
+    constructor(versionList: ArrayList<version>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(versionList,context,view) {
+        this.onSearchPressed = onSearchPressed
+        frag = 1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VersionViewHolder {
         //inflate the layout file
@@ -45,10 +53,17 @@ class VersionAdapter(
             currentCodeVersion = version.CodeVersion!!
             versionDropDown.setTitle(version.NomVersion)
             versionDropDown.collapse()
-            search.visibility=View.VISIBLE
-            Log.i("modele : ",version.toString())
-            search.setOnClickListener{
-                onSearchPressed!!.envoyerFragment(1,version)
+
+            when(frag) {
+                1 -> {  search.visibility=View.VISIBLE
+                        Log.i("modele : ",version.toString())
+                        search.setOnClickListener{
+                            onSearchPressed!!.envoyerFragment(1,version)}
+                }
+
+                0-> {
+
+                }
             }
         }
         holder.suivieImage.setOnClickListener {

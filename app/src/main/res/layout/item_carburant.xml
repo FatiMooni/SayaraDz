@@ -1,0 +1,20 @@
+<LinearLayout
+        android:layout_height="150dp"
+        android:layout_width="150dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:text="DD"
+            android:id="@+id/aprev_carb_type"
+    />
+    <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="carburant"
+            android:id="@+id/title_carb_type"
+    />
+</LinearLayout>

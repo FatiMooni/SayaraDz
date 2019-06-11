@@ -73,8 +73,11 @@ class MarqueAdapter(
                 0 -> {
                     Log.i("occasion",view.context.toString())
                     modeleDropDown.isEnabled = true
+                    modeleAdapter = ModeleAdapter(modeleList,view.context,view)
+                    initLineaire(view,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
 
                 }
+
                 1 -> {
                     search.visibility=View.GONE
                     modeleDropDown.visibility=View.VISIBLE
@@ -82,9 +85,10 @@ class MarqueAdapter(
                     modeleDropDown.setTitle("Modele")
                     versionDropDown.visibility=View.GONE
                     init(view)
-                    requeteModele()}
+                    }
 
             }
+            requeteModele()
 
         }
     }

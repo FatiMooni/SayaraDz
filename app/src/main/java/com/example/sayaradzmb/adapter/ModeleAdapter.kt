@@ -38,6 +38,8 @@ class ModeleAdapter(
     private var currentCodeModele : Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
     var modeleVersions = HashMap<Int,ArrayList<version>>()
+    var frag = 0
+
 
 
     /**
@@ -46,6 +48,7 @@ class ModeleAdapter(
     constructor( modeleList: ArrayList<Modele>, context: Context, view : View,
                  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view) {
          this.onSearchPressed = onSearchPressed
+         frag = 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModeleViewHolder {
@@ -62,13 +65,22 @@ class ModeleAdapter(
         holder.nomModele.text = modele.NomModele
         holder.nomModele.setOnClickListener{
             currentCodeModele = modele.CodeModele!!
-            search.visibility=View.GONE
             modeleDropDown.setTitle(modele.NomModele)
             modeleDropDown.collapse()
+            when (frag)
+            {
+                1 -> {search.visibility=View.GONE
             versionDropDown.visibility=View.VISIBLE
             versionDropDown.collapse()
             versionDropDown.setTitle("Version")
-            init(view)
+            init(view)}
+
+                0 -> {
+                    versionDropDown.isEnabled = true
+                    versionAdapter = VersionAdapter(versionList,view.context,view)
+                    initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+                }
+            }
             requeteVersion()
 
         }
