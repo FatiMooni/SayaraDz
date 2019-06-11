@@ -15,6 +15,7 @@ import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.helper.SuiviVoitureHelper
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
@@ -33,7 +34,7 @@ class ModeleAdapter(
     private var modeleListFiltree : ArrayList<Modele>,
     private val activity : FragmentActivity
 
-) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface {
+) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface,SuiviVoitureHelper {
 
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
@@ -59,6 +60,7 @@ class ModeleAdapter(
         val modele = modeleListFiltree.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
+        toggleSuivi(modele.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
         holder.nomModele.setOnClickListener(View.OnClickListener {
             currentCodeModele = modele.CodeModele!!
             search.visibility=View.GONE
@@ -71,19 +73,32 @@ class ModeleAdapter(
             requeteVersion()
             initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
-        holder.suivieImage.setOnClickListener {
-            if (holder.suivieImage.tag == "nonSuivi"){
+        imageSuivi.setOnClickListener {
+            if (imageSuivi.tag == "nonSuivi"){
                 /**
                  * faire l'abonnement
                  */
-                Picasso.get().load(R.drawable.star).into(imageSuivi)
-                imageSuivi.tag = "Suivi"
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.suivreModeles(modele.CodeModele!!,avoirInfoUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
+                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
+                requeteVersion()
             }else{
                 /**
                  * desabonner
                  */
-                Picasso.get().load(R.drawable.star_vide).into(imageSuivi)
-                imageSuivi.tag = "nonSuivi"
+                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
             }
         }
     }

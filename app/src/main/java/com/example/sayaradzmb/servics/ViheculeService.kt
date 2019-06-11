@@ -5,6 +5,7 @@ import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -30,7 +31,11 @@ interface ViheculeService {
     @GET("marques/modeles/versions/{id}")
     fun getVersionInfo(@Path("id") id : Int) : Call<version>
 
-    
+    @POST("/suivies/modeles/{id}")
+    fun suivreModeles(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
+
+    @POST("/suivies/versions/{id}")
+    fun suivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
 
 
 
