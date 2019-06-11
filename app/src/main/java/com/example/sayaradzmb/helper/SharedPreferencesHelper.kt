@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import com.example.sayaradzmb.model.Automobiliste
+import java.math.BigInteger
 
 
 class SharedPreferencesHelper(internal var context: Context,nom_fichier : String) {
@@ -31,6 +32,13 @@ class SharedPreferencesHelper(internal var context: Context,nom_fichier : String
         val prenom = pref.getString("userPrenom",null)
         return Automobiliste(id,nom,prenom)
     }
+
+    fun avoirIdUser() : BigInteger{
+        val pref = sharedPreferences
+        val id = pref.getString("idUser",null)
+        return id!!.toBigInteger()
+    }
+
     /**
      * To check and get login details
      * @param userName : name to validate

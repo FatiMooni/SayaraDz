@@ -12,8 +12,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_login.*
-
-import com.facebook.appevents.AppEventsLogger;
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginResult
 import android.content.pm.PackageManager
 import android.os.Handler
@@ -22,12 +22,12 @@ import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.constatnte.*
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
-import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Automobiliste
 import com.example.sayaradzmb.servics.AuthService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.facebook.*
 import com.facebook.GraphRequest.newMeRequest
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -186,6 +186,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
+            println("account google ${account.toString()}")
             saveInfoGoogle(account)
             dejaConnecte()
         }
@@ -224,7 +225,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
 
                 }else{
                     Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
-                    Log.w("response !success","la connexion echouee"+response!!)
+                    Log.w("response !success","la connexion echouee"+response)
                 }
 
             }
@@ -333,10 +334,8 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
      * l'initialisation des donnee qui sont necessaire pour la connexion facebook
      */
     private fun facebookInit(): CallbackManager? {
-        FacebookSdk.sdkInitialize(applicationContext)
-        AppEventsLogger.activateApp(this)
-        callbackManager = CallbackManager.Factory.create();
-        login_button.setReadPermissions(Arrays.asList(
+        callbackManager = CallbackManager.Factory.create()
+        login_button.setPermissions(Arrays.asList(
             "public_profile",
             "email"
         ))
@@ -351,8 +350,9 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
             if (jsonObject != null) {
                 println("json $jsonObject")
                 val id = jsonObject.getString("id")
-                val nom = jsonObject.getString("name")
-                val prenom = "surname"
+                val listnom = jsonObject.getString("name").split(' ')
+                val nom = listnom[0]
+                val prenom = listnom[1]
                 saveInfoFacebook(id,prenom,nom)
             }
         }
@@ -360,6 +360,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
         parametre.putString("feilds","email,first_name")
         requete.parameters=parametre
         requete.executeAsync()
+
     }
 
     /**

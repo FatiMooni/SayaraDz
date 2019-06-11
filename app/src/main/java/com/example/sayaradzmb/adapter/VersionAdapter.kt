@@ -40,6 +40,13 @@ class VersionAdapter(
         val version = versionListFiltree.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomVersion.text = version.NomVersion
+
+        if (version.suivie == true){
+            processusSuivre(R.drawable.star,imageSuivi,"Suivi")
+        }else{
+            processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
+        }
+
         holder.nomVersion.setOnClickListener {
             currentCodeVersion = version.CodeVersion!!
             versionDropDown.setTitle(version.NomVersion)
@@ -55,14 +62,13 @@ class VersionAdapter(
                 /**
                  * faire l'abonnement
                  */
-                Picasso.get().load(R.drawable.star).into(imageSuivi)
-                imageSuivi.tag = "Suivi"
+
+                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
             }else{
                 /**
                  * desabonner
                  */
-                Picasso.get().load(R.drawable.star_vide).into(imageSuivi)
-                imageSuivi.tag = "nonSuivi"
+                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
             }
         }
     }
@@ -107,5 +113,10 @@ class VersionAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+    public fun processusSuivre(drawable :Int,image : ImageView,tag : String){
+        Picasso.get().load(drawable).into(image)
+        image.tag = tag
     }
 }

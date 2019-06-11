@@ -14,6 +14,7 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
@@ -32,7 +33,7 @@ class ModeleAdapter(
     private var modeleListFiltree : ArrayList<Modele>,
     private val activity : FragmentActivity
 
-) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface {
+) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface {
 
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
@@ -116,7 +117,7 @@ class ModeleAdapter(
     private fun requeteVersion(){
         versionList.clear()
         val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
-        val requeteAppel = vService.getVersions(currentCodeModele)
+        val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)
         requeteAppel.enqueue(object : Callback<List<version>> {
             override fun onResponse(call: Call<List<version>>, response: Response<List<version>>) =
                 if(response.isSuccessful){

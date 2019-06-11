@@ -14,7 +14,8 @@ data class Modele(
     val versions : List<version>?,
     val options : List<Option>?,
     val couleurs : List<Couleur>?,
-    val images: List<cheminImage>?
+    val images: List<cheminImage>?,
+    val suivie : Boolean
 )
 data class version(
     val CodeVersion : Int?,
@@ -24,7 +25,8 @@ data class version(
     val couleurs : List<Couleur>?,
     val images: List<cheminImage>?,
     val lignetarif : Tarif?,
-    val modele : versionExtraInfo
+    val modele : versionExtraInfo,
+    val suivie: Boolean
 
 )
 
