@@ -98,7 +98,22 @@ class ModeleAdapter(
                 /**
                  * desabonner
                  */
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirInfoUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
                 processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
+                requeteVersion()
             }
         }
     }

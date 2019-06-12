@@ -8,36 +8,38 @@
                                              android:layout_height="match_parent"
                                              android:id="@+id/drawer_nav"
 >
-    <FrameLayout
 
-            android:layout_width="0dp"
-            android:layout_height="131dp"
-            android:background="@drawable/image_entete"
-            android:layout_alignParentTop="true" android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/frameLayout" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/header"
+            android:elevation="150px">
+        <FrameLayout
+
+                android:layout_width="0dp"
+                android:layout_height="131dp"
+                android:layout_alignParentTop="true" android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/frameLayout" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
 
 
-        <include
-                layout="@layout/toolbar_accuille"
-                android:id="@+id/acc_toolbar"/>
-    </FrameLayout>
+            <include
+                    layout="@layout/toolbar_accuille"
+                    android:id="@+id/acc_toolbar"/>
+        </FrameLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+        />
+    </RelativeLayout>
+
 
         <android.support.constraint.ConstraintLayout
                 android:elevation="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Préciser vos choix ?"
-                    android:textSize="18sp"
-                    android:id="@+id/textView"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginBottom="34dp"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+
         </android.support.constraint.ConstraintLayout>
 
     <FrameLayout

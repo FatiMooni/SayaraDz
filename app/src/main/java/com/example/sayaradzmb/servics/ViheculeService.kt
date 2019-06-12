@@ -5,10 +5,7 @@ import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import java.math.BigInteger
 
 interface ViheculeService {
@@ -36,6 +33,12 @@ interface ViheculeService {
 
     @POST("/suivies/versions/{id}")
     fun suivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
+
+    @DELETE("suivies/modeles/{id}")
+    fun desuivreModele(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
+
+    @DELETE("suivies/versions/{id}")
+    fun desuivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
 
 
 
