@@ -99,7 +99,7 @@ class ModeleAdapter(
                  * desabonner
                  */
                 val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
-                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirInfoUser(this.context))
+                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirIdUser(this.context))
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){

@@ -43,25 +43,14 @@
         </android.support.constraint.ConstraintLayout>
 
     <FrameLayout
-            android:id="@+id/holder_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="500dp">
-        <include
-                layout="@layout/toolbar_accuille"
-                android:id="@+id/acc_toolbar"/>
-    </FrameLayout>
-
-
-    <FrameLayout
             android:elevation="20dp"
             android:id="@+id/fragment_id"
             android:layout_width="match_parent"
-            android:layout_height="545dp"
+            android:layout_height="541dp"
             android:layout_above="@+id/navigation_bar" android:layout_marginBottom="0dp"
-            android:layout_marginTop="-1dp" android:layout_below="@+id/frameLayout" android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp" android:layout_alignParentStart="true" android:layout_marginStart="0dp">
+            android:layout_marginTop="3dp" android:layout_below="@+id/frameLayout" android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp" android:layout_alignParentStart="true" android:layout_marginStart="0dp"
+            tools:ignore="NotSibling">
 
 
     </FrameLayout>

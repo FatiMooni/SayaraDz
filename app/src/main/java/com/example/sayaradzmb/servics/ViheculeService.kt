@@ -28,17 +28,17 @@ interface ViheculeService {
     @GET("marques/modeles/versions/{id}")
     fun getVersionInfo(@Path("id") id : Int) : Call<version>
 
-    @POST("/suivies/modeles/{id}")
+    @POST("suivies/modeles/{id}")
     fun suivreModeles(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
 
-    @POST("/suivies/versions/{id}")
+    @POST("suivies/versions/{id}")
     fun suivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
 
-    @DELETE("suivies/modeles/{id}")
-    fun desuivreModele(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
+    @DELETE("automobiliste/{idAutomob}/modeles/{id}")
+    fun desuivreModele(@Path("id") id : Int,@Path("idAutomob") automobiliste : BigInteger) : Call<Any>
 
-    @DELETE("suivies/versions/{id}")
-    fun desuivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
+    @DELETE("automobiliste/{idAutomob}/modeles/{id}")
+    fun desuivreVersion(@Path("id") id : Int,@Path("idAutomob") automobiliste : BigInteger) : Call<Any>
 
 
 
