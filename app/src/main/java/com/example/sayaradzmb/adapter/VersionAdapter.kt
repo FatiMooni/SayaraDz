@@ -54,6 +54,7 @@ class VersionAdapter(
             versionDropDown.setTitle(version.NomVersion)
             versionDropDown.collapse()
 
+            //settings for each fragment
             when(frag) {
                 1 -> {  search.visibility=View.VISIBLE
                         Log.i("modele : ",version.toString())
@@ -62,7 +63,11 @@ class VersionAdapter(
                 }
 
                 0-> {
-
+                    val featuresDropDown = view.findViewById<ExpandableCardView>(R.id.other_features)
+                    featuresDropDown.setOnClickListener {
+                        if (featuresDropDown.isExpanded) featuresDropDown.collapse()
+                        else featuresDropDown.expand()
+                    }
                 }
             }
         }

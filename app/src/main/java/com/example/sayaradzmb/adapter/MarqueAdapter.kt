@@ -65,24 +65,31 @@ class MarqueAdapter(
             Picasso.get().load(marque.images[0].CheminImage).into(holder.logoImage)
         }
         holder.item.setOnClickListener {
+
+            //Shared settings
             Log.i("marque",marque.CodeMarque.toString())
             currentCodeMarque = marque.CodeMarque!!
             marqueDropDown.setTitle(marque.NomMarque)
             marqueDropDown.collapse()
+            modeleDropDown.setTitle("Modele")
+
+
+            //settings for each fragment
             when (frag) {
                 0 -> {
                     Log.i("occasion",view.context.toString())
-                    modeleDropDown.isEnabled = true
+                    modeleDropDown.setOnClickListener {
+                        if (modeleDropDown.isExpanded) modeleDropDown.collapse()
+                        else modeleDropDown.expand()
+                    }
                     modeleAdapter = ModeleAdapter(modeleList,view.context,view)
                     initLineaire(view,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
-
                 }
 
                 1 -> {
                     search.visibility=View.GONE
-                    modeleDropDown.visibility=View.VISIBLE
                     modeleDropDown.collapse()
-                    modeleDropDown.setTitle("Modele")
+                    modeleDropDown.visibility=View.VISIBLE
                     versionDropDown.visibility=View.GONE
                     init(view)
                     }

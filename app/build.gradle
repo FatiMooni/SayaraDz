@@ -60,5 +60,9 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.0'
     //expandable card
     implementation 'com.alespero:expandable-cardview:0.8'
+    //
+    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
+    //
+    implementation 'com.ianpinto.androidrangeseekbar:androidrangeseekbar:1.0.0'
 
 }

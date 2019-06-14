@@ -5,29 +5,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp">
-<!--ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"-->
 
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:orientation="vertical">
         <com.alespero.expandablecardview.ExpandableCardView
                 android:id="@+id/fnt_ecv_marque"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Marque"
                 app:inner_view="@layout/item_marque_dropdown"
                 app:expandOnClick="true"
                 app:animationDuration="300"
                 app:startExpanded="false"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
+
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="#000"
         />
@@ -40,11 +41,15 @@
                 app:expandOnClick="false"
                 app:animationDuration="300"
                 app:startExpanded="false"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
+                android:focusable="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="#000"
-                android:clickable="false"/>
+                android:focusableInTouchMode="true"
+                android:backgroundTintMode="src_over"
+
+               />
         <com.alespero.expandablecardview.ExpandableCardView
                 android:id="@+id/fnt_ecv_version"
                 android:layout_width="wrap_content"
@@ -54,11 +59,30 @@
                 app:expandOnClick="false"
                 app:animationDuration="300"
                 app:startExpanded="false"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="#000"
                 android:clickable="false"
+                android:focusableInTouchMode="true"
+
+        />
+        <com.alespero.expandablecardview.ExpandableCardView
+                android:id="@+id/other_features"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                app:title="Autres Critères"
+                app:inner_view="@layout/other_features_inner_view"
+                app:expandOnClick="true"
+                app:animationDuration="300"
+                app:startExpanded="false"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#000"
+                android:clickable="false"
+
         />
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -81,5 +105,7 @@
 
 
     </LinearLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

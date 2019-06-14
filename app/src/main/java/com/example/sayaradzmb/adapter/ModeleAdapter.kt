@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -36,9 +37,10 @@ class ModeleAdapter(
     private var versionList = ArrayList<version>()
     override var itemRecycleView : RecyclerView? = null
     private var currentCodeModele : Int = -1
-    var search = view.findViewById<Button>(R.id.search_button)
-    var modeleVersions = HashMap<Int,ArrayList<version>>()
-    var frag = 0
+    private var search = view.findViewById<Button>(R.id.search_button)
+    @SuppressLint("UseSparseArrays")
+    private var modeleVersions = HashMap<Int,ArrayList<version>>()
+    private var frag = 0
 
 
 
@@ -64,19 +66,25 @@ class ModeleAdapter(
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
         holder.nomModele.setOnClickListener{
+
+            //Shared settings
             currentCodeModele = modele.CodeModele!!
             modeleDropDown.setTitle(modele.NomModele)
             modeleDropDown.collapse()
+            versionDropDown.setTitle("Version")
+
             when (frag)
             {
                 1 -> {search.visibility=View.GONE
-            versionDropDown.visibility=View.VISIBLE
-            versionDropDown.collapse()
-            versionDropDown.setTitle("Version")
-            init(view)}
+                    versionDropDown.visibility=View.VISIBLE
+                    versionDropDown.collapse()
+                    init(view)}
 
                 0 -> {
-                    versionDropDown.isEnabled = true
+                    versionDropDown.setOnClickListener {
+                        if (versionDropDown.isExpanded) versionDropDown.collapse()
+                        else versionDropDown.expand()
+                    }
                     versionAdapter = VersionAdapter(versionList,view.context,view)
                     initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
                 }
