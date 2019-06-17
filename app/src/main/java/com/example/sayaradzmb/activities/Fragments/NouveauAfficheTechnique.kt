@@ -23,6 +23,7 @@ import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.model.cheminImage
 import com.example.sayaradzmb.model.version
+import com.example.sayaradzmb.ui.activities.Fragments.NouveauAfficheTechnique
 import com.squareup.picasso.Picasso
 import me.relex.circleindicator.CircleIndicator2
 

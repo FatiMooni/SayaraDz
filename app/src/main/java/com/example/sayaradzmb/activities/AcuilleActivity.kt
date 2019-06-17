@@ -29,12 +29,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import android.support.v4.view.MenuItemCompat
 import android.view.View
-
-
+import com.example.sayaradzmb.ui.activities.Fragments.NouveauAfficheTechnique
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
-class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,NouveauAfficheTechnique.OnCommandPressed{
+class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed, NouveauAfficheTechnique.OnCommandPressed{
 
 
     private var mGoogleSignInClient : GoogleSignInClient? = null
@@ -70,7 +69,7 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         var fragment : Fragment?=null
         when(int){
             1->{
-                fragment=NouveauAfficheTechnique(version)
+                fragment= NouveauAfficheTechnique(version)
 
             }
         }
