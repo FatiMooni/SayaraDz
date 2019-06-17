@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.constatnte
+package com.example.sayaradzmb
 
 const val RC_SIGN_IN=123
 const val NOM_FICHER_LOGIN = "login"

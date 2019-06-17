@@ -5,8 +5,3 @@ data class AuthGoogle (
     var signe:String = "G",
     var idAutomobiliste : String? =null
 )
-data class Authfacebook(
-    var token : String? = null,
-    var signe : String = "F",
-    var idAutomobiliste : String? = null
-)
