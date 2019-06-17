@@ -11,9 +11,16 @@ import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.Item.modeleItem
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.helper.SuiviVoitureHelper
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
+import com.example.sayaradzmb.servics.ServiceBuilder
+import com.example.sayaradzmb.servics.ViheculeService
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class VersionAdapter(
     private val versionList: ArrayList<version>,
@@ -21,7 +28,7 @@ class VersionAdapter(
     internal var view : View,
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var versionListFiltree : ArrayList<version>
-) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable {
+) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable,SharedPreferenceInterface,SuiviVoitureHelper {
 
     private var currentCodeVersion: Int = -1
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -40,6 +47,9 @@ class VersionAdapter(
         val version = versionListFiltree.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomVersion.text = version.NomVersion
+
+        toggleSuivi(version.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
+
         holder.nomVersion.setOnClickListener {
             currentCodeVersion = version.CodeVersion!!
             versionDropDown.setTitle(version.NomVersion)
@@ -55,14 +65,39 @@ class VersionAdapter(
                 /**
                  * faire l'abonnement
                  */
-                Picasso.get().load(R.drawable.star).into(imageSuivi)
-                imageSuivi.tag = "Suivi"
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.suivreVersion(version.CodeVersion!!,avoirInfoUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
+                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
             }else{
                 /**
                  * desabonner
                  */
-                Picasso.get().load(R.drawable.star_vide).into(imageSuivi)
-                imageSuivi.tag = "nonSuivi"
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.desuivreVersion(version.CodeVersion!!,avoirIdUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
+                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
             }
         }
     }
@@ -108,4 +143,6 @@ class VersionAdapter(
             }
         }
     }
+
+
 }

@@ -41,7 +41,7 @@ dependencies {
     // design
     implementation 'com.android.support:support-v4:28.0.0'
     // facebook
-    implementation 'com.facebook.android:facebook-android-sdk:4.40.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.0.2'
     //recycleView
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     //CardView

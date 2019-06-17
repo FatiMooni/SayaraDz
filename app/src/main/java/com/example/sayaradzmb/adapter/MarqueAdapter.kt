@@ -15,6 +15,7 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -33,7 +34,11 @@ class MarqueAdapter(
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var marqueListFiltree : ArrayList<Marque>,
     private val activity : FragmentActivity
-) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface {
+) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface {
+
+    /**
+     * Declaration
+     */
     var marqueview : View? = null
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
@@ -44,7 +49,9 @@ class MarqueAdapter(
     private var currentCodeMarque : Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
 
-
+    /**
+     * OnCreate
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarqueViewHolder {
         //inflate the layout file
         val marqueView =
@@ -53,6 +60,9 @@ class MarqueAdapter(
         return MarqueViewHolder(marqueView)
     }
 
+    /**
+     *
+     */
     override fun onBindViewHolder(holder: MarqueViewHolder, position: Int) {
         val marque = marqueListFiltree.get(position)
         holder.nomMarque.text = marque.NomMarque
@@ -105,11 +115,10 @@ class MarqueAdapter(
     private fun requeteModele(){
         modeleList.clear()
         val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
-        val requeteAppel = vService.getModeles(currentCodeMarque)
+        val requeteAppel = vService.getModeles(avoirIdUser(this.context),currentCodeMarque)
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =
                 if(response.isSuccessful){
-
                     print(response.body()!!)
                     var lesModele = response.body()!!
                     lesModele.forEach{

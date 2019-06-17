@@ -28,9 +28,10 @@ import android.support.v4.content.ContextCompat.getSystemService
 import android.app.SearchManager
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import com.example.sayaradzmb.constatnte.NOM_FICHER_LOGIN
 
 
-class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface {
+class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,SharedPreferenceInterface {
     private var onSearchPressed : OnSearchPressed? = null
     override var itemRecycleView : RecyclerView? = null
     private var marqueList = ArrayList<Marque>()
@@ -43,8 +44,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf,container,false)
-        val pref = SharedPreferencesHelper(this.context!!,"facebook")
-        //println("islem1 "+pref.sharedPreferences.getString("idUser",null))
+        Log.i("user info ",avoirInfoUser(this.context!!).toString())
         init(v)
         requeteMarque()
         //essai

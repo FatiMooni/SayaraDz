@@ -27,6 +27,10 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import android.support.v4.view.MenuItemCompat
+import android.view.View
+
+
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
@@ -34,13 +38,13 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
 
 
     private var mGoogleSignInClient : GoogleSignInClient? = null
-
-
+    var textCartItemCount: TextView? = null
+    var mCartItemCount = 10
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-          super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_accuille)
         navigationTest()
         setSupportActionBar(acc_toolbar as Toolbar)
@@ -85,9 +89,37 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu,menu)
+
+        val menuItem = menu!!.findItem(R.id.icon_notification)
+
+        val actionView = MenuItemCompat.getActionView(menuItem)
+        textCartItemCount = actionView.findViewById(com.example.sayaradzmb.R.id.cart_badge) as TextView
+
+        setupBadge()
+
+        actionView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                onOptionsItemSelected(menuItem)
+            }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
+    private fun setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount === 0) {
+                if (textCartItemCount!!.visibility !== View.GONE) {
+                    textCartItemCount!!.visibility = View.GONE
+                }
+            } else {
+                textCartItemCount!!.text = "12"
+                if (textCartItemCount!!.visibility !== View.VISIBLE) {
+                    textCartItemCount!!.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when(item!!.itemId){
