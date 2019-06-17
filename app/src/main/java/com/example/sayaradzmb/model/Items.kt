@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.Item
+package com.example.sayaradzmb.model
 
 data class marqueItem(
     var name: String?,
