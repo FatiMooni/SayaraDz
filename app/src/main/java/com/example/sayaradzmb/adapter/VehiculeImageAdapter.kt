@@ -11,6 +11,9 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.cheminImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.vehicule_image_display.view.*
+import android.support.v4.view.ViewPager
+
+
 
 class VehiculeImageAdapter : PagerAdapter {
     var context : Context
@@ -27,6 +30,10 @@ class VehiculeImageAdapter : PagerAdapter {
 
     override fun getCount(): Int = images.size
 
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        (container as ViewPager).removeView(`object` as View)
+    }
+
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
           var img : ImageView
 
@@ -38,7 +45,9 @@ class VehiculeImageAdapter : PagerAdapter {
 
         //binder l'mage dans imageviewer
           img = view.findViewById(R.id.car_image_holder)
-          Picasso.get().load(images[position].CheminImage).into(img)
+          Picasso.get()
+              .load(images[position].CheminImage)
+              .into(img)
           container.addView(view)
           return  view
 

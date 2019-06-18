@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version

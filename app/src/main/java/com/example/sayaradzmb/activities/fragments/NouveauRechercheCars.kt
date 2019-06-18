@@ -1,7 +1,6 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,12 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.adapter.MarqueAdapter
 import com.example.sayaradzmb.helper.*
 import com.example.sayaradzmb.model.Marque
-import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.ViheculeService

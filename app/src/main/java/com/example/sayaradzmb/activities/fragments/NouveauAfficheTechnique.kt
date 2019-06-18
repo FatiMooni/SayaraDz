@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -18,7 +18,6 @@ import android.widget.TextView
 import com.example.sayaradzmb.adapter.CouleurAdapter
 import com.example.sayaradzmb.adapter.ImageVoitureAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
-import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.model.cheminImage
 import com.example.sayaradzmb.model.version
@@ -53,7 +52,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var options = ArrayList<Option>()
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragement_neuf_tech,container,false)
+        val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
         val context = v.context
         Log.i("version : ",version.toString())
         nomVoiture = v.findViewById(R.id.neuf_tech_card_nom_car)

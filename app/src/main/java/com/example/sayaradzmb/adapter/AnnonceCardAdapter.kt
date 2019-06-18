@@ -67,8 +67,8 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
             véhicule = version.modele.marque.NomMarque + " " + version.modele.NomModele + " " + version.NomVersion
             objet.annonce_info.text = véhicule
             objet.annonce_price_info.text = annonce.Prix
-            if (!annonce.images.isEmpty()) {
-                Picasso.get().load(annonce.images[0].CheminImage).into(objet.annonce_image)
+            if (!annonce.images!!.isEmpty()) {
+                Picasso.get().load(annonce.images!![0].CheminImage).into(objet.annonce_image)
             }
 
              objet.button_apercu.setOnClickListener {
@@ -81,7 +81,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
                     .setTitle("Aperçu de l'annonce")
 
                 //init the adapter
-                pAdapter = VehiculeImageAdapter(mBuilder.context, annonce.images)
+                pAdapter = VehiculeImageAdapter(mBuilder.context, annonce.images!!)
 
                 //Setting the data
                 mDialogView.findViewById<TextView>(R.id.marque_title).text = véhicule

@@ -11,9 +11,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.alespero.expandablecardview.ExpandableCardView
-import com.example.sayaradzmb.Item.modeleItem
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.model.version
 import com.squareup.picasso.Picasso
 
@@ -63,11 +62,7 @@ class VersionAdapter(
                 }
 
                 0-> {
-                    val featuresDropDown = view.findViewById<ExpandableCardView>(R.id.other_features)
-                    featuresDropDown.setOnClickListener {
-                        if (featuresDropDown.isExpanded) featuresDropDown.collapse()
-                        else featuresDropDown.expand()
-                    }
+
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.adapter.AnnonceCardAdapter
 import com.example.sayaradzmb.adapter.FollowedCarsCardAdapter
 import com.example.sayaradzmb.adapter.NewCarsCardAdapter
 import com.example.sayaradzmb.adapter.UsedCarsCardAdapter
-import com.example.sayaradzmb.model.version
 
 class AccuilleFragment : Fragment(){
     private var carsList  = ArrayList<Int>()

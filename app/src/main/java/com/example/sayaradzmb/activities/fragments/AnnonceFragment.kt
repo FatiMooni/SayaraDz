@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,6 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.adapter.AnnonceCardAdapter
-import com.example.sayaradzmb.model.Carburant
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder

@@ -119,7 +119,9 @@ class LoginActivity : AppCompatActivity() {
         val token = account.idToken
         val pref = sharedPref(this@LoginActivity,"google")
         pref.setLoginDetails(account.id!!, account.givenName!!, account.familyName!!)
-        val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!)
+
+        val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!,null)
+
         val authService = ServiceBuilder.buildService(AuthService::class.java)
         val requestCall = authService.setToken("Bearer G ${token}",automobiliste)
         requestCall.enqueue(object : Callback<Automobiliste> {
@@ -159,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
         val pref = SharedPreferencesHelper(this@LoginActivity,"facebook")
         val nom = pref.sharedPreferences.getString("userNom",null)
         val prenom =pref.sharedPreferences.getString("userPrenom",null)
-        val requestCall = authService.setToken("Bearer F ${token.token}",Automobiliste(loginResult.accessToken?.userId!!,prenom,nom))
+        val requestCall = authService.setToken("Bearer F ${token.token}",Automobiliste(loginResult.accessToken?.userId!!,prenom,nom,null))
         requestCall.enqueue(object : Callback<Automobiliste> {
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){

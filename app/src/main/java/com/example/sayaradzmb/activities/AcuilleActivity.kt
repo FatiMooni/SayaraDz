@@ -23,7 +23,7 @@ import android.widget.TextView
 import com.example.sayaradzmb.R
 import kotlinx.android.synthetic.main.activity_accuille.*
 
-import com.example.sayaradzmb.activities.Fragments.*
+import com.example.sayaradzmb.activities.fragments.*
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.version
 import com.facebook.AccessToken
@@ -83,13 +83,6 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
-
-       /* val headerView = navView.getHeaderView(R.layout.nav_header_side_menu)
-        headerView.findViewById<TextView>(R.id.UserName).text = "name"
-                //pref!!.sharedPreferences.getString("userName", null)
-        headerView.findViewById<TextView>(R.id.UserEmail).text = "email"
-            //pref!!.sharedPreferences.getString("userPrenom", null)*/
-
 
         //////
         chargerFagment(NouveauRechercheCars())

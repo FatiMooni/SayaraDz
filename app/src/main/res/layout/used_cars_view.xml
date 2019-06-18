@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:ignore="MissingConstraints"
+        app:cardCornerRadius="10sp"
+        android:elevation="15dp"
+        android:background="@color/colorGrey"
+        app:cardBackgroundColor="@color/colorLightGrey"
+        android:layout_margin="7dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="@color/colorWhite"
+                android:scaleType="centerCrop"
+                android:id="@+id/annonce_image"
+        />
+
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="@string/general"
+                android:layout_below="@+id/annonce_image"
+                android:layout_alignStart="@id/annonce_image"
+                android:layout_marginStart="10dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title"
+                android:id="@+id/annonce_info"
+                />
+
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle"
+                android:padding="2dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/annonce_price_info"
+                android:layout_below="@+id/annonce_info"
+                android:text="this is a sample text"
+        />
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#ffffff"
+                android:outlineProvider="@color/colorPrimaryDark"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="90"
+                android:background="@drawable/item_edit_versement"
+                android:layout_below="@id/annonce_price_info"
+                android:layout_marginHorizontal="10dp"
+                android:padding="5dp"
+                android:id="@+id/infos_holder"
+        >
+            <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/annonce_km"
+                    android:layout_weight="30"
+                    android:textAlignment="center"
+                    android:text="@string/prix"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+            />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/annonce_annee"
+                android:textAlignment="center"
+                android:layout_weight="30"
+                android:text="@string/prix"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+            />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_weight="30"
+                android:id="@+id/annonce_fuel"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:text="@string/Fuel"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+            />
+        </android.support.v7.widget.LinearLayoutCompat>
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:weightSum="100"
+                android:gravity="center"
+                android:layout_below="@id/infos_holder"
+                android:layout_height="wrap_content">
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_edit_versement"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="40"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:text="Faire un offre"
+            />
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_edit_versement"
+                    android:backgroundTint="#424242"
+                    android:drawableStart="@drawable/phone"
+                    android:paddingStart="15dp"
+                    android:text="Call owner"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="35"
+            />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

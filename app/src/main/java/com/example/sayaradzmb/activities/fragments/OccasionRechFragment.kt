@@ -1,12 +1,8 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
-import android.app.Activity
-import android.content.Context
-import android.content.Context.LAYOUT_INFLATER_SERVICE
-import android.graphics.drawable.GradientDrawable
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,29 +10,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.adapter.MarqueAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
-import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.fuel_type
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.ViheculeService
-import kotlinx.android.synthetic.main.item_carburant.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.zip.Inflater
-import android.widget.Spinner
-import android.widget.ArrayAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OccasionFragment : Fragment(),RecycleViewHelper {
+class OccasionRechFragment : Fragment(),RecycleViewHelper {
 
     override var itemRecycleView : RecyclerView? = null
     private var marqueList = ArrayList<Marque>()
@@ -44,8 +38,12 @@ class OccasionFragment : Fragment(),RecycleViewHelper {
     private var featuresDropDown : ExpandableCardView? = null
 
 
+    //variables utilisés dans la requete
+    private var codeVersion :Int? = null
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var myView = inflater.inflate(R.layout.fragement_occasion,container,false)
+        var myView = inflater.inflate(R.layout.fragment_occasion_rech,container,false)
 
         //prepare the recycle view + marque list
         init(myView)
@@ -70,12 +68,12 @@ class OccasionFragment : Fragment(),RecycleViewHelper {
     /**
      * onAttach methode overriding
      */
-   /* override fun onAttach(context: Context?) {
-        super.onAttach(context)
+    /* override fun onAttach(context: Context?) {
+         super.onAttach(context)
 
-        val activity = context as Activity
-        onSearchPressed = activity as OnSearchPressed
-    }*/
+         val activity = context as Activity
+         onSearchPressed = activity as OnSearchPressed
+     }*/
 
 
 
@@ -89,7 +87,7 @@ class OccasionFragment : Fragment(),RecycleViewHelper {
             override fun onResponse(call: Call<List<Marque>>, response: Response<List<Marque>>) =
                 if(response.isSuccessful){
                     print(response.body()!!)
-                    var lesMarque = response.body()!!
+                    val lesMarque = response.body()!!
                     lesMarque.forEach{
                             e->marqueList.add(e)
                     }
@@ -113,12 +111,12 @@ class OccasionFragment : Fragment(),RecycleViewHelper {
 
     private fun initFeaturesLayout(view : View, inf : LayoutInflater){
 
-        var position = 0
+        val position = 0
         featuresDropDown = view.findViewById(R.id.other_features)
-        var holder = view.findViewById<LinearLayoutCompat>(R.id.carburant_type_holder)
+        val holder = view.findViewById<LinearLayoutCompat>(R.id.carburant_type_holder)
         for (carb in fuel_type) {
 
-            var carburantView = inf.inflate(R.layout.item_carburant, null)
+            val carburantView = inf.inflate(R.layout.item_carburant, null)
             carburantView.findViewById<TextView>(R.id.title_carb_type).text = carb.title
             carburantView.findViewById<ImageView>(R.id.aprev_carb_type).setImageDrawable(view.context.resources.getDrawable(carb.image,null))
             holder.addView(carburantView)
