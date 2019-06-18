@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.activities.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutCompat
@@ -10,15 +11,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.adapter.MarqueAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Marque
+import com.example.sayaradzmb.model.VehiculeRechFilters
 import com.example.sayaradzmb.model.fuel_type
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -37,6 +36,7 @@ class OccasionRechFragment : Fragment(),RecycleViewHelper {
     private var marqueAdapter : MarqueAdapter? = null
     private var featuresDropDown : ExpandableCardView? = null
 
+    private lateinit var item : VehiculeRechFilters
 
     //variables utilisés dans la requete
     private var codeVersion :Int? = null
@@ -51,6 +51,21 @@ class OccasionRechFragment : Fragment(),RecycleViewHelper {
 
         initFeaturesLayout(myView,inflater)
         initYearsSpinner(myView)
+
+        val btnSearch = myView.findViewById<Button>(R.id.search_button)
+
+        //Send filters to the next fragment
+        val bundle = Bundle()
+        btnSearch.setOnClickListener {
+            item = VehiculeRechFilters(154,47,66,78,95,47)
+            bundle.putParcelable("filters", item)
+            val nextFrag = OccasionFilteredFragment()
+            nextFrag.arguments = bundle
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
+        }
 
         //retourner le fragment
         return myView

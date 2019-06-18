@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
@@ -23,6 +20,7 @@ class VersionAdapter(
 ) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>() {
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
     private var currentCodeVersion: Int = -1
+    private var listenerVariable : AdapterView.OnItemClickListener? = null
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var search = view.findViewById<Button>(R.id.search_button)
     var frag = 0
@@ -86,6 +84,8 @@ class VersionAdapter(
     override fun getItemCount(): Int {
         return versionList.size
     }
+
+    //val listener (view : View) -> ( AdapterView.OnItemClickListener?
 
     inner class VersionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal var item = view.findViewById<LinearLayout>(R.id.item_version)

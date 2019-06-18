@@ -34,7 +34,7 @@ class OccasionFragment : Fragment(),RecycleViewHelper {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
          maView =inflater.inflate(R.layout.fragment_occasion , container , false)
 
-
+         getAnnonceList(idUser)
 
         //passer au fragment suivant : i.e. fragment de recherche avancée
         maView!!.findViewById<AppCompatButton>(R.id.btn_rech).setOnClickListener {
