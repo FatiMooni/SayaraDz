@@ -10,7 +10,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="right"
-            android:src="@drawable/notification"/>
+            android:src="@drawable/ic_action_name"/>
 
     <TextView
             android:id="@+id/cart_badge"
