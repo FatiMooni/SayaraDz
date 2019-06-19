@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.sayaradzmb.adapter.CouleurAdapter
 import com.example.sayaradzmb.adapter.ImageVoitureAdapter
+import com.example.sayaradzmb.adapter.OptionAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
@@ -31,11 +32,12 @@ import me.relex.circleindicator.CircleIndicator2
 class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     var version: version
 ) : Fragment(),RecycleViewHelper{
+
+
     override var itemRecycleView: RecyclerView? = null
-    private var voitureRecyclerView: RecyclerView? = null
     private var voitureAdapter: ImageVoitureAdapter? = null
-    private var couleurRecyclerView: RecyclerView? = null
     private var couleurAdapter: CouleurAdapter? = null
+    private var optionAdapter: OptionAdapter? = null
     private var onCommandPressed : NouveauAfficheTechnique.OnCommandPressed? = null
     private var indicator : CircleIndicator2? = null
 
@@ -48,8 +50,11 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var suiviImage : ImageView?=null
     private var prixVoiture : TextView?= null
     private var imagePhoto = ArrayList<cheminImage>()
-    private var couleurs = ArrayList<String>()
+    private var couleurs = ArrayList<Couleur>()
     private var options = ArrayList<Option>()
+    @SuppressLint("SetTextI18n")
+
+    //fin design componenet
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf_tech,container,false)
         val context = v.context
@@ -79,10 +84,11 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                 suiviImage!!.tag = "nonSuivi"
             }
         }
-        Log.i("prix version",version.lignetarif!!.Prix.toString())
-        prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()} DZD"
+        if(version.lignetarif != null) prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()!!} DZD"
+        else prixVoiture!!.text = "price not defined"
+
         if (!version.images!!.isEmpty()) imagePhoto.addAll(version.images as ArrayList<cheminImage>)
-        if (!version.couleurs!!.isEmpty())couleurs.addAll(version.couleurs as ArrayList<String>)
+        if (!version.couleurs!!.isEmpty())couleurs.addAll(version.couleurs as ArrayList<Couleur>)
         if (!version.options!!.isEmpty())options.addAll(version.options as ArrayList<Option>)
 
 
@@ -94,25 +100,15 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
          */
          initVoituresImage(v)
          initCouleurs(v)
-            couleurs.add("a")
-        couleurAdapter!!.notifyDataSetChanged()
+         initOption(v)
+
         /**
          * fin initialisation
          */
-        //circle indicatore
-        //val pagerSnapHelper = PagerSnapHelper()
-        //pagerSnapHelper.attachToRecyclerView(voitureRecyclerView)
-        //indicator = v.findViewById<CircleIndicator2>(R.id.neuf_tech_indicator)
-        //indicator.attachToRecyclerView(voitureRecyclerView,pagerSnapHelper)
-
 
         commander(v)
         return v
     }
-
-
-
-
 
 
 
@@ -149,11 +145,16 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      */
     private fun initVoituresImage(v : View){
         voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context)
-        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL,voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.HORIZONTAL,voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
         couleurAdapter = CouleurAdapter(couleurs,v.context)
-        initLineaire(v,R.id.neuf_tech_rv_couleur,LinearLayoutManager.VERTICAL,couleurAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        initLineaire(v,R.id.neuf_tech_rv_couleur,LinearLayoutManager.HORIZONTAL,couleurAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+    }
+    private fun initOption(v: View?) {
+        optionAdapter = OptionAdapter(options,v!!.context)
+        initLineaire(v,R.id.io_rv_option,LinearLayoutManager.VERTICAL,optionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+
     }
 }
 

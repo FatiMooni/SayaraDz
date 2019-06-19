@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.*
 import com.example.sayaradzmb.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -50,7 +51,7 @@ import java.io.File
 * Cette classe assure l'ajout d'une nouvelle annonces par un automobiliste
 *
 * */
-class AjouterAnnonceActivity : AppCompatActivity() {
+class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
 
 
     // variables de la vue
@@ -256,7 +257,7 @@ class AjouterAnnonceActivity : AppCompatActivity() {
     // envoyer la requete de modeles
     fun recupererModele(id: Int?){
 
-        val requestCall = vService.getModeles(id!!)
+        val requestCall = vService.getModeles(avoirIdUser(this@AjouterAnnonceActivity),id!!)
         val listCodeModele  = ArrayList<Int?>()
         val listNomModele = ArrayList<String>()
 
@@ -315,7 +316,7 @@ class AjouterAnnonceActivity : AppCompatActivity() {
     // envoyer la requete de modeles
     fun recupererVersion(id: Int?){
 
-        val requestCall = vService.getVersions(id!!)
+        val requestCall = vService.getVersions(avoirIdUser(this@AjouterAnnonceActivity),id!!)
         val listCodeVersion  = ArrayList<Int?>()
         val listNomVersion = ArrayList<String>()
 

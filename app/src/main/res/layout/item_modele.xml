@@ -22,7 +22,7 @@ android:layout_marginRight="20dp">
             android:layout_height="15dp"
             android:layout_weight="1"
             android:src="@drawable/star_vide"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:tag="nonSuivi"
             />
 

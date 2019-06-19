@@ -5,12 +5,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.example.sayaradzmb.R
+import com.facebook.login.Login
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        /**
+         *  le code qui permet de passer a login activity
+         */
         val handler = Handler()
         handler.postDelayed({
             // do something

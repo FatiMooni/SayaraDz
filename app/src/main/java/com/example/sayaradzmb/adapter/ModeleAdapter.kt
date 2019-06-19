@@ -1,20 +1,22 @@
 package com.example.sayaradzmb.adapter
 
 import android.content.Context
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
+import com.example.sayaradzmb.helper.SearchViewInterface
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.helper.SuiviVoitureHelper
+import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -28,8 +30,11 @@ class ModeleAdapter(
     private val modeleList: ArrayList<Modele>,
     internal var context: Context,
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?
-) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper {
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
+    private var modeleListFiltree : ArrayList<Modele>,
+    private val activity : FragmentActivity
+
+) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface,SuiviVoitureHelper {
 
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
@@ -52,9 +57,10 @@ class ModeleAdapter(
 
     override fun onBindViewHolder(holder: ModeleViewHolder, position: Int) {
 
-        val modele = modeleList.get(position)
+        val modele = modeleListFiltree.get(position)
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
+        toggleSuivi(modele.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
         holder.nomModele.setOnClickListener(View.OnClickListener {
             currentCodeModele = modele.CodeModele!!
             search.visibility=View.GONE
@@ -65,27 +71,55 @@ class ModeleAdapter(
             versionDropDown.setTitle("Version")
             init(view)
             requeteVersion()
-
+            initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
-        holder.suivieImage.setOnClickListener {
-            if (holder.suivieImage.tag == "nonSuivi"){
+        imageSuivi.setOnClickListener {
+            if (imageSuivi.tag == "nonSuivi"){
                 /**
                  * faire l'abonnement
                  */
-                Picasso.get().load(R.drawable.star).into(imageSuivi)
-                imageSuivi.tag = "Suivi"
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.suivreModeles(modele.CodeModele!!,avoirInfoUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
+                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
+                requeteVersion()
             }else{
                 /**
                  * desabonner
                  */
-                Picasso.get().load(R.drawable.star_vide).into(imageSuivi)
-                imageSuivi.tag = "nonSuivi"
+                val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
+                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirIdUser(this.context))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste modele non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
+                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
+                requeteVersion()
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return modeleList.size
+        return modeleListFiltree.size
     }
     fun addAllwithclear(modeleLists : ArrayList<Modele>){
         modeleList.addAll(modeleLists)
@@ -106,14 +140,14 @@ class ModeleAdapter(
      */
 
     private fun init(v : View){
-        versionAdapter = VersionAdapter(versionList,v.context,view,onSearchPressed)
+        versionAdapter = VersionAdapter(versionList,v.context,view,onSearchPressed,versionList)
         initLineaire(v,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
     private fun requeteVersion(){
         versionList.clear()
         val vService =  ServiceBuilder.buildService(ViheculeService::class.java)
-        val requeteAppel = vService.getVersions(currentCodeModele)
+        val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)
         requeteAppel.enqueue(object : Callback<List<version>> {
             override fun onResponse(call: Call<List<version>>, response: Response<List<version>>) =
                 if(response.isSuccessful){
@@ -133,5 +167,37 @@ class ModeleAdapter(
                 Log.w("failConnexion","la liste version non reconnue")
             }
         })
+    }
+
+    public override fun getFilter(): Filter {
+        return object : Filter() {
+            protected override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    modeleListFiltree= modeleList
+                    Log.i("marquefiltree",modeleListFiltree.toString())
+                } else {
+                    val filteredList = ArrayList<Modele>()
+                    for (row in modeleList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.NomModele?.toLowerCase()?.contains(charString.toLowerCase())!!) {
+                            filteredList.add(row)
+                        }
+                    }
+                    modeleListFiltree = filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = modeleListFiltree
+                return filterResults
+            }
+
+            protected override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                modeleListFiltree = filterResults.values as ArrayList<Modele>
+                notifyDataSetChanged()
+            }
+        }
     }
 }

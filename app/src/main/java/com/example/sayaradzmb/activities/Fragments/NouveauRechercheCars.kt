@@ -23,13 +23,20 @@ import com.example.sayaradzmb.servics.ViheculeService
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.support.v4.content.ContextCompat.getSystemService
+import android.app.SearchManager
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
+import com.example.sayaradzmb.constatnte.NOM_FICHER_LOGIN
 
 
-class NouveauRechercheCars: Fragment(),RecycleViewHelper {
+class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,SharedPreferenceInterface {
     private var onSearchPressed : OnSearchPressed? = null
     override var itemRecycleView : RecyclerView? = null
     private var marqueList = ArrayList<Marque>()
     private var marqueAdapter : MarqueAdapter? = null
+    private var searchView : SearchView? = null
 
     /**
      * la foncion onCreat
@@ -37,10 +44,12 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragement_neuf,container,false)
-        val pref = SharedPreferencesHelper(this.context!!,"facebook")
-        println("islem1 "+pref.sharedPreferences.getString("idUser",null))
+        Log.i("user info ",avoirInfoUser(this.context!!).toString())
         init(v)
         requeteMarque()
+        //essai
+        initSearchView(activity!!,v,marqueAdapter!!,R.id.search_bar_marque)
+        // Associate searchable configuration with the SearchView
         return v
     }
 
@@ -91,7 +100,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper {
      */
 
     private fun init(v : View){
-        marqueAdapter = MarqueAdapter(marqueList,v.context,v,onSearchPressed)
+        marqueAdapter = MarqueAdapter(marqueList,v.context,v,onSearchPressed,marqueList,activity!!)
         initLineaire(v,R.id.imd_rv_marque,LinearLayoutManager.VERTICAL,marqueAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
