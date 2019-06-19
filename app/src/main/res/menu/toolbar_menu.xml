@@ -5,7 +5,7 @@
         <item
                 android:id="@+id/icon_notification"
                 android:title="Notification"
-                android:icon="@drawable/ic_action_name"
+                android:icon="@drawable/notification"
                 app:actionLayout="@layout/costum_noificatio_item_layout"
                 app:showAsAction="always"/>
 </menu>
