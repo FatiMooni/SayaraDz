@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
@@ -28,7 +28,7 @@ import retrofit2.Response
 
 
 class MarqueAdapter(
-    private val marqueList: ArrayList<Marque>,
+    private var marqueList: ArrayList<Marque>,
     internal var context: Context,
     internal var view : View,
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
@@ -40,6 +40,10 @@ class MarqueAdapter(
      * Declaration
      */
     var marqueview : View? = null
+
+    //
+    var frag = 1
+
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -52,6 +56,15 @@ class MarqueAdapter(
     /**
      * OnCreate
      */
+
+
+
+   /* constructor(marqueList: ArrayList<Marque>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(marqueList,context,view) {
+        this.onSearchPressed = onSearchPressed
+        frag = 1
+    }*/
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarqueViewHolder {
         //inflate the layout file
         val marqueView =
@@ -71,19 +84,41 @@ class MarqueAdapter(
             Picasso.get().load(marque.images[0].CheminImage).into(holder.logoImage)
         }
         holder.item.setOnClickListener(View.OnClickListener {
+
             currentCodeMarque = marque.CodeMarque!!
-            search.visibility=View.GONE
             marqueDropDown.setTitle(marque.NomMarque)
             marqueDropDown.collapse()
-            modeleDropDown.visibility=View.VISIBLE
-            modeleDropDown.collapse()
             modeleDropDown.setTitle("Modele")
-            versionDropDown.visibility=View.GONE
-            init(view)
+
+
+            //settings for each fragment
+            when (frag) {
+                0 -> {
+                    Log.i("occasion",view.context.toString())
+                    modeleDropDown.setOnClickListener {
+                        if (modeleDropDown.isExpanded) modeleDropDown.collapse()
+                        else modeleDropDown.expand()
+                    }
+                    //modeleAdapter = ModeleAdapter(modeleList,view.context,view)
+                    initLineaire(view,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+                }
+
+                1 -> {
+                    search.visibility=View.GONE
+                    modeleDropDown.collapse()
+                    modeleDropDown.visibility=View.VISIBLE
+                    versionDropDown.visibility=View.GONE
+                    init(view)
+                    if(marqueview == null) Log.i("marqueview","marqueview null")
+                    initSearchView(activity,view!!,modeleAdapter!!,R.id.search_bar_modele)
+                    }
+
+            }
             requeteModele()
-            if(marqueview == null) Log.i("marqueview","marqueview null")
-            initSearchView(activity,view!!,modeleAdapter!!,R.id.search_bar_modele)
+
+
         })
+
     }
 
     override fun getItemCount(): Int {

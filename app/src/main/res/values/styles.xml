@@ -3,6 +3,7 @@
     <style name="CostumToolbarPopup" parent="AppTheme.NoActionBar">
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">-12dp</item>
+
     </style>
     <style name="AppTheme.nonTitle">
         <item name="windowNoTitle">true</item>
@@ -18,9 +19,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -41,10 +42,22 @@
         <item name="android:thicknessRatio">1.9</item>
     </style>
 
+    <style name="ActionBarSpecialStyle" parent="AppTheme.NoActionBar.AppBarOverlay">
+        <item name="android:tint">#fff</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlHighlight">#ff33b5e5</item>
+    </style>
     /** Buttons **/
     <style name="Widget.ButtonSecondary" parent="android:Widget">
         <item name="android:background">@drawable/secondary_button</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
+    <style name="AppTheme.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

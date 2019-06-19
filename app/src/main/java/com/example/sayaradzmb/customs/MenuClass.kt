@@ -9,7 +9,6 @@ class MenuClass(private val position: Int) : PopupMenu.OnMenuItemClickListener {
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
 
-
         }
         return false
     }

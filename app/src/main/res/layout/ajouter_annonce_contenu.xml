@@ -47,7 +47,7 @@
 
                 <Spinner
                         style="@style/spinner_style"
-                        android:id="@+id/spinner4"
+                        android:id="@+id/carburant_spinner"
                         android:background="@android:color/transparent"
                 />
             </android.support.v7.widget.LinearLayoutCompat>

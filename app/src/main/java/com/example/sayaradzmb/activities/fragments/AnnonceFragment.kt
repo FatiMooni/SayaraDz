@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -121,5 +121,7 @@ class AnnonceFragment : Fragment() {
             }
         })
     }
+
+
 
 }

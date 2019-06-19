@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -24,6 +25,7 @@ import android.view.View
 import android.widget.*
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.adapter.FuelSpinnerAdapter
 import com.example.sayaradzmb.model.*
 import com.example.sayaradzmb.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -44,6 +46,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import kotlin.collections.ArrayList
+
 
 /*
 * AjouterAnnonceActivity : Activity Class Manager
@@ -52,6 +56,7 @@ import java.io.File
 *
 * */
 class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
+
 
 
     // variables de la vue
@@ -63,14 +68,15 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
     // autres variables
     private var fileUri: Uri? = null
     private var postPath = ArrayList<String>()
+    private var carburantList = ArrayList<Carburant>()
     private lateinit var vService : ViheculeService
 
     //pour le post request
-    private var idUser : String = ""
     private var codeVersion : String = ""
     private var prixVehicule : String = ""
     private var couleurVehicule : String = ""
-    private var KmVehicule : String = ""
+    private var carburantVehicule : String = ""
+    private var kmVehicule : String = ""
     private var descriptionVehicule : String = ""
     private var album = ArrayList<MultipartBody.Part>()
 
@@ -95,7 +101,7 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
          *  préparer les spinner
          */
 
-        val arrayAdapter = ArrayAdapter(this,R.layout.spinner_item, listOf<String>("Choisir une marque avant"))
+        val arrayAdapter = ArrayAdapter(this,R.layout.spinner_item, listOf("Choisir une marque avant"))
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         versions = findViewById(R.id.versions_spinner)
         versions.adapter = arrayAdapter
@@ -108,6 +114,8 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
         // créer le serveur
         vService = createViheculeService()
 
+        //initialisation du spinner
+        initCarburantSpinner(this)
 
         // initialiser la liste des marque
         marques = findViewById(R.id.marque_spinner)
@@ -121,7 +129,7 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
             prixVehicule = input_prix.text.toString()
             couleurVehicule = input_couleur.text.toString()
             descriptionVehicule = input_description.text.toString()
-            KmVehicule = input_km.text.toString()
+            kmVehicule = input_km.text.toString()
             uploadImage()
         }
 
@@ -559,8 +567,9 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
         val idAu = RequestBody.create(MediaType.parse("text/plain"),"380466752766558")
         val price = RequestBody.create(MediaType.parse("text/plain"),prixVehicule)
         val desc = RequestBody.create(MediaType.parse("text/plain"),descriptionVehicule)
-        val col = RequestBody.create(MediaType.parse("text/plain"),"1")
-        val dist = RequestBody.create(MediaType.parse("text/plain"),KmVehicule)
+        val col = RequestBody.create(MediaType.parse("text/plain"),couleurVehicule)
+        val dist = RequestBody.create(MediaType.parse("text/plain"),kmVehicule)
+        val carb = RequestBody.create(MediaType.parse("text/plain"),carburantVehicule)
 
        postPath.forEach {
         //creation d'une instance fichier pour l'image séléctionnée
@@ -570,7 +579,7 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
         album.add(file)
        }
         //post request
-        val requestCall = vService.CreateAnnouncemet(idAu,code,price,desc,col,dist,album)
+        val requestCall = vService.CreateAnnouncemet(idAu,code,price,desc,col,dist,carb,album)
 
         //evaluaton de la réponse
         requestCall.enqueue(object : Callback<Annonce>{
@@ -589,6 +598,33 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
 
         })
     }
+
+
+    /*
+    cette fonction initialise le spinner des carburants
+     */
+    private fun  initCarburantSpinner(context : Context){
+         for (i in fuel_type){
+             carburantList.add(i)
+         }
+        val adapter = FuelSpinnerAdapter(context,  carburantList)
+        val spinFuel = findViewById<Spinner>(R.id.carburant_spinner)
+        spinFuel.adapter = adapter
+
+        spinFuel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+
+                     carburantVehicule = carburantList[position].title
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Code to perform some action when nothing is selected
+            }
+        }
+    }
+
 }
 
 

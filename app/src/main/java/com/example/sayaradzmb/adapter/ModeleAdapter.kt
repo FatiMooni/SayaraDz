@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
@@ -29,6 +30,7 @@ import retrofit2.Response
 class ModeleAdapter(
     private val modeleList: ArrayList<Modele>,
     internal var context: Context,
+
     internal var view : View,
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var modeleListFiltree : ArrayList<Modele>,
@@ -36,17 +38,28 @@ class ModeleAdapter(
 
 ) : RecyclerView.Adapter<ModeleAdapter.ModeleViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface,SuiviVoitureHelper {
 
+
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     private var versionAdapter : VersionAdapter? = null
     private var versionList = ArrayList<version>()
     override var itemRecycleView : RecyclerView? = null
     private var currentCodeModele : Int = -1
-    var search = view.findViewById<Button>(R.id.search_button)
-    var modeleVersions = HashMap<Int,ArrayList<version>>()
+    private var search = view.findViewById<Button>(R.id.search_button)
+    @SuppressLint("UseSparseArrays")
+    private var modeleVersions = HashMap<Int,ArrayList<version>>()
+    private var frag = 1
 
 
 
+    /**
+     * Second constructor
+     */
+    /*constructor( modeleList: ArrayList<Modele>, context: Context, view : View,
+                 onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view) {
+         this.onSearchPressed = onSearchPressed
+         frag = 1
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModeleViewHolder {
         //inflate the layout file
@@ -62,19 +75,34 @@ class ModeleAdapter(
         holder.nomModele.text = modele.NomModele
         toggleSuivi(modele.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
         holder.nomModele.setOnClickListener(View.OnClickListener {
+
             currentCodeModele = modele.CodeModele!!
-            search.visibility=View.GONE
             modeleDropDown.setTitle(modele.NomModele)
             modeleDropDown.collapse()
-            versionDropDown.visibility=View.VISIBLE
-            versionDropDown.collapse()
             versionDropDown.setTitle("Version")
-            init(view)
+
+            when (frag)
+            {
+                1 -> {search.visibility=View.GONE
+                    versionDropDown.visibility=View.VISIBLE
+                    versionDropDown.collapse()
+                    init(view)}
+
+                0 -> {
+                    versionDropDown.setOnClickListener {
+                        if (versionDropDown.isExpanded) versionDropDown.collapse()
+                        else versionDropDown.expand()
+                    }
+                  //  versionAdapter = VersionAdapter(versionList,view.context,view)
+                    //initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+                }
+            }
             requeteVersion()
             initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
         imageSuivi.setOnClickListener {
             if (imageSuivi.tag == "nonSuivi"){
+
                 /**
                  * faire l'abonnement
                  */

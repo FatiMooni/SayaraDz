@@ -8,16 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
-import com.example.sayaradzmb.Item.modeleItem
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.Fragments.NouveauRechercheCars
+import com.example.sayaradzmb.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.helper.SuiviVoitureHelper
-import com.example.sayaradzmb.model.Modele
+
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.ViheculeService
-import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,11 +26,22 @@ class VersionAdapter(
     internal var view : View,
     private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var versionListFiltree : ArrayList<version>
-) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable,SharedPreferenceInterface,SuiviVoitureHelper {
+) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable, SharedPreferenceInterface, SuiviVoitureHelper {
+
 
     private var currentCodeVersion: Int = -1
+    private var listenerVariable : AdapterView.OnItemClickListener? = null
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var search = view.findViewById<Button>(R.id.search_button)
+    var frag = 1
+    /**
+     * Second constrator
+     */
+
+   /* constructor(versionList: ArrayList<version>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(versionList,context,view) {
+        this.onSearchPressed = onSearchPressed
+        frag = 1
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VersionViewHolder {
         //inflate the layout file
@@ -54,10 +63,18 @@ class VersionAdapter(
             currentCodeVersion = version.CodeVersion!!
             versionDropDown.setTitle(version.NomVersion)
             versionDropDown.collapse()
-            search.visibility=View.VISIBLE
-            Log.i("modele : ",version.toString())
-            search.setOnClickListener{
-                onSearchPressed!!.envoyerFragment(1,version)
+
+            //settings for each fragment
+            when(frag) {
+                1 -> {  search.visibility=View.VISIBLE
+                        Log.i("modele : ",version.toString())
+                        search.setOnClickListener{
+                            onSearchPressed!!.envoyerFragment(1,version)}
+                }
+
+                0-> {
+
+                }
             }
         }
         holder.suivieImage.setOnClickListener {
@@ -105,6 +122,8 @@ class VersionAdapter(
     override fun getItemCount(): Int {
         return versionListFiltree.size
     }
+
+    //val listener (view : View) -> ( AdapterView.OnItemClickListener?
 
     inner class VersionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal var item = view.findViewById<LinearLayout>(R.id.item_version)

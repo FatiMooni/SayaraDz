@@ -5,8 +5,8 @@
         android:orientation="horizontal"
         android:weightSum="4"
         android:id="@+id/item_version"
-              android:layout_marginLeft="20dp"
-              android:layout_marginRight="20dp">
+              android:layout_marginLeft="10dp"
+              android:layout_marginRight="10dp">
 
     <TextView
             android:id="@+id/im_text_nomversion"

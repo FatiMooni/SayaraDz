@@ -5,8 +5,13 @@ import android.content.Context
 import android.content.Intent
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView
 
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.view.MenuItemCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar
@@ -14,12 +19,13 @@ import android.view.Menu
 
 
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 
 import com.example.sayaradzmb.R
 import kotlinx.android.synthetic.main.activity_accuille.*
 
-import com.example.sayaradzmb.activities.Fragments.*
+import com.example.sayaradzmb.activities.fragments.*
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.version
 import com.facebook.AccessToken
@@ -27,35 +33,27 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import android.support.v4.view.MenuItemCompat
-import android.view.View
 
 
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
-class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,NouveauAfficheTechnique.OnCommandPressed{
+class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed,NavigationView.OnNavigationItemSelectedListener,NouveauAfficheTechnique.OnCommandPressed{
 
 
+    private var pref: SharedPreferencesHelper? = null
     private var mGoogleSignInClient : GoogleSignInClient? = null
     var textCartItemCount: TextView? = null
     var mCartItemCount = 10
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_accuille)
-        navigationTest()
-        setSupportActionBar(acc_toolbar as Toolbar)
-        (acc_toolbar as Toolbar).setNavigationIcon(R.drawable.menu_icon)
-        chargerFagment(NouveauRechercheCars())
-    }
 
 
     /**
      * la focntion qui aide a switche entre les fragment
      */
+
     override fun envoyerFragment(int: Int) {
         var fragment : Fragment?=null
         when(int){
@@ -76,6 +74,37 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         }
         chargerFagment(fragment)
     }
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_side_menu)
+        navigationTest()
+        val toolbar : Toolbar = findViewById(R.id.acc_toolbar)
+        setSupportActionBar(toolbar)
+
+
+        /*
+        adding a drawer ( side navigation menu )
+         */
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, R.string.open, R.string.app_name
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener(this)
+
+        //////
+        chargerFagment(NouveauRechercheCars())
+
+    }
+
+
+
     /**
      * Pour Deconnecter
      */
@@ -93,15 +122,11 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         val menuItem = menu!!.findItem(R.id.icon_notification)
 
         val actionView = MenuItemCompat.getActionView(menuItem)
-        textCartItemCount = actionView.findViewById(com.example.sayaradzmb.R.id.cart_badge) as TextView
+        textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
 
         setupBadge()
 
-        actionView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                onOptionsItemSelected(menuItem)
-            }
-        })
+        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -138,8 +163,8 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
     private fun facebookDeconnexion(){
         LoginManager.getInstance().logOut()
         AccessToken.setCurrentAccessToken(null)
-        val pref = SharedPreferencesHelper(this@AcuilleActivity,"facebook")
-        pref.sharedPreferences.edit().clear().apply()
+        pref = SharedPreferencesHelper(this@AcuilleActivity,"facebook")
+        pref!!.sharedPreferences.edit().clear().apply()
         deconnecter()
     }
 
@@ -150,8 +175,8 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
         //signIn out from the the google account
         mGoogleSignInClient!!.signOut()
             .addOnCompleteListener(this) {
-                val pref = sharedPref(this@AcuilleActivity,"google")
-                pref.sharedPreferences.edit().clear().apply()
+                pref = sharedPref(this@AcuilleActivity,"google")
+                pref!!.sharedPreferences.edit().clear().apply()
                 deconnecter()
             }
 
@@ -207,15 +232,12 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
             when (it.itemId) {
                 R.id.nouelle_voiture -> {
                     fragment = NouveauRechercheCars()
-                    titre.text="Nouvelle Voiture"
                 }
                 R.id.occasion_voiture -> {
                     fragment = OccasionFragment()
-                    titre.text="Occasion Voiture"
                 }
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
-                    titre.text="Accuille"
                 }
                 R.id.annoce_voiture -> {
                     fragment = AnnonceFragment()
@@ -229,7 +251,47 @@ class AcuilleActivity : AppCompatActivity(),NouveauRechercheCars.OnSearchPressed
             }
             return@setOnNavigationItemSelectedListener chargerFagment(fragment)
         }
+
     }
+
+
+    /**
+     * for the side navigation menu
+     */
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_profile -> {
+                // Handle the camera action
+            }
+            R.id.nav_offer -> {
+
+            }
+            R.id.nav_command -> {
+
+            }
+            R.id.nav_following -> {
+
+            }
+            R.id.nav_favoris -> {
+
+            }
+            R.id.nav_support -> {
+
+            }
+            R.id.nav_share -> {
+
+            }
+            R.id.nav_us -> {
+
+            }
+            R.id.website_link -> {
+
+            }
+        }
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true    }
+
 }
 
 

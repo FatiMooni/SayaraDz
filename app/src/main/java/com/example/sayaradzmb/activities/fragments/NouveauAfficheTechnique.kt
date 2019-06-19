@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -28,6 +28,7 @@ import me.relex.circleindicator.CircleIndicator2
 
 
 
+@Suppress("UNCHECKED_CAST")
 @SuppressLint("ValidFragment")
 class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     var version: version
@@ -54,9 +55,8 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var options = ArrayList<Option>()
     @SuppressLint("SetTextI18n")
 
-    //fin design componenet
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragement_neuf_tech,container,false)
+        val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
         val context = v.context
         Log.i("version : ",version.toString())
         nomVoiture = v.findViewById(R.id.neuf_tech_card_nom_car)
@@ -127,7 +127,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
      */
     interface OnCommandPressed{
-        public fun envoyerFragment(int : Int)
+        fun envoyerFragment(int : Int)
     }
 
     /**
@@ -145,7 +145,8 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      */
     private fun initVoituresImage(v : View){
         voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context)
-        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.HORIZONTAL,voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+
+        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
         couleurAdapter = CouleurAdapter(couleurs,v.context)

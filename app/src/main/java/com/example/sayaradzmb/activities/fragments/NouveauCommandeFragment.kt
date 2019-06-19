@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 
 import android.content.Context
@@ -25,7 +25,7 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragement_neuf_commande,container,false)
+        val v = inflater.inflate(R.layout.fragment_neuf_commande,container,false)
         val context = v.context
 
         /**

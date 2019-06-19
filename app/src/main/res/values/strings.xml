@@ -19,7 +19,7 @@
     <string name="kilometrage">Kilométrage</string>
     <string name="storage_permition_rationale_message">----</string>
     <string name="aperçu" translatable="false">Aperçu</string>
-    
+
     <string name="year">Année</string>
     <string name="Fuel">Fuel</string>
     <string name="price_sign" translatable="false">DZA</string>
@@ -47,5 +47,26 @@
     <string name="open" translatable="false">Open</string>
     <string name="close" translatable="false">Close</string>
     <string name="prix">Prix</string>
+    <string name="title_activity_side_menu">SideMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_profile">Mon Profile</string>
+    <string name="menu_command">Mes Commandes</string>
+    <string name="menu_offer">Mes Offres</string>
+    <string name="menu_followed">Following</string>
+    <string name="menu_favored">Favoris</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_help">Support</string>
+    <string name="menu_about_us">About us</string>
+    <string name="menu_share">Partager SayaraDz</string>
+    <string name="deconnexion">Deconnexion</string>
+    <string name="check_the_website">Check the website</string>
+    <string name="menu_deconect">Log Out</string>
+    <string name="recherche_avanc_e">Recherche Avancée</string>
 
 </resources>

@@ -30,7 +30,7 @@ class SharedPreferencesHelper(internal var context: Context,nom_fichier : String
         val id = pref.getString("idUser",null)
         val nom = pref.getString("userName",null)
         val prenom = pref.getString("userPrenom",null)
-        return Automobiliste(id,nom,prenom)
+        return Automobiliste(id,nom,prenom,null)
     }
 
     fun avoirIdUser() : BigInteger{

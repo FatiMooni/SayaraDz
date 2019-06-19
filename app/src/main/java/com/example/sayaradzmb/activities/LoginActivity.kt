@@ -128,11 +128,12 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
          * avoir id prenom nom
          */
         saveInfoGoogle(account)
-        val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!)
+        val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!,null)
 
         /**
          * la requete de retrofit
          */
+
         val authService = ServiceBuilder.buildService(AuthService::class.java)
         val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_GOOGLE_AUTH} ${token}",automobiliste)
         requestCall.enqueue(object : Callback<Automobiliste> {
@@ -218,6 +219,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
          *
          */
         val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_FACEBOOK_AUTH} ${token.token}",automobiliste)
+
         requestCall.enqueue(object : Callback<Automobiliste> {
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){
@@ -230,7 +232,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
 
             }
             override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
-                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
+                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG).show()
                 Log.w("facebook failure",t.message)
             }
         })
@@ -306,7 +308,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
     private fun facebookAuth(callbackManager: CallbackManager){
         facebook_button.setOnClickListener {
 
-            Toast.makeText(this@LoginActivity,"Try to connect",Toast.LENGTH_LONG)
+            Toast.makeText(this@LoginActivity,"Try to connect",Toast.LENGTH_LONG).show()
             login_button.performClick()
             login_button.registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {

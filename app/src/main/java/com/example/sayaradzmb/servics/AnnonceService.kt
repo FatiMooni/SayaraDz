@@ -17,8 +17,9 @@ interface AnnonceService {
                            @Part("CodeVersion") CodeVersion : RequestBody,
                            @Part("Prix") Prix : RequestBody,
                            @Part("Description") Description : RequestBody,
-                           @Part("CodeCouleur") CodeCouleur : RequestBody,
+                           @Part("Couleur") Couleur : RequestBody,
                            @Part ("Km") Km :  RequestBody,
+                           @Part ("Carburant") Carburant : RequestBody,
                            @Part imageAnnonce : List<MultipartBody.Part>) : Call<Annonce>
 
      @GET("automobiliste/{id}/annonces")

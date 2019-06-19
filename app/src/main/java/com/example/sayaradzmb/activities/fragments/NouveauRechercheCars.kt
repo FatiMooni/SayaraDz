@@ -1,7 +1,6 @@
-package com.example.sayaradzmb.activities.Fragments
+package com.example.sayaradzmb.activities.fragments
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,12 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.adapter.MarqueAdapter
 import com.example.sayaradzmb.helper.*
 import com.example.sayaradzmb.model.Marque
-import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.ViheculeService
@@ -28,6 +25,7 @@ import android.support.v4.content.ContextCompat.getSystemService
 import android.app.SearchManager
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import android.support.v7.widget.SearchView
 import com.example.sayaradzmb.constatnte.NOM_FICHER_LOGIN
 
 
@@ -57,11 +55,11 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
      * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
      */
     interface OnSearchPressed{
-        public fun envoyerFragment(int : Int,version : version)
+        fun envoyerFragment(int : Int,version : version)
     }
 
     /**
-     * onAttach methode overrdin
+     * onAttach methode overriding
      */
     override fun onAttach(context: Context?) {
         super.onAttach(context)

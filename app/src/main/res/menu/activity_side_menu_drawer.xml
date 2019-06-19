@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/profile"
+                android:title="@string/menu_profile"/>
+        <item
+                android:id="@+id/nav_command"
+                android:icon="@drawable/command"
+                android:title="@string/menu_command"/>
+        <item
+                android:id="@+id/nav_offer"
+                android:icon="@drawable/offer"
+                android:title="@string/menu_offer"/>
+        <item
+                android:id="@+id/nav_following"
+                android:icon="@drawable/followed"
+                android:title="@string/menu_followed"/>
+        <item
+                android:id="@+id/nav_favoris"
+                android:icon="@drawable/favorite"
+                android:title="@string/menu_favored"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/menu_share"/>
+            <item
+                    android:id="@+id/nav_support"
+                    android:icon="@drawable/ic_help_black_24dp"
+                    android:title="@string/menu_help"/>
+            <item
+                    android:id="@+id/nav_us"
+                    android:icon="@drawable/ic_announcement_black_24dp"
+                    android:title="@string/menu_about_us"/>
+        </menu>
+    </item>
+    <item android:title="@string/check_the_website">
+        <menu>
+            <item
+                    android:id="@+id/website_link"
+                    android:icon="@drawable/website_logo"
+                    app:showAsAction="always"
+                    android:title="@string/menu_share"/>
+
+        </menu>
+    </item>
+    <item android:title="@string/deconnexion">
+        <menu>
+            <item
+                    android:id="@+id/deconnect"
+                    android:icon="@drawable/ic_arrow_back_black_24dp"
+                    app:showAsAction="ifRoom"
+                    android:title="@string/menu_deconect"/>
+
+        </menu>
+    </item>
+
+
+</menu>
