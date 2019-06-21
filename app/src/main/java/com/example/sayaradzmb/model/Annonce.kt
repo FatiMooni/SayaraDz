@@ -9,5 +9,5 @@ data class Annonce(
     var CodeCouleur: Int?,
     var Km: String,
     var Description: String,
-    var images: List<cheminImage>?
+    var images: List<CheminImage>?
 )
