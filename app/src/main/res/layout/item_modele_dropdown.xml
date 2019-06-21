@@ -5,10 +5,13 @@
               android:layout_height="match_parent"
               android:layout_marginTop="10dp">
     <SearchView
+            android:tooltipText="Trouver une marque"
             android:id="@+id/search_bar_modele"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/secondary_button"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
     />
     <android.support.v7.widget.RecyclerView
             android:id="@+id/imd_rv_modele"

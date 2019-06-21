@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
    <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="15dp">
     <android.support.v7.widget.CardView
             android:id="@+id/commande_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
+            app:cardCornerRadius="7dp"
+            app:cardElevation="10dp"
+            android:layout_marginBottom="10dp">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
             <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -29,12 +33,14 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp">
-                        <ImageView
+                            android:layout_marginBottom="5dp">
+                        <ImageButton
                                 android:id="@+id/commande_3point"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_favoris"/>
+                                android:layout_margin="2dp"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/more_icon"/>
                         <TextView
                                 android:id="@+id/commande_nom_voiture"
                                 android:layout_width="wrap_content"
@@ -68,7 +74,7 @@
                             android:id="@+id/commande_prix_car"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/image_entete"/>
+                            android:src="@drawable/no_picture"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -76,7 +82,8 @@
             android:id="@+id/commande_personal_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
+            android:background="@drawable/item_edit_versement"
+            android:layout_marginBottom="10dp">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +103,7 @@
                             android:id="@+id/commande_3point2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_favoris"/>
+                            android:src="@drawable/person_sign"/>
                     <TextView
                             android:id="@+id/personnal_info"
                             android:layout_width="wrap_content"
@@ -143,13 +150,15 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    <TextView
+                    <Button
                             android:id="@+id/commande_gestion"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textColor="#000"
+                            android:textColor="@color/colorAccent"
                             android:text="Gérer"
-                            android:textSize="18dp" android:layout_alignParentEnd="true"
+                            android:background="@android:color/transparent"
+                            android:textSize="18dp"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"/>
                 </RelativeLayout>
             </LinearLayout>
@@ -159,12 +168,12 @@
             android:id="@+id/commande_versement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="10dp">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-        android:layout_margin="10dp">
+                android:layout_margin="10dp">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -179,7 +188,7 @@
                             android:id="@+id/commande_icon_vers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_favoris"/>
+                            android:src="@drawable/versment_sign"/>
                     <TextView
                             android:id="@+id/commande_versement_info"
                             android:layout_width="wrap_content"
@@ -197,6 +206,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
                 android:text="Type your amount : "/>
 
                 <RelativeLayout android:layout_width="match_parent"
@@ -224,10 +234,11 @@
             android:layout_height="wrap_content"
             android:text="Confirmer"
             android:background="@drawable/costum_search_button"
-    android:layout_marginLeft="80dp"
+            android:layout_marginLeft="80dp"
             android:layout_marginRight="80dp"
-    android:textColor="@color/colorWhite"
+            android:textColor="@color/colorWhite"
             android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
     />
    </LinearLayout>
 </ScrollView>

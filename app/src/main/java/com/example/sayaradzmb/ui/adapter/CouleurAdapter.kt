@@ -40,7 +40,7 @@ class CouleurAdapter(
         var drawable = buttonColor!!.background
         Log.i("classe name",drawable::class.toString())
         if(drawable is GradientDrawable){
-            drawable.setColor(Color.parseColor("#C3C3C3"))
+            drawable.setColor(Color.parseColor(color))
             Log.i("is shape : ", "yes")
         }
         holder.couleurview.setOnClickListener {
