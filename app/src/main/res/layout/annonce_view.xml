@@ -18,14 +18,15 @@
                 android:id="@+id/annonce_image"
                 android:padding="10dp"
                 android:background="@color/colorWhite"
-                android:src="@drawable/main_img"
+                android:src="@drawable/no_picture"
         />
         <Button
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/annonce_image"
+                android:layout_alignEnd="@id/annonce_image"
                 android:layout_marginTop="200dp"
                 android:textAlignment="center"
+                android:id="@+id/offer_num"
                 android:text="00"
         />
 

@@ -15,7 +15,7 @@ data class VehiculeOccasion(
     var Carburant: String,
     var Description : String,
     var NombreOffres: String,
-    var annnee : String,
+    var Annee : String,
     var images: List<CheminImage>?
 
 )

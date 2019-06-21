@@ -24,10 +24,12 @@ class VersionAdapter(
     private val versionList: ArrayList<Version>,
     internal var context: Context,
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var versionListFiltree : ArrayList<Version>
 ) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable, SharedPreferenceInterface, SuiviVoitureHelper {
 
+
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+    private var onSelectedItem : ((Version) -> Unit)? = null
 
     private var currentCodeVersion: Int = -1
     private var listenerVariable : AdapterView.OnItemClickListener? = null
@@ -38,10 +40,15 @@ class VersionAdapter(
      * Second constrator
      */
 
-   /* constructor(versionList: ArrayList<version>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(versionList,context,view) {
+   constructor(versionList: ArrayList<Version>, context: Context, view : View, versionListFiltree: ArrayList<Version>, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(versionList,context,view,versionListFiltree) {
         this.onSearchPressed = onSearchPressed
         frag = 1
-    }*/
+    }
+
+    constructor(versionList: ArrayList<Version>, context: Context, view : View, versionListFiltree: ArrayList<Version>,listener: (Version) -> Unit) : this(versionList,context,view,versionListFiltree) {
+        this.onSelectedItem = listener
+        frag = 0
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VersionViewHolder {
         //inflate the layout file
@@ -59,24 +66,27 @@ class VersionAdapter(
 
         toggleSuivi(version.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
 
-        holder.nomVersion.setOnClickListener {
-            currentCodeVersion = version.CodeVersion!!
-            versionDropDown.setTitle(version.NomVersion)
-            versionDropDown.collapse()
 
             //settings for each fragment
             when(frag) {
-                1 -> {  search.visibility=View.VISIBLE
-                        Log.i("modele : ",version.toString())
-                        search.setOnClickListener{
-                            onSearchPressed!!.envoyerFragment(1,version)}
+                1 -> {
+                    holder.nomVersion.setOnClickListener {
+                        currentCodeVersion = version.CodeVersion!!
+                        versionDropDown.setTitle(version.NomVersion)
+                        versionDropDown.collapse()
+                        search.visibility = View.VISIBLE
+                        Log.i("modele : ", version.toString())
+                        search.setOnClickListener {
+                            onSearchPressed!!.envoyerFragment(1, version)
+                        }
+                    }
                 }
 
                 0-> {
-
+                    holder.bind(version,onSelectedItem!!)
                 }
             }
-        }
+
         holder.suivieImage.setOnClickListener {
             if (holder.suivieImage.tag == "nonSuivi"){
                 /**
@@ -129,6 +139,15 @@ class VersionAdapter(
         internal var item = view.findViewById<LinearLayout>(R.id.item_version)
         internal var suivieImage = view.findViewById<ImageView>(R.id.im_image_suiviversion)
         internal var nomVersion = view.findViewById<TextView>(R.id.im_text_nomversion)
+
+        fun bind(obj: Version, listener: (Version) -> Unit) = with(view) {
+            nomVersion.text = obj.NomVersion
+            item.setOnClickListener {
+                listener(obj)
+                versionDropDown.setTitle(obj.NomVersion)
+                versionDropDown.collapse()
+            }
+        }
     }
 
     public override fun getFilter(): Filter {

@@ -5,16 +5,19 @@ import android.os.Parcelable
 
 data class VehiculeRechFilters (
     var codeVersion : Int ?,
+    var carburant: String?,
     var minPrix : Int?,
     var maxPrix : Int?,
+
     var minAnnee : Int?,
     var maxAnnee : Int?,
     var maxKm : Int?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(String::class.java.classLoader) as? String,
+        parcel.readValue(Float::class.java.classLoader) as? Int,
+        parcel.readValue(Float::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int
@@ -22,6 +25,7 @@ data class VehiculeRechFilters (
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(codeVersion)
+        parcel.writeValue(carburant)
         parcel.writeValue(minPrix)
         parcel.writeValue(maxPrix)
         parcel.writeValue(minAnnee)
@@ -42,5 +46,4 @@ data class VehiculeRechFilters (
             return arrayOfNulls(size)
         }
     }
-
 }

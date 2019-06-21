@@ -21,8 +21,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.activities.fragments.OccasionFragment
 import kotlinx.android.synthetic.main.activity_accuille.*
 
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
@@ -94,6 +96,9 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.open, R.string.app_name
         )
+
+        val header = navView.inflateHeaderView(R.layout.nav_header_side_menu)
+        header.findViewById<TextView>(R.id.UserName).text = "Abdiche Fatima Zahra"
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -263,6 +268,7 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
         when (item.itemId) {
             R.id.nav_profile -> {
                 // Handle the camera action
+                Toast.makeText(this, "profile", Toast.LENGTH_LONG).show()
             }
             R.id.nav_offer -> {
 
@@ -287,6 +293,10 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
             }
             R.id.website_link -> {
 
+            }
+            R.id.deconnect -> {
+                googleDeconnexion()
+                deconnecter()
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

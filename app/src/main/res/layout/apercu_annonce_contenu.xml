@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/prix_specification"
                         android:layout_marginStart="10dp"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:layout_toEndOf="@id/prix_title"
                         android:layout_alignBaseline="@+id/prix_title"
                 />
@@ -210,7 +210,7 @@
                               android:layout_height="wrap_content"
                               android:id="@+id/year_specification"
                               android:layout_centerHorizontal="true"
-                              android:text="@string/Fuel"
+                              android:text="@string/year"
                               android:layout_below="@id/year_title"
                       />
                   </android.support.design.circularreveal.CircularRevealRelativeLayout>
@@ -252,7 +252,7 @@
                               android:layout_height="wrap_content"
                               android:id="@+id/type_specification"
                               android:layout_centerHorizontal="true"
-                              android:text="@string/year"
+                              android:text="@string/Fuel"
                               android:layout_below="@id/type_title"
                       />
                   </android.support.design.circularreveal.CircularRevealRelativeLayout>
@@ -271,24 +271,6 @@
                     android:layout_height="wrap_content"
             >
 
-                <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/options"
-                        android:textColor="@android:color/black"
-                        android:padding="10dp"
-                        android:textSize="18sp"
-                        android:id="@+id/option_title"
-                />
-                <android.support.v7.widget.AppCompatSpinner
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@android:color/secondary_text_light"
-                        android:id="@+id/text_option"
-                        android:layout_marginBottom="10dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_below="@id/option_title"
-                />
 
                 <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -297,7 +279,6 @@
                         android:textColor="@android:color/black"
                         android:padding="10dp"
                         android:textSize="18sp"
-                        android:layout_below="@id/text_option"
                         android:id="@+id/descr_title"
                 />
                 <android.support.v7.widget.AppCompatTextView

@@ -45,7 +45,6 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
 
         // pour retourner le fichier xml annonce_view sous
         // forme d'une vue pour chaque élément de la liste
-        p0.removeAllViews()
         val annonceView = LayoutInflater.from(context).inflate(R.layout.annonce_view, p0,false)
         return ViewHolder(annonceView)
     }
@@ -67,6 +66,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
             véhicule = version.modele.marque.NomMarque + " " + version.modele.NomModele + " " + version.NomVersion
             objet.annonce_info.text = véhicule
             objet.annonce_price_info.text = annonce.Prix
+            objet.offer_num.text = annonce.NombreOffres.toString()
             if (!annonce.images!!.isEmpty()) {
                 Picasso.get().load(annonce.images!![0].CheminImage).into(objet.annonce_image)
             }
@@ -89,7 +89,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
                 mDialogView.findViewById<TextView>(R.id.KM_title).text = annonce.Km
                 mDialogView.findViewById<TextView>(R.id.color_title).text = annonce.CodeCouleur.toString()
                 mDialogView.findViewById<TextView>(R.id.year_title).text = "jan 2018"
-                mDialogView.findViewById<TextView>(R.id.type_title).text = "Mazout"
+                mDialogView.findViewById<TextView>(R.id.type_title).text = annonce.Carburant
                 mDialogView.findViewById<TextView>(R.id.text_description).text = annonce.Description
                 mDialogView.findViewById<ViewPager>(R.id.images_viewer).adapter = pAdapter
 

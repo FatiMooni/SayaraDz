@@ -31,7 +31,6 @@ class ModeleAdapter(
     internal var context: Context,
 
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var modeleListFiltree : ArrayList<Modele>,
     private val activity : FragmentActivity
 
@@ -39,9 +38,12 @@ class ModeleAdapter(
 
 
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     private var versionAdapter : VersionAdapter? = null
     private var versionList = ArrayList<Version>()
+    private var comm : ((Version) -> Unit)? = null
+
     override var itemRecycleView : RecyclerView? = null
     private var currentCodeModele : Int = -1
     private var search = view.findViewById<Button>(R.id.search_button)
@@ -54,11 +56,16 @@ class ModeleAdapter(
     /**
      * Second constructor
      */
-    /*constructor( modeleList: ArrayList<Modele>, context: Context, view : View,
-                 onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view) {
+    constructor( modeleList: ArrayList<Modele>, context: Context, view : View, modeleListFiltree: ArrayList<Modele>
+                 ,activity: FragmentActivity, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view,modeleListFiltree,activity) {
          this.onSearchPressed = onSearchPressed
          frag = 1
-    }*/
+    }
+    constructor(modeleList: ArrayList<Modele>, context: Context, view : View,  modeleListFiltree: ArrayList<Modele>,
+                activity: FragmentActivity, listener: (Version) -> Unit) : this(modeleList,context,view,modeleListFiltree,activity) {
+        this.comm = listener
+        frag = 0
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModeleViewHolder {
         //inflate the layout file
@@ -92,8 +99,8 @@ class ModeleAdapter(
                         if (versionDropDown.isExpanded) versionDropDown.collapse()
                         else versionDropDown.expand()
                     }
-                  //  versionAdapter = VersionAdapter(versionList,view.context,view)
-                    //initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+                  versionAdapter = VersionAdapter(versionList,view.context,view,versionList,comm!!)
+                    initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
                 }
             }
             requeteVersion()
@@ -167,7 +174,7 @@ class ModeleAdapter(
      */
 
     private fun init(v : View){
-        versionAdapter = VersionAdapter(versionList,v.context,view,onSearchPressed,versionList)
+        versionAdapter = VersionAdapter(versionList,v.context,view,versionList,onSearchPressed)
         initLineaire(v,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
@@ -221,7 +228,7 @@ class ModeleAdapter(
                 return filterResults
             }
 
-            protected override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
                 modeleListFiltree = filterResults.values as ArrayList<Modele>
                 notifyDataSetChanged()
             }

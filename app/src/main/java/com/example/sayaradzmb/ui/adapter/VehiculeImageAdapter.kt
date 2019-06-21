@@ -44,10 +44,13 @@ class VehiculeImageAdapter : PagerAdapter {
 
         //binder l'mage dans imageviewer
           img = view.findViewById(R.id.car_image_holder)
+
           Picasso.get()
               .load(images[position].CheminImage)
               .into(img)
           container.addView(view)
+
+
           return  view
 
     }

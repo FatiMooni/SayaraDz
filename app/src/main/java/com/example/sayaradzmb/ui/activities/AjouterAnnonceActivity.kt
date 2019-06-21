@@ -36,7 +36,9 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.ajouter_annonce_activity.*
 import kotlinx.android.synthetic.main.ajouter_annonce_contenu.*
+import kotlinx.android.synthetic.main.confirm_dialog.view.*
 import kotlinx.android.synthetic.main.photos_annonce_dialog.view.*
+import kotlinx.android.synthetic.main.photos_annonce_dialog.view.dialogCancelBtn
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -165,11 +167,10 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
             //AlertDialogBuilder
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
-                .setTitle("Login Form")
 
             //afficher le dialog
-            mBuilder.show()
-
+             val chooser = mBuilder.create()
+             chooser.show()
             //choisir la photo a partir de la gallerie
             mDialogView.button_gallerie.setOnClickListener {
                 pickPhotoFromGallery()
@@ -180,6 +181,13 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
             mDialogView.dialogCancelBtn.setOnClickListener {
                 askCameraPermission()
             }
+
+            val close = mDialogView.findViewById<ImageButton>(R.id.close_btn)
+            close.setOnClickListener {
+                chooser.cancel()
+            }
+
+
         }
     }
 
@@ -404,7 +412,6 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
                     options.removeAllViews()
                     opt.forEach {
                             option ->
-                        Toast.makeText(this@AjouterAnnonceActivity,option.NomOption,Toast.LENGTH_SHORT).show()
                         val chip = Chip(options.context)
 
                         // necessary to get single selection working

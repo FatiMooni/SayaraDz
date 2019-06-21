@@ -7,6 +7,7 @@
            android:layout_width="match_parent"
            android:layout_height="250dp"
            android:id="@+id/car_image_holder"
+           android:src="@drawable/no_picture"
            app:layout_constraintHorizontal_chainStyle="packed"
            app:layout_constraintVertical_chainStyle="packed"
            tools:ignore="MissingConstraints"/>

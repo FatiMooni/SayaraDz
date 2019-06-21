@@ -17,6 +17,7 @@ import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
+import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.squareup.picasso.Picasso
@@ -30,7 +31,6 @@ class MarqueAdapter(
     private var marqueList: ArrayList<Marque>,
     internal var context: Context,
     internal var view : View,
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed?,
     private var marqueListFiltree : ArrayList<Marque>,
     private val activity : FragmentActivity
 ) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface {
@@ -42,7 +42,8 @@ class MarqueAdapter(
 
     //
     var frag = 1
-
+    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+    private var  comm : ((Version) -> Unit)? = null
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
@@ -58,10 +59,17 @@ class MarqueAdapter(
 
 
 
-   /* constructor(marqueList: ArrayList<Marque>, context: Context, view : View,  onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(marqueList,context,view) {
+    constructor(marqueList: ArrayList<Marque>, context: Context, view : View, marqueListFiltree : ArrayList<Marque>,
+                activity : FragmentActivity, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(marqueList,context,view,marqueListFiltree,activity) {
         this.onSearchPressed = onSearchPressed
         frag = 1
-    }*/
+    }
+
+    constructor(marqueList: ArrayList<Marque>, context: Context, view : View, marqueListFiltree : ArrayList<Marque>,
+                activity : FragmentActivity,listener: (Version) -> Unit) : this(marqueList,context,view,marqueListFiltree,activity) {
+        this.comm = listener
+        frag = 0
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarqueViewHolder {
@@ -98,7 +106,7 @@ class MarqueAdapter(
                         if (modeleDropDown.isExpanded) modeleDropDown.collapse()
                         else modeleDropDown.expand()
                     }
-                    //modeleAdapter = ModeleAdapter(modeleList,view.context,view)
+                    modeleAdapter = ModeleAdapter(modeleList,view.context,view,modeleList,activity,comm!!)
                     initLineaire(view,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
                 }
 
@@ -109,10 +117,10 @@ class MarqueAdapter(
                     versionDropDown.visibility=View.GONE
                     init(view)
                     if(marqueview == null) Log.i("marqueview","marqueview null")
-                    initSearchView(activity,view!!,modeleAdapter!!,R.id.search_bar_modele)
                     }
 
             }
+            initSearchView(activity,view,modeleAdapter!!,R.id.search_bar_modele)
             requeteModele()
 
 
@@ -142,7 +150,7 @@ class MarqueAdapter(
 
 
     private fun init(v : View){
-        modeleAdapter = ModeleAdapter(modeleList,v.context,view,onSearchPressed,modeleList,activity!!)
+        modeleAdapter = ModeleAdapter(modeleList,v.context,view,modeleList,activity,onSearchPressed)
         initLineaire(v,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
@@ -170,7 +178,7 @@ class MarqueAdapter(
     /**
      *
      */
-    public override fun getFilter(): Filter {
+    override fun getFilter(): Filter {
         return object : Filter() {
             protected override fun performFiltering(charSequence: CharSequence): FilterResults {
                 val charString = charSequence.toString()

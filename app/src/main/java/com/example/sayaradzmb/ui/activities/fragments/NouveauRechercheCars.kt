@@ -92,7 +92,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
      */
 
     private fun init(v : View){
-        marqueAdapter = MarqueAdapter(marqueList,v.context,v,onSearchPressed,marqueList,activity!!)
+        marqueAdapter = MarqueAdapter(marqueList,v.context,v,marqueList,activity!!,onSearchPressed)
         initLineaire(v,R.id.imd_rv_marque,LinearLayoutManager.VERTICAL,marqueAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 

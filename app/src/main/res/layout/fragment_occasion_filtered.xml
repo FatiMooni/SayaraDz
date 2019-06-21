@@ -9,54 +9,94 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:id="@+id/filters"
+            android:padding="10dp"
     >
-       <LinearLayout android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:orientation="vertical"
-       >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:padding="10dp"
+        >
+           <LinearLayout android:layout_width="wrap_content"
+                         android:orientation="horizontal"
+                         android:weightSum="10"
+                         android:layout_height="match_parent">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:id="@+id/car_info"
                       android:textSize="@dimen/secondary_title"
                       android:text="car"
-               />
-
+                      android:layout_weight="6"
+            />
+               <android.support.v7.widget.AppCompatImageButton
+                       android:layout_width="wrap_content"
+                       android:layout_weight="4"
+                       android:layout_gravity="end"
+                       android:src="@drawable/baseline_filter_list_black_18dp"
+                       android:layout_height="wrap_content"/>
+           </LinearLayout>
             <TextView android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/filter_car_info"
-                         android:textSize="@dimen/secondary_title"
-                         android:text="car"
-               />
-           <android.support.design.chip.ChipGroup
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/options_chips"
-                   android:theme="@style/Theme.MaterialComponents"
-           >
-
-           </android.support.design.chip.ChipGroup>
-       </LinearLayout>
+                      android:layout_height="wrap_content"
+                      android:id="@+id/filter_car_info"
+                      android:textSize="@dimen/secondary_title"
+                      android:text="car"
+                      android:layout_marginBottom="10dp"
+            />
+            <android.support.design.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filters_chips"
+                    android:theme="@style/Theme.MaterialComponents"
+                    android:layout_marginBottom="15dp"
+            >
+                <android.support.design.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/type_carb"
+                        app:closeIcon="@drawable/cancel"
+                        app:closeIconEnabled="true"
+                />
+                <android.support.design.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/years_range"
+                        app:closeIcon="@drawable/cancel"
+                        app:closeIconEnabled="true"
+                />
+                <android.support.design.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/price_range"
+                        app:closeIcon="@drawable/cancel"
+                        app:closeIconEnabled="true"
+                />
+                <android.support.design.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/max_km"
+                        app:closeIcon="@drawable/cancel"
+                        app:closeIconEnabled="true"
+                />
+            </android.support.design.chip.ChipGroup>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 
 
 
-    <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/filters"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
-    >
+
 
         <android.support.v7.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@id/filters"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recyler_view_voiture_occasion">
 
         </android.support.v7.widget.RecyclerView>
 
-    </android.support.v7.widget.LinearLayoutCompat>
 </android.support.constraint.ConstraintLayout>

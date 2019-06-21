@@ -39,7 +39,7 @@ class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<Veh
             objet.findViewById<TextView>(R.id.annonce_info).text =
                 "${item.version.NomMarque} ${item.version.NomModele} ${item.version.NomVersion}"
             objet.findViewById<TextView>(R.id.annonce_price_info).text = item.Prix
-            objet.findViewById<TextView>(R.id.annonce_annee).text = item.annnee
+            objet.findViewById<TextView>(R.id.annonce_annee).text = item.Annee
             objet.findViewById<TextView>(R.id.annonce_km).text = item.Km
             objet.findViewById<TextView>(R.id.annonce_fuel).text = item.Carburant
             val pAdapter = VehiculeImageAdapter(context, item.images!!)

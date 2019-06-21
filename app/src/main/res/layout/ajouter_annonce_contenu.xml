@@ -301,13 +301,14 @@
             >
             </android.support.design.circularreveal.CircularRevealGridLayout>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.AppCompatButton
+        <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Valider l'annonce"
-                android:backgroundTint="@color/colorAccent"
+                android:background="@drawable/item_button_commande"
                 android:id="@+id/button_validate"
-                tools:ignore="InvalidId"/>
+                android:textColor="@color/colorWhite"
+                />
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>
