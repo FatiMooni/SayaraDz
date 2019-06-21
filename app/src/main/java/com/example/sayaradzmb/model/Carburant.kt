@@ -1,6 +1,5 @@
 package com.example.sayaradzmb.model
 
-import android.graphics.drawable.Drawable
 import com.example.sayaradzmb.R
 
 data class Carburant (val image : Int , val title : String)

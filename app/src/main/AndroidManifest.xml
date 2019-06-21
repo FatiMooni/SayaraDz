@@ -28,16 +28,16 @@
             >
 
         <activity
-                android:name=".activities.AcuilleActivity"
+                android:name=".ui.activities.AcuilleActivity"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activities.LoginActivity"
+                android:name=".ui.activities.LoginActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".activities.AjouterAnnonceActivity"
+                android:name=".ui.activities.AjouterAnnonceActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".activities.MainActivity"
+                android:name=".ui.activities.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
