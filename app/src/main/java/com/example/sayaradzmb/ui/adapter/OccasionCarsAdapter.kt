@@ -60,6 +60,7 @@ class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<Veh
                 //Bundle
                 val bundle = Bundle()
                 bundle.putParcelable("annonce",item)
+                intent.putExtra("annonce",bundle)
                 // lancer l'activité
                 startActivity(context,intent,bundle)
 

@@ -37,6 +37,9 @@
                 android:name=".ui.activities.AjouterAnnonceActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+                android:name=".ui.activities.OffreActivity"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
                 android:name=".ui.activities.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

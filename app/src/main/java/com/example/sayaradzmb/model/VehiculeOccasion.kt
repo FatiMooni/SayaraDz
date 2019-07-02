@@ -15,7 +15,7 @@ data class VehiculeOccasion(
     var Carburant: String,
     var Description : String,
     var NombreOffres: String,
-    var Annee : String,
+    var Annee : String?,
     var images: List<CheminImage>?
 
 ) : Parcelable {
@@ -29,7 +29,7 @@ data class VehiculeOccasion(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readString(),
         parcel.createTypedArrayList(CheminImage)
     ) {
     }
