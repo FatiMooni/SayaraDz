@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:rsb="http://schemas.android.com/tools">
+    <com.ianpinto.androidrangeseekbar.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/price_range"
+            rsb:absoluteMaxValue="200"
+            rsb:absoluteMinValue="10"
+            android:padding="15dp"
+            app:activeColor="@color/colorPrimaryDark"
+            app:defaultColor="@color/colorPrimary"
+            rsb:textAboveThumbsColor="@android:color/primary_text_light"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            android:layout_marginHorizontal="10dp"
+            app:absoluteMaxValue="200"
+            app:absoluteMinValue="10"
+            rsb:thumbShadow="true"/>
+</android.support.constraint.ConstraintLayout>

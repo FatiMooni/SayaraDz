@@ -18,7 +18,6 @@ interface SearchViewInterface {
         // Associate searchable configuration with the SearchView
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager?
         val searchView = v.findViewById<SearchView>(id)
-        if (v == null) Log.i("id null","3Lacjjjjjjjjj")
         searchView!!.setSearchableInfo(
             searchManager!!
                 .getSearchableInfo(activity!!.getComponentName())

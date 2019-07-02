@@ -2,76 +2,93 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
+    <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:id="@+id/filters"
             android:padding="10dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/colorLightGrey"
+            app:cardElevation="5dp"
+            android:background="@drawable/item_button_commande"
     >
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:orientation="vertical"
                       android:padding="10dp"
         >
-           <LinearLayout android:layout_width="wrap_content"
+           <LinearLayout android:layout_width="match_parent"
                          android:orientation="horizontal"
                          android:weightSum="10"
                          android:layout_height="match_parent">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:id="@+id/car_info"
-                      android:textSize="@dimen/secondary_title"
+                      android:textSize="18sp"
+                      android:textColor="@android:color/black"
                       android:text="car"
-                      android:layout_weight="6"
+                      android:layout_weight="9.5"
             />
                <android.support.v7.widget.AppCompatImageButton
-                       android:layout_width="wrap_content"
-                       android:layout_weight="4"
+                       android:layout_width="27dp"
+                       android:layout_weight="0.5"
                        android:layout_gravity="end"
-                       android:src="@drawable/baseline_filter_list_black_18dp"
-                       android:layout_height="wrap_content"/>
+                       android:foregroundGravity="left"
+                       android:src="@drawable/filter"
+                       android:layout_height="41dp"/>
            </LinearLayout>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:id="@+id/filter_car_info"
-                      android:textSize="@dimen/secondary_title"
-                      android:text="car"
-                      android:layout_marginBottom="10dp"
+                      android:textSize="16sp"
+                      android:textColor="@android:color/black"
+                      android:text="Other Filters"
+                      android:layout_marginBottom="5dp"
             />
             <android.support.design.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/filters_chips"
                     android:theme="@style/Theme.MaterialComponents"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="2dp"
             >
                 <android.support.design.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/type_carb"
+                        app:chipIcon="@drawable/fuel"
+                        app:chipStartPadding="7dp"
+                        android:paddingHorizontal="5dp"
                         app:closeIcon="@drawable/cancel"
                         app:closeIconEnabled="true"
+                        app:chipIconSize="15dp"
+                        app:chipBackgroundColor="@android:color/transparent"
+                        app:chipStrokeColor="@color/colorPrimaryDark"
+                        app:chipStrokeWidth="0.5dp"
+
                 />
                 <android.support.design.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/years_range"
+                        app:chipIcon="@drawable/year"
+                        app:chipStartPadding="7dp"
+                        android:paddingHorizontal="5dp"
                         app:closeIcon="@drawable/cancel"
                         app:closeIconEnabled="true"
-                />
-                <android.support.design.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/price_range"
-                        app:closeIcon="@drawable/cancel"
-                        app:closeIconEnabled="true"
+                        app:chipBackgroundColor="@android:color/transparent"
+                        app:chipStrokeColor="@color/colorPrimaryDark"
+                        app:chipStrokeWidth="0.5dp"
+                        app:chipIconSize="15dp"
+
                 />
                 <android.support.design.chip.Chip
                         android:layout_width="wrap_content"
@@ -79,10 +96,34 @@
                         android:id="@+id/max_km"
                         app:closeIcon="@drawable/cancel"
                         app:closeIconEnabled="true"
+                        app:chipIcon="@drawable/kelom"
+                        app:chipStartPadding="7dp"
+                        app:chipBackgroundColor="@android:color/transparent"
+                        app:chipStrokeColor="@color/colorPrimaryDark"
+                        app:chipStrokeWidth="0.5dp"
+                        android:paddingHorizontal="5dp"
+                        app:chipIconSize="15dp"
                 />
+                <android.support.design.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/price_range"
+                        app:closeIcon="@drawable/cancel"
+                        app:chipIcon="@drawable/paint"
+                        android:textColor="@color/colorGrey"
+                        app:chipStartPadding="7dp"
+                        app:chipBackgroundColor="@android:color/transparent"
+                        app:chipStrokeColor="@color/colorPrimaryDark"
+                        app:chipStrokeWidth="0.5dp"
+                        android:paddingHorizontal="5dp"
+                        app:closeIconEnabled="true"
+                        app:chipIconSize="15dp"
+                        android:backgroundTint="@android:color/transparent"
+                />
+
             </android.support.design.chip.ChipGroup>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
 
 
 

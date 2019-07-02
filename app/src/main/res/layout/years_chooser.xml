@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/date_holder"
+        android:weightSum="100"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/years_title"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="wrap_content"
+            android:background="@drawable/spinner_layout_style"
+            android:layout_weight="30"
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/years_picker_start"
+            android:layout_height="wrap_content"/>
+    <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="wrap_content"
+            android:background="@drawable/spinner_layout_style"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="30"
+            android:id="@+id/years_picker_end"
+            android:layout_height="wrap_content"/>
+</android.support.v7.widget.LinearLayoutCompat>

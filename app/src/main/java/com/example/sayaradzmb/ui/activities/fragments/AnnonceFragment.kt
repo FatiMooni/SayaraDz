@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.ui.adapter.AnnonceCardAdapter
@@ -23,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AnnonceFragment : Fragment() {
+class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
     /**
      * Variables
@@ -44,8 +45,9 @@ class AnnonceFragment : Fragment() {
         // preparer Recycler view
         intialiserRecyclerView()
 
+        val idUser = avoirIdUser(activityView.context).toString()
         //Recuperer les annonces
-        recupereAnnonce("380466752766558")
+        recupereAnnonce(idUser!!)
 
         //pour passer à une autre vue : ajouter une nouvelle annonce
         val addBtn = activityView.findViewById<FloatingActionButton>(R.id.ajouter_annonce_button)

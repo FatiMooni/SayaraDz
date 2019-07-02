@@ -2,8 +2,7 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:rsb="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
 >
     <TextView
             android:layout_marginStart="15dp"
@@ -16,20 +15,7 @@
     />
 
 
-    <HorizontalScrollView android:layout_width="match_parent"
-                          android:id="@+id/scroll_carbur"
-                          android:layout_below="@id/carburant_title"
-                          android:layout_height="wrap_content">
-        <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/carburant_title"
-                android:orientation="horizontal"
-                android:id="@+id/carburant_type_holder"
-        >
-
-        </android.support.v7.widget.LinearLayoutCompat>
-    </HorizontalScrollView>
+    <include layout="@layout/fuel_chooser"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -42,31 +28,9 @@
             android:layout_below="@id/scroll_carbur"
     />
 
-
-    <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/date_holder"
-            android:weightSum="100"
-            android:gravity="center_horizontal"
-            android:layout_below="@id/years_title"
-            android:layout_height="wrap_content">
-
-        <android.support.v7.widget.AppCompatSpinner
-                android:layout_width="wrap_content"
-                android:background="@drawable/spinner_layout_style"
-                android:layout_weight="30"
-                android:layout_marginHorizontal="5dp"
-                android:id="@+id/years_picker_start"
-                android:layout_height="wrap_content"/>
-        <android.support.v7.widget.AppCompatSpinner
-                android:layout_width="wrap_content"
-                android:background="@drawable/spinner_layout_style"
-                android:layout_marginHorizontal="5dp"
-                android:layout_weight="30"
-                android:id="@+id/years_picker_end"
-                android:layout_height="wrap_content"/>
-    </android.support.v7.widget.LinearLayoutCompat>
+    <include
+            layout="@layout/years_chooser"
+    />
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,24 +43,14 @@
     />
 
 
-    <com.ianpinto.androidrangeseekbar.rangeseekbar.RangeSeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <include
             android:layout_below="@id/price_title"
-            android:id="@+id/price_range"
-            rsb:absoluteMaxValue="200"
-            rsb:absoluteMinValue="10"
-            android:padding="15dp"
-            app:activeColor="@color/colorPrimaryDark"
-            app:defaultColor="@color/colorPrimary"
-            rsb:textAboveThumbsColor="@android:color/primary_text_light"
-            rsb:thumbDisabled="@drawable/custom_slider_thumb"
-            rsb:thumbNormal="@drawable/custom_slider_thumb"
-            rsb:thumbPressed="@drawable/custom_slider_thumb"
-            android:layout_marginHorizontal="10dp"
-            app:absoluteMaxValue="200"
-            app:absoluteMinValue="10"
-            rsb:thumbShadow="true"/>
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/price_chooser"
+            android:id="@+id/price_range_holder"
+
+    />
 
     <TextView
             android:layout_width="match_parent"
@@ -107,29 +61,16 @@
             android:text="@string/kilometrage"
             android:clickable="false"
             android:textSize="14sp"
-            android:layout_below="@id/price_range"
+            android:layout_below="@id/price_range_holder"
     />
 
 
 
 
-    <com.ianpinto.androidrangeseekbar.rangeseekbar.RangeSeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            rsb:absoluteMaxValue="200"
-            rsb:absoluteMinValue="10"
-            android:layout_below="@id/km_title"
-            app:singleThumb="true"
-            android:id="@+id/Km_range"
-            android:layout_marginHorizontal="10dp"
-            rsb:textAboveThumbsColor="@android:color/primary_text_light"
-            rsb:thumbDisabled="@drawable/custom_slider_thumb"
-            rsb:thumbNormal="@drawable/custom_slider_thumb"
-            rsb:thumbPressed="@drawable/custom_slider_thumb"
-            app:valuesAboveThumbs="true"
-            app:absoluteMaxValue="200"
-            app:absoluteMinValue="10"
-            app:barHeight="1dp"
-            app:showLabels="true"
-            rsb:thumbShadow="true"/>
+   <include
+           android:layout_below="@id/km_title"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           layout = "@layout/km_chooser"
+   />
 </RelativeLayout>

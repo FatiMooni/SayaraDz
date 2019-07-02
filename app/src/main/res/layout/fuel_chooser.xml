@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView android:layout_width="match_parent"
+                      android:id="@+id/scroll_carbur"
+                      android:layout_below="@id/carburant_title"
+                      android:layout_height="wrap_content"
+                      xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/carburant_title"
+            android:orientation="horizontal"
+            android:id="@+id/carburant_type_holder"
+    >
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</HorizontalScrollView>

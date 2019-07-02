@@ -35,6 +35,15 @@
                 android:id="@+id/annonce_info"
                 />
 
+        <Button android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="More Details"
+                android:id="@+id/annonce_details"
+                android:background="@android:color/transparent"
+                android:layout_alignTop="@id/annonce_info"
+                android:layout_height="wrap_content"/>
+
         <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

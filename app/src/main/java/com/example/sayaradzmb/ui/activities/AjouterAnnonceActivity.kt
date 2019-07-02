@@ -46,6 +46,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.math.BigInteger
 import kotlin.collections.ArrayList
 
 
@@ -75,6 +76,7 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
     private lateinit var optionService : OptionService
 
     //pour le post request
+    private  var idUser : String? = null
     private var codeVersion : String = ""
     private var prixVehicule : String = ""
     private var couleurVehicule : String = ""
@@ -91,6 +93,8 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
          *   préparer le contenu
          **/
         super.onCreate(savedInstanceState)
+
+        idUser = avoirIdUser(this).toString()
         setContentView(R.layout.ajouter_annonce_activity)
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_black_24dp)
@@ -586,7 +590,7 @@ class AjouterAnnonceActivity : AppCompatActivity(),SharedPreferenceInterface {
 
         //les differentes parts du post request
         val code = RequestBody.create(MediaType.parse("text/plain") ,codeVersion)
-        val idAu = RequestBody.create(MediaType.parse("text/plain"),"380466752766558")
+        val idAu = RequestBody.create(MediaType.parse("text/plain"),idUser)
         val price = RequestBody.create(MediaType.parse("text/plain"),prixVehicule)
         val desc = RequestBody.create(MediaType.parse("text/plain"),descriptionVehicule)
         val col = RequestBody.create(MediaType.parse("text/plain"),couleurVehicule)

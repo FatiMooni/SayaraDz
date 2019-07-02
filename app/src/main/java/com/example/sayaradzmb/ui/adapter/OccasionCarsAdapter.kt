@@ -1,15 +1,24 @@
 package com.example.sayaradzmb.ui.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.os.Parcelable
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.VehiculeOccasion
+import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
+import com.example.sayaradzmb.ui.activities.OffreActivity
 import java.util.ArrayList
 
 class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<VehiculeOccasion>) : RecyclerView.Adapter<OccasionCarsAdapter.ViewHolder>(){
@@ -45,6 +54,18 @@ class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<Veh
             val pAdapter = VehiculeImageAdapter(context, item.images!!)
             objet.findViewById<ViewPager>(R.id.annonce_image).adapter = pAdapter
 
+            objet.findViewById<Button>(R.id.annonce_details).setOnClickListener {
+                // preparé l'activité d'ajout
+                val intent = Intent(context, OffreActivity::class.java)
+                //Bundle
+                val bundle = Bundle()
+                bundle.putParcelable("annonce",item)
+                // lancer l'activité
+                startActivity(context,intent,bundle)
+
+
+
+            }
         }
     }
 }

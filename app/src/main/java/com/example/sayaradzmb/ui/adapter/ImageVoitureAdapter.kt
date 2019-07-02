@@ -15,6 +15,7 @@ class ImageVoitureAdapter(
     private val imageList: ArrayList<CheminImage>?,
     internal var context: Context
 ) : RecyclerView.Adapter<ImageVoitureAdapter.ImageVoitureViewHolder>() {
+
     private var currentImage :String? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageVoitureViewHolder {
         //inflate the layout file

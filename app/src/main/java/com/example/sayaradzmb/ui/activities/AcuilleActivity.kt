@@ -35,8 +35,7 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-
-
+import kotlinx.android.synthetic.main.toolbar_accuille.*
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
@@ -62,6 +61,8 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
         when(int){
             2->{
                 fragment= NouveauCommandeFragment()
+                titre_fonction.text = "Commander une Voiture"
+
             }
         }
         chargerFagment(fragment)
@@ -72,6 +73,7 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
         when(int){
             1->{
                 fragment= NouveauAfficheTechnique(version)
+                titre_fonction.text = "Fiche Technique"
 
             }
         }
@@ -238,15 +240,22 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
             when (it.itemId) {
                 R.id.nouelle_voiture -> {
                     fragment = NouveauRechercheCars()
+                    titre.text="Recherche"
+
                 }
                 R.id.occasion_voiture -> {
                     fragment = OccasionFragment()
+                    titre.text="Véhicules Occasions"
+
                 }
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
+                    titre.text="Acceuille"
+
                 }
                 R.id.annoce_voiture -> {
                     fragment = AnnonceFragment()
+                    titre.text="Mes Annonces"
 
                 }
                 R.id.favoris_voiture -> {

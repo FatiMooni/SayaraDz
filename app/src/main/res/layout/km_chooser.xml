@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:rsb="http://schemas.android.com/tools">
+    <com.ianpinto.androidrangeseekbar.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            rsb:absoluteMaxValue="200"
+            rsb:absoluteMinValue="10"
+            app:singleThumb="true"
+            android:id="@+id/Km_range"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="10dp"
+            rsb:textAboveThumbsColor="@android:color/primary_text_light"
+            rsb:thumbDisabled="@drawable/custom_slider_thumb"
+            rsb:thumbNormal="@drawable/custom_slider_thumb"
+            rsb:thumbPressed="@drawable/custom_slider_thumb"
+            app:valuesAboveThumbs="true"
+            app:absoluteMaxValue="200"
+            app:absoluteMinValue="10"
+            app:barHeight="1dp"
+            app:showLabels="true"
+            rsb:thumbShadow="true"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -49,6 +49,8 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
 
             override fun onResponse(call: Call<List<VehiculeOccasion>>, response: Response<List<VehiculeOccasion>>) {
                 if(response.isSuccessful){
+                    annonceList.clear()
+                    annonceAdapter!!.notifyDataSetChanged()
                     for (e in response.body()!!){
                         annonceList.add(e)
                     }
