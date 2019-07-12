@@ -24,12 +24,12 @@ import android.widget.TextView
 import android.widget.Toast
 
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.fragments.OccasionFragment
 import kotlinx.android.synthetic.main.activity_accuille.*
 
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.ui.activities.fragments.*
+import com.example.sayaradzmb.ui.activities.fragments.OccasionSample
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -244,7 +244,7 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
 
                 }
                 R.id.occasion_voiture -> {
-                    fragment = OccasionFragment()
+                    fragment = OccasionSample()
                     titre.text="Véhicules Occasions"
 
                 }
