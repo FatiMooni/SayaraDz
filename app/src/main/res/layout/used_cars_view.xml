@@ -115,6 +115,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_weight="40"
                     android:textStyle="bold"
+                    android:id="@+id/offer_btn"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     android:text="Faire un offre"

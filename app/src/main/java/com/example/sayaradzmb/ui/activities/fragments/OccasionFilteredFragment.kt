@@ -7,8 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.design.chip.Chip
-import android.support.design.chip.ChipGroup
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,39 +17,43 @@ import com.example.sayaradzmb.customs.CustomFiltersInitializer
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.VehiculeRechFilters
 
-class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterface,CustomFiltersInitializer {
+@SuppressLint("InflateParams")
+class OccasionFilteredFragment : CustomOccasionFragment(), SharedPreferenceInterface, CustomFiltersInitializer {
 
-    override var typeCarburant : String = ""
-    override var maxYear : Int = 0
-    override var minYear : Int = 0
-    override var maxPrix : Int = 0
-    override var minPrix : Int = 0
-    override var maxKm : Int = 0
+    override var typeCarburant: String? = null
+    override var maxYear: Int? = null
+    override var minYear: Int? = null
+    override var maxPrix: Int? = null
+    override var minPrix: Int? = null
+    override var maxKm: Int? = null
     /**
      * Local Variables
      */
 
-    private var maView : View? = null
-    private var filter : VehiculeRechFilters? = null
-    private var versionInfo : TextView? = null
-    var idUser : String? = null
+    private var maView: View? = null
+    private var filter: VehiculeRechFilters? = null
+    private var versionInfo: TextView? = null
+    private var idUser: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //
+        //Get the view
         maView = inflater.inflate(R.layout.fragment_occasion_filtered, container, false)
 
+        //Get the current user inforamtions
         idUser = avoirIdUser(maView!!.context).toString()
 
+        //Get the filters from the previous activity
         filter = arguments!!.getParcelable("filters") as VehiculeRechFilters
         val title = arguments!!.getCharSequence("version")
+
 
         versionInfo = maView!!.findViewById(R.id.car_info)
         versionInfo!!.text = title
 
-        Toast.makeText(maView!!.context,filter.toString(),Toast.LENGTH_LONG).show()
+        Toast.makeText(maView!!.context, filter.toString(), Toast.LENGTH_LONG).show()
 
         prepareRecyclerView(maView!!)
-        getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+        getAnnonceList(idUser!!, filters = filter)
         setFiltersCard(filter!!)
 
         return maView
@@ -59,7 +61,7 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
 
     @TargetApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
-    private fun setFiltersCard(item : VehiculeRechFilters){
+    private fun setFiltersCard(item: VehiculeRechFilters) {
 
         //getting the chips card
         val kmProp = maView!!.findViewById<Chip>(R.id.max_km)
@@ -73,38 +75,35 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
 
         //The Price
         if (item.maxPrix != null || item.minPrix != null) {
-            priceProp.text = item.minPrix!!.div( 1000000).toString() +"-"+
-                    item.maxPrix!!.div( 1000000).toString() +
-                    " M " + context!!.resources.getString(R.string.price_sign)
+            priceProp.text = item.minPrix!!.div(10000).toString() + "-" +
+                    item.maxPrix!!.div(10000).toString()
+                        .plus(" M ")
+                        .plus(context!!.resources.getString(R.string.price_sign))
 
-        }
-        else {
+        } else {
             priceProp.text = "Any Price"
         }
 
         //The Maximum distance
         if (item.maxKm != null) {
             kmProp.text = item.maxKm.toString() + context!!.resources.getString(R.string.distance_sign)
-        }
-        else {
+        } else {
             kmProp.text = "Any Distance"
         }
 
         //The year of matriculation
-        if (item.maxAnnee != null || item.minAnnee!= null) {
+        if (item.maxAnnee != null || item.minAnnee != null) {
 
             yearProp.text = item.minAnnee.toString() + "-" + item.maxAnnee.toString()
-        }
-        else {
+        } else {
             yearProp.text = "Any Year"
         }
 
         //The used Fuel
-        if (item.carburant != null ) {
+        if (item.carburant != null) {
 
             fuelProp.text = item.carburant
-        }
-        else {
+        } else {
             fuelProp.text = "Any Type"
         }
 
@@ -134,20 +133,20 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
             yearProp.visibility = View.GONE
             filter!!.maxAnnee = null
             filter!!.minAnnee = null
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            getAnnonceList(idUser!!, filters = filter)
 
         }
 
         fuelProp.setOnCloseIconClickListener {
             fuelProp.visibility = View.GONE
             filter!!.carburant = null
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            getAnnonceList(idUser!!, filters = filter)
         }
 
         kmProp.setOnCloseIconClickListener {
             kmProp.visibility = View.GONE
             filter!!.maxKm = null
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            getAnnonceList(idUser!!, filters = filter)
 
         }
 
@@ -155,7 +154,7 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
             priceProp.visibility = View.GONE
             filter!!.maxPrix = null
             filter!!.minPrix = null
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            getAnnonceList(idUser!!, filters = filter)
 
         }
 
@@ -165,7 +164,7 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
     /**
      * To edit the filters directly
      */
-    fun showPriceChooser(){
+    private fun showPriceChooser() {
         val mDialogView = LayoutInflater.from(maView!!.context).inflate(R.layout.price_chooser, null)
 
         //AlertDialogBuilder
@@ -182,15 +181,15 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
         chooser.setOnDismissListener {
             filter!!.minPrix = minPrix
             filter!!.maxPrix = maxPrix
-            Toast.makeText(maView!!.context, minPrix.toString() , Toast.LENGTH_LONG).show()
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            Toast.makeText(maView!!.context, minPrix.toString(), Toast.LENGTH_LONG).show()
+            getAnnonceList(idUser!!, filters = filter)
             setFiltersCard(filter!!)
 
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun showFuelChooser(){
+    fun showFuelChooser() {
         val mDialogView = LayoutInflater.from(maView!!.context).inflate(R.layout.fuel_chooser, null)
 
         //AlertDialogBuilder
@@ -207,13 +206,14 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
 
         chooser.setOnDismissListener {
             filter!!.carburant = typeCarburant
-            Toast.makeText(maView!!.context, typeCarburant , Toast.LENGTH_LONG).show()
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            Toast.makeText(maView!!.context, typeCarburant, Toast.LENGTH_LONG).show()
+            getAnnonceList(idUser!!, filters = filter)
             setFiltersCard(filter!!)
 
         }
     }
-    fun showDistanceChooser(){
+
+    private fun showDistanceChooser() {
         val mDialogView = LayoutInflater.from(maView!!.context).inflate(R.layout.km_chooser, null)
 
         //AlertDialogBuilder
@@ -229,14 +229,14 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
 
         chooser.setOnDismissListener {
             filter!!.maxKm = maxKm
-            Toast.makeText(maView!!.context, maxKm.toString() , Toast.LENGTH_LONG).show()
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            Toast.makeText(maView!!.context, maxKm.toString(), Toast.LENGTH_LONG).show()
+            getAnnonceList(idUser!!, filters = filter)
             setFiltersCard(filter!!)
         }
     }
 
 
-    fun showYearChooser(){
+    private fun showYearChooser() {
         val mDialogView = LayoutInflater.from(maView!!.context).inflate(R.layout.years_chooser, null)
 
         //AlertDialogBuilder
@@ -253,8 +253,8 @@ class OccasionFilteredFragment : CustomOccasionFragment(),SharedPreferenceInterf
         chooser.setOnDismissListener {
             filter!!.maxAnnee = maxYear
             filter!!.minAnnee = minYear
-            Toast.makeText(maView!!.context, maxYear.toString() , Toast.LENGTH_LONG).show()
-            getAnnonceList(idUser!!,maView = maView!! , filters = filter)
+            Toast.makeText(maView!!.context, maxYear.toString(), Toast.LENGTH_LONG).show()
+            getAnnonceList(idUser!!, filters = filter)
             setFiltersCard(filter!!)
 
         }

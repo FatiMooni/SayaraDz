@@ -24,12 +24,15 @@
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:appComponentFactory"
-            tools:targetApi="p"
-            >
-
+            tools:targetApi="p">
+        <activity
+                android:name=".ui.activities.OffreActivity"
+                android:label="@string/title_activity_offre"
+                android:theme="@style/AppTheme.NoActionBar.NoActionBar">
+        </activity>
         <activity
                 android:name=".ui.activities.AcuilleActivity"
-                android:theme="@style/AppTheme.NoActionBar" />
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.LoginActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
@@ -37,7 +40,7 @@
                 android:name=".ui.activities.AjouterAnnonceActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.activities.OffreActivity"
+                android:name=".ui.activities.OffreApercuActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.MainActivity"
@@ -49,10 +52,9 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-                   android:value="@string/facebook_app_id"
-        />
-
+        <meta-data
+                android:name="com.facebook.sdk.ApplicationId"
+                android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

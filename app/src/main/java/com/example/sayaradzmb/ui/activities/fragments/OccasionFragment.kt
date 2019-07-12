@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.activities.fragments
+package com.example.sayaradzmb.ui.activities.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.AppCompatButton
@@ -8,20 +8,20 @@ import android.view.ViewGroup
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.VehiculeRechFilters
-import com.example.sayaradzmb.ui.activities.fragments.CustomOccasionFragment
-import com.example.sayaradzmb.ui.activities.fragments.OccasionRechFragment
+
 
 
 class OccasionFragment : CustomOccasionFragment(), SharedPreferenceInterface {
-    val filter = VehiculeRechFilters(null, null, null, null, null, null, null)
+    private val filter = VehiculeRechFilters(null, null, null, null, null, null, null)
     var maView: View? = null
     var idUser: String? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         maView = inflater.inflate(R.layout.fragment_occasion, container, false)
 
         idUser = avoirIdUser(maView!!.context).toString()
         prepareRecyclerView(maView!!)
-        getAnnonceList(idUser!!, maView!!, filter)
+        getAnnonceList(idUser!!, filter)
 
         //passer au fragment suivant : i.e. fragment de recherche avancée
         maView!!.findViewById<AppCompatButton>(R.id.btn_rech).setOnClickListener {
@@ -31,8 +31,6 @@ class OccasionFragment : CustomOccasionFragment(), SharedPreferenceInterface {
                 .addToBackStack(null)
                 .commit()
         }
-
-
 
         return maView
 

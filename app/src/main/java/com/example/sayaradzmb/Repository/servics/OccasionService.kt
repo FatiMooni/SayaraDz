@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.servics
+package com.example.sayaradzmb.Repository.servics
 
 
 import com.example.sayaradzmb.model.VehiculeOccasion
@@ -16,7 +16,7 @@ interface OccasionService {
         @Query("minAnnee") minAnnee : Int?,
         @Query("maxAnnee") maxAnnee : Int?,
         @Query("maxKm") maxKm : Int?,
-        @Query("codeVersion") codeVersion : Int?
+        @Query("CodeVersion") CodeVersion : Int?
     ) : Call<List<VehiculeOccasion>>
 
 }

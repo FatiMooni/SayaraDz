@@ -37,12 +37,12 @@ class OccasionRechFragment : Fragment(), RecycleViewHelper, CustomFiltersInitial
     //variables utilisés dans la requete
     private var nameVersion: String? = null
     private var codeVersion: Int? = null
-    override var typeCarburant: String = ""
-    override var maxYear: Int = 0
-    override var minYear: Int = 0
-    override var maxPrix: Int = 0
-    override var minPrix: Int = 0
-    override var maxKm: Int = 0
+    override var typeCarburant: String? = null
+    override var maxYear: Int? = null
+    override var minYear: Int? = null
+    override var maxPrix: Int? = null
+    override var minPrix: Int? = null
+    override var maxKm: Int? = null
 
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -115,7 +115,8 @@ class OccasionRechFragment : Fragment(), RecycleViewHelper, CustomFiltersInitial
     private fun init(view: View) {
         marqueAdapter = MarqueAdapter(marqueList, view.context, view, marqueList, activity!!) {
             codeVersion = it.CodeVersion
-            nameVersion = it.NomVersion
+            nameVersion = it.NomVersion.plus(" ")
+                            
         }
         initLineaire(
             view, R.id.imd_rv_marque,

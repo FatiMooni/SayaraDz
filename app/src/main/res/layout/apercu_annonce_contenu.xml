@@ -285,13 +285,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@android:color/secondary_text_light"
-                        android:hint="Ajouter une description"
+                        android:hint="@string/hint"
                         android:id="@+id/text_description"
                         android:layout_marginBottom="10dp"
-                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginEnd="7dp"
                         android:layout_below="@id/descr_title"
                 />
             </android.support.design.circularreveal.CircularRevealRelativeLayout>
-
+        <Button android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#fff"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_button_commande"
+                android:text="@string/offer_request"
+                android:layout_height="wrap_content"/>
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>

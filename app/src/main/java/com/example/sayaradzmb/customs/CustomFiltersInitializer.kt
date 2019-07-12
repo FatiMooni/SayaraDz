@@ -14,12 +14,12 @@ import kotlin.collections.ArrayList
 
 interface CustomFiltersInitializer {
 
-    var typeCarburant : String
-    var maxYear : Int
-    var minYear : Int
-    var maxPrix : Int
-    var minPrix : Int
-    var maxKm : Int
+    var typeCarburant : String?
+    var maxYear : Int?
+    var minYear : Int?
+    var maxPrix : Int?
+    var minPrix : Int?
+    var maxKm : Int?
 
     //Get the fuel type used
     @RequiresApi(Build.VERSION_CODES.M)
@@ -52,7 +52,7 @@ interface CustomFiltersInitializer {
     fun  initYearsSpinner(view : View){
         val years = ArrayList<String>()
         val thisYear = Calendar.getInstance().get(Calendar.YEAR)
-        for (i in 1980..thisYear) {
+        for (i in 1990..thisYear) {
             years.add(Integer.toString(i))
         }
         val adapter = ArrayAdapter<String>(view.context, android.R.layout.simple_spinner_dropdown_item, years)
@@ -90,9 +90,9 @@ interface CustomFiltersInitializer {
      fun initPriceRange(view : View){
         val priceRange = view.findViewById<RangeSeekBar<Int>>(R.id.price_range)
 
-        priceRange.setOnRangeSeekBarChangeListener { bar, minValue, maxValue ->
-            maxPrix = maxValue * 1000000
-            minPrix = minValue * 1000000
+        priceRange.setOnRangeSeekBarChangeListener { _, minValue, maxValue ->
+            maxPrix = maxValue * 10000
+            minPrix = minValue * 10000
         }
 
     }
@@ -104,7 +104,7 @@ interface CustomFiltersInitializer {
         val priceRange = view.findViewById<RangeSeekBar<Int>>(R.id.Km_range)
 
         priceRange.setOnRangeSeekBarChangeListener { _, _, maxValue ->
-            maxKm = (maxValue * 10000)
+            maxKm = (maxValue * 1000)
         }
 
     }

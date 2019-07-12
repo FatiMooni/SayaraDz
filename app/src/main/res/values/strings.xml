@@ -10,7 +10,6 @@
     <string name="fb_login_protocol_scheme">fb367651757216742</string>
 
 
-
     // Announce strings
     <string name="general">Information principales</string>
     <string name="options">Options</string>
@@ -68,5 +67,23 @@
     <string name="check_the_website">Check the website</string>
     <string name="menu_deconect">Log Out</string>
     <string name="recherche_avanc_e">Recherche Avancée</string>
+    <string name="owner_information">Owner Information</string>
+    <string name="offer_request">Faire un Offre</string>
+    <string name="_07582396114">07582396114</string>
+    <string name="cars">cars</string>
+    <string name="hint">Ajouter une description</string>
+    <string name="title_activity_offre">OffreActivity</string>
+    <string name="commander_acc">Commander une Voiture</string>
+    <string name="fiche_acc">Fiche Technique</string>
+    <string name="rech_acc">Recherche</string>
+    <string name="occ_acc">Véhicules Occasions</string>
+    <string name="acc">Acceuille</string>
+    <string name="announce_acc">Mes Annonces</string>
+    <string name="fav_acc">Favoris</string>
+    <string name="seller">Seller Personnel Info</string>
+    <string name="appeler">Appeler</string>
+    <string name="owner">Your Personnel Indo</string>
+    <string name="Gérer">gerer</string>
+    <string name="confirm">Confirmer</string>
 
 </resources>
