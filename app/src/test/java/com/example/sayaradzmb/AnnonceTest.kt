@@ -43,7 +43,7 @@ class AnnonceTest {
         val response = MockResponse()
             .setResponseCode(200)
             .setBody(
-                "[{"+
+                        "[{"+
                         "\"idAnnonce\": 54, \"Prix\": \"2290000 \","+
                         "\"idAutomobiliste\": \"380466752766558\","+
                         "\"CodeVersion\": 1,"+
