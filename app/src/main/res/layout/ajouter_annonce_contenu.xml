@@ -65,6 +65,7 @@
                 <Spinner
                         style="@style/spinner_style"
                         android:id="@+id/marque_spinner"
+                        android:prompt="@string/marque"
                         android:background="@android:color/transparent"
                 />
 
@@ -86,7 +87,7 @@
                         style="@style/spinner_style"
                         android:id="@+id/modele_spinner"
                         android:background="@android:color/transparent"
-                        android:prompt="@string/app_name"
+                        android:prompt="@string/modele"
                 />
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -103,6 +104,7 @@
                 <Spinner
                         style="@style/spinner_style"
                         android:id="@+id/versions_spinner"
+                        android:prompt="@string/version"
                         android:background="@android:color/transparent"
                 />
             </android.support.v7.widget.LinearLayoutCompat>

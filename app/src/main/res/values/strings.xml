@@ -86,4 +86,7 @@
     <string name="Gérer">gerer</string>
     <string name="confirm">Confirmer</string>
 
+    <string name="modele">Modèle</string>
+    <string name="marque">Marque</string>
+    <string name="version">Version</string>
 </resources>
