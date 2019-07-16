@@ -27,11 +27,10 @@ import retrofit2.Response
 
 class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
-    /**
-     * Variables
-     */
+     /****
+     *** This fragment to display the different
+     ***/
     private var annoncesList = ArrayList<Annonce>()
-    private var versionInfo = ArrayList<Version>()
     private lateinit var customAdapter: AnnonceCardAdapter
     private lateinit var activityView: View
 
@@ -98,28 +97,4 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
         })
     }
 
-    fun recupererVersion(id: Int?) {
-
-        val requestCall = ServiceBuilder.buildService(VersionService::class.java).getVersionInfo(id!!)
-        requestCall.enqueue(object : Callback<Version> {
-
-            override fun onResponse(call: Call<Version>, response: Response<Version>) {
-                if (response.isSuccessful) {
-                    val req = response.body()!!
-                    versionInfo.add(req)
-                    if (versionInfo.size == annoncesList.size) customAdapter.notifyDataSetChanged()
-
-                } else {
-                    Toast.makeText(
-                        view!!.context, "there is a problem in our server",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<Version>, t: Throwable) {
-                Log.e("version info", "problem in the getting", t)
-            }
-        })
-    }
 }
