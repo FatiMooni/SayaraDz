@@ -21,8 +21,8 @@ class FollowedCarsCardAdapter(var context : Context, var new_cars : ArrayList<In
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        val car_version = new_cars[p1]
-        p0.bindInfo(car_version)
+        val carVersion = new_cars[p1]
+        p0.bindInfo(carVersion)
     }
 
     inner class ViewHolder (private val objet : View) : RecyclerView.ViewHolder(objet){

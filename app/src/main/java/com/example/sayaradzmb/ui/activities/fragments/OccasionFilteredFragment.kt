@@ -12,6 +12,7 @@ import android.support.design.chip.Chip
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +28,13 @@ import com.example.sayaradzmb.viewmodel.OccasionViewModel
 
 class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitializer, Fragment() {
 
-    override var typeCarburant: String = ""
-    override var maxYear: Int = 0
-    override var minYear: Int = 0
-    override var maxPrix: Int = 0
-    override var minPrix: Int = 0
-    override var maxKm: Int = 0
+    override var typeCarburant: String? = null
+    override var maxYear: Int? = null
+    override var minYear: Int? = null
+    override var maxPrix: Int? = null
+    override var minPrix: Int? = null
+    override var maxKm: Int? = null
+
     /**
      * Local Variables
      */
@@ -45,14 +47,18 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
     private var annonceAdapter: OccasionCarsAdapter? = null
     private var model = OccasionViewModel()
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //
+        //Get the view
         maView = inflater.inflate(R.layout.fragment_occasion_filtered, container, false)
 
+        //Get the current user inforamtions
         idUser = avoirIdUser(maView!!.context).toString()
 
+        //Get the filters from the previous activity
         filter = arguments!!.getParcelable("filters") as VehiculeRechFilters
         val title = arguments!!.getCharSequence("version")
+
 
         versionInfo = maView!!.findViewById(R.id.car_info)
         versionInfo!!.text = title
@@ -71,6 +77,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
         })
 
         model.loadUsedCars(idUser!!, filters = filter)
+
 
         setFiltersCard(filter!!)
 
@@ -93,9 +100,11 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
 
         //The Price
         if (item.maxPrix != null || item.minPrix != null) {
-            priceProp.text = item.minPrix!!.div(1000000).toString() + "-" +
-                    item.maxPrix!!.div(1000000).toString() +
-                    " M " + context!!.resources.getString(R.string.price_sign)
+
+            priceProp.text = item.minPrix!!.div(10000).toString() + "-" +
+                    item.maxPrix!!.div(10000).toString()
+                        .plus(" M ")
+                        .plus(context!!.resources.getString(R.string.price_sign))
 
         } else {
             priceProp.text = "Any Price"
@@ -152,12 +161,14 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.minAnnee = null
             model.loadUsedCars(idUser!!, filter)
 
+
         }
 
         fuelProp.setOnCloseIconClickListener {
             fuelProp.visibility = View.GONE
             filter!!.carburant = null
             model.loadUsedCars(idUser!!, filter)
+
         }
 
         kmProp.setOnCloseIconClickListener {
@@ -165,13 +176,16 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.maxKm = null
             model.loadUsedCars(idUser!!, filter)
 
+
         }
 
         priceProp.setOnCloseIconClickListener {
             priceProp.visibility = View.GONE
             filter!!.maxPrix = null
             filter!!.minPrix = null
+
             model.loadUsedCars(idUser!!, filter)
+
 
         }
 
@@ -200,6 +214,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.maxPrix = maxPrix
             Toast.makeText(maView!!.context, minPrix.toString(), Toast.LENGTH_LONG).show()
             model.loadUsedCars(idUser!!, filter)
+
             setFiltersCard(filter!!)
 
         }
@@ -207,6 +222,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showFuelChooser() {
+
         val mDialogView = LayoutInflater.from(maView!!.context).inflate(R.layout.fuel_chooser, null)
 
         //AlertDialogBuilder
@@ -225,6 +241,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.carburant = typeCarburant
             Toast.makeText(maView!!.context, typeCarburant, Toast.LENGTH_LONG).show()
             model.loadUsedCars(idUser!!, filters = filter)
+
             setFiltersCard(filter!!)
 
         }
@@ -248,6 +265,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.maxKm = maxKm
             Toast.makeText(maView!!.context, maxKm.toString(), Toast.LENGTH_LONG).show()
             model.loadUsedCars(idUser!!, filter)
+
             setFiltersCard(filter!!)
         }
     }
@@ -272,6 +290,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
             filter!!.minAnnee = minYear
             Toast.makeText(maView!!.context, maxYear.toString(), Toast.LENGTH_LONG).show()
             model.loadUsedCars(idUser!!, filter)
+
             setFiltersCard(filter!!)
 
         }

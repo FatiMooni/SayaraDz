@@ -7,7 +7,7 @@ data class Annonce(
     var idAutomobiliste: String?,
     var Couleur : String?,
     var Carburant : String?,
-    var CodeVersion: Int?,
+    var version : VersionInfo?,
     var CodeCouleur: Int?,
     var Km: String,
     var Description: String,

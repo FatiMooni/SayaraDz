@@ -49,7 +49,7 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
 
         //fetch data
         idUser = avoirIdUser(this).toString()
-        model.loadMesCommandes(idUser!!)
+        model.loadMesCommandes(idUser)
 
     }
 
@@ -58,7 +58,7 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = findViewById<RecyclerView>(R.id.rv_command)
         adapter.layoutManager = layout
-        commandeAdapter = CommandesAdapter(this, commandeList!!)
+        commandeAdapter = CommandesAdapter(this, commandeList)
         adapter.adapter = commandeAdapter
     }
 }

@@ -26,7 +26,6 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_commande,container,false)
-        val context = v.context
 
         /**
          * initialisation

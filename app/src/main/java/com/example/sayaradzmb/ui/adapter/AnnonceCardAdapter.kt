@@ -6,12 +6,15 @@ import android.content.Context
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.Annonce
-import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.servics.AnnonceService
+import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.annonce_view.view.*
@@ -25,7 +28,8 @@ import retrofit2.Response
  * informations de chaque élement ( annonce) à une cardview
  **/
 
-class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce>, val info : ArrayList<Version>) : RecyclerView.Adapter<AnnonceCardAdapter.ViewHolder>() {
+class AnnonceCardAdapter(val context: Context, private val annonces: ArrayList<Annonce>) :
+    RecyclerView.Adapter<AnnonceCardAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         return annonces.size
     }
@@ -36,8 +40,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
         // p0 pour la position
 
         val annonce = annonces[p1]
-        val version = info[p1]
-        p0.bindInfo(annonce,version)
+        p0.bindInfo(annonce)
 
     }
 
@@ -45,33 +48,31 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
 
         // pour retourner le fichier xml annonce_view sous
         // forme d'une vue pour chaque élément de la liste
-        val annonceView = LayoutInflater.from(context).inflate(R.layout.annonce_view, p0,false)
+        val annonceView = LayoutInflater.from(context).inflate(R.layout.annonce_view, p0, false)
         return ViewHolder(annonceView)
     }
 
 
-
-    inner class ViewHolder (private val objet : View) : RecyclerView.ViewHolder(objet){
+    inner class ViewHolder(private val objet: View) : RecyclerView.ViewHolder(objet) {
 
         //variables
-        var véhicule : String = ""
-        lateinit var mDialogView : View
-        lateinit var pAdapter : VehiculeImageAdapter
-        var popup = PopupMenu(objet.context,objet.delete_icon_btn)
-
+        var vehicule: String = ""
+        lateinit var mDialogView: View
+        lateinit var pAdapter: VehiculeImageAdapter
+        var popup = PopupMenu(objet.context, objet.delete_icon_btn)
 
 
         @SuppressLint("SetTextI18n")
-         fun bindInfo(annonce : Annonce, version : Version) {
-            véhicule = version.modele.marque.NomMarque + " " + version.modele.NomModele + " " + version.NomVersion
-            objet.annonce_info.text = véhicule
+        fun bindInfo(annonce: Annonce) {
+            val ver = annonce.version!!
+            objet.annonce_info.text = ver.NomMarque.plus(" ").plus(ver.NomModele).plus(" ").plus(ver.NomVersion)
             objet.annonce_price_info.text = annonce.Prix
             objet.offer_num.text = annonce.NombreOffres.toString()
-            if (!annonce.images!!.isEmpty()) {
+            if (annonce.images!!.isNotEmpty()) {
                 Picasso.get().load(annonce.images!![0].CheminImage).into(objet.annonce_image)
             }
 
-             objet.button_apercu.setOnClickListener {
+            objet.button_apercu.setOnClickListener {
                 //Inflate the dialog --> ajouter le contenu en xml au dialog
                 val mDialogView = LayoutInflater.from(objet.context).inflate(R.layout.apercu_annonce_contenu, null)
 
@@ -84,7 +85,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
                 pAdapter = VehiculeImageAdapter(mBuilder.context, annonce.images!!)
 
                 //Setting the data
-                mDialogView.findViewById<TextView>(R.id.marque_title).text = véhicule
+                mDialogView.findViewById<TextView>(R.id.marque_title).text = objet.annonce_info.text
                 mDialogView.findViewById<TextView>(R.id.prix_specification).text = annonce.Prix
                 mDialogView.findViewById<TextView>(R.id.KM_title).text = annonce.Km
                 mDialogView.findViewById<TextView>(R.id.color_title).text = annonce.CodeCouleur.toString()
@@ -99,7 +100,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
             }
 
             val inflater = popup.menuInflater
-            inflater.inflate(R.menu.card_menu,popup.menu)
+            inflater.inflate(R.menu.card_menu, popup.menu)
 
             objet.delete_icon_btn.setOnClickListener { popup.show() }
 
@@ -121,23 +122,22 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
 
         }
 
-        fun supprimerAnnonce(id :Int){
+        fun supprimerAnnonce(id: Int) {
             val service = ServiceBuilder.buildService(AnnonceService::class.java)
             val deleteReq = service.DeleteAnnouncement(id)
 
             deleteReq.enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e("delete annonce","Something went wrong", t)
+                    Log.e("delete annonce", "Something went wrong", t)
                 }
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         //annonces.remove()
                         //this@AnnonceCardAdapter.notifyItemRemoved()
-                        Toast.makeText(objet.context,response.message(),Toast.LENGTH_LONG).show()
-                    }
-                    else {
-                        Log.w("delete annonce","the req passed nut Something went wrong")
+                        Toast.makeText(objet.context, response.message(), Toast.LENGTH_LONG).show()
+                    } else {
+                        Log.w("delete annonce", "the req passed nut Something went wrong")
 
                     }
                 }

@@ -40,7 +40,6 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var couleurAdapter: CouleurAdapter? = null
     private var optionAdapter: OptionAdapter? = null
     private var onCommandPressed : OnCommandPressed? = null
-    private var indicator : CircleIndicator2? = null
 
     /**
      * composant design
@@ -57,7 +56,6 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
-        val context = v.context
         Log.i("version : ",version.toString())
         nomVoiture = v.findViewById(R.id.neuf_tech_card_nom_car)
         commanderButton = v.findViewById(R.id.neuf_tech_card_commande_button)
@@ -84,7 +82,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                 suiviImage!!.tag = "nonSuivi"
             }
         }
-        if(version.lignetarif != null) prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()!!} DZD"
+        if(version.lignetarif != null) prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()} DZD"
         else prixVoiture!!.text = "price not defined"
 
         if (!version.images!!.isEmpty()) imagePhoto.addAll(version.images as ArrayList<CheminImage>)

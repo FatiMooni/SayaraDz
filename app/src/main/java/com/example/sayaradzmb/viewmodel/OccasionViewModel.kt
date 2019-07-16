@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.model.VehiculeRechFilters
-import com.example.sayaradzmb.servics.OccasionService
+import com.example.sayaradzmb.repository.servics.OccasionService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback

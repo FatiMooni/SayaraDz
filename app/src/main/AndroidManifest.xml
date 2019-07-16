@@ -3,9 +3,11 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.example.sayaradzmb">
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <supports-screens
             android:anyDensity="true"
@@ -24,12 +26,25 @@
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:appComponentFactory"
-            tools:targetApi="p"
-            >
+            tools:targetApi="p">
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/path" />
+        </provider>
 
         <activity
+                android:name=".ui.activities.OffreActivity"
+                android:label="@string/title_activity_offre"
+                android:theme="@style/AppTheme.NoActionBar.NoActionBar">
+        </activity>
+        <activity
                 android:name=".ui.activities.AcuilleActivity"
-                android:theme="@style/AppTheme.NoActionBar" />
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.LoginActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
@@ -37,7 +52,7 @@
                 android:name=".ui.activities.AjouterAnnonceActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.activities.OffreActivity"
+                android:name=".ui.activities.OffreApercuActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.MainActivity"
@@ -51,9 +66,9 @@
         <activity android:name=".ui.activities.fragments.OccasionSample"/>
         <activity android:name=".ui.activities.CommandesActivity"/>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-                   android:value="@string/facebook_app_id"
-        />
+        <meta-data
+                android:name="com.facebook.sdk.ApplicationId"
+                android:value="@string/facebook_app_id"/>
 
     </application>
 

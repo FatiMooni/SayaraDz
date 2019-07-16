@@ -13,24 +13,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
-import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.model.Annonce
+import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.ui.adapter.AnnonceCardAdapter
-import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.servics.AnnonceService
+import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
-import com.example.sayaradzmb.servics.VersionService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
-    /**
-     * Variables
-     */
+     /****
+     *** This fragment to display the different
+     ***/
     private var annoncesList = ArrayList<Annonce>()
-    private var versionInfo = ArrayList<Version>()
     private lateinit var customAdapter: AnnonceCardAdapter
     private lateinit var activityView: View
 
@@ -47,7 +44,7 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
         val idUser = avoirIdUser(activityView.context).toString()
         //Recuperer les annonces
-        recupereAnnonce(idUser!!)
+        recupereAnnonce(idUser)
 
         //pour passer à une autre vue : ajouter une nouvelle annonce
         val addBtn = activityView.findViewById<FloatingActionButton>(R.id.ajouter_annonce_button)
@@ -68,7 +65,7 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
         layout.orientation = LinearLayoutManager.VERTICAL
         rv.layoutManager = layout
         customAdapter =
-            AnnonceCardAdapter(activityView.context!!, annoncesList, versionInfo)
+            AnnonceCardAdapter(activityView.context!!, annoncesList)
         rv.adapter = customAdapter
 
     }
@@ -86,7 +83,7 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
             override fun onResponse(call: Call<List<Annonce>>, response: Response<List<Annonce>>) {
                 if (response.isSuccessful) {
                     annoncesList.addAll(response.body()!!)
-                    annoncesList.forEach { a -> recupererVersion(a.CodeVersion) }
+                    customAdapter.notifyDataSetChanged()
 
                 } else {
                     Toast.makeText(view!!.context, response.message(), Toast.LENGTH_LONG).show()
@@ -96,34 +93,5 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
         })
     }
-
-    fun recupererVersion(id: Int?) {
-
-        val requestCall = ServiceBuilder.buildService(VersionService::class.java).getVersionInfo(id!!)
-
-
-        requestCall.enqueue(object : Callback<Version> {
-
-            override fun onResponse(call: Call<Version>, response: Response<Version>) {
-                if (response.isSuccessful) {
-                    val req = response.body()!!
-                    versionInfo.add(req)
-                    if (versionInfo.size == annoncesList.size) customAdapter.notifyDataSetChanged()
-
-                } else {
-                    Toast.makeText(
-                        view!!.context, "there is a problem in our server",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<Version>, t: Throwable) {
-                Log.e("version info", "problem in the getting", t)
-            }
-        })
-    }
-
-
 
 }
