@@ -20,7 +20,6 @@ import retrofit2.Response
 
 open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
     //pour utiliser Linear Helper
-    override var itemRecycleView: RecyclerView? = null
     private var annonceList = ArrayList<VehiculeOccasion>()
     private var idUser : String = "44587"
     private var annonceAdapter : OccasionCarsAdapter? = null

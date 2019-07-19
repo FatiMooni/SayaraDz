@@ -28,7 +28,6 @@ import retrofit2.Response
 @Suppress("UNCHECKED_CAST")
 class OccasionRechFragment : Fragment(), RecycleViewHelper, CustomFiltersInitializer {
 
-    override var itemRecycleView: RecyclerView? = null
     private var marqueList = ArrayList<Marque>()
     private var marqueAdapter: MarqueAdapter? = null
 

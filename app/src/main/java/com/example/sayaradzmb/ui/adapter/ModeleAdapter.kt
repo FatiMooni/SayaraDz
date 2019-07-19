@@ -38,13 +38,12 @@ class ModeleAdapter(
 
 
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     private var versionAdapter : VersionAdapter? = null
     private var versionList = ArrayList<Version>()
     private var comm : ((Version) -> Unit)? = null
 
-    override var itemRecycleView : RecyclerView? = null
     private var currentCodeModele : Int = -1
     private var search = view.findViewById<Button>(R.id.search_button)
     @SuppressLint("UseSparseArrays")
@@ -56,11 +55,7 @@ class ModeleAdapter(
     /**
      * Second constructor
      */
-    constructor( modeleList: ArrayList<Modele>, context: Context, view : View, modeleListFiltree: ArrayList<Modele>
-                 ,activity: FragmentActivity, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(modeleList,context,view,modeleListFiltree,activity) {
-         this.onSearchPressed = onSearchPressed
-         frag = 1
-    }
+
     constructor(modeleList: ArrayList<Modele>, context: Context, view : View,  modeleListFiltree: ArrayList<Modele>,
                 activity: FragmentActivity, listener: (Version) -> Unit) : this(modeleList,context,view,modeleListFiltree,activity) {
         this.comm = listener
@@ -174,7 +169,7 @@ class ModeleAdapter(
      */
 
     private fun init(v : View){
-        versionAdapter = VersionAdapter(versionList,v.context,view,versionList,onSearchPressed)
+        versionAdapter = VersionAdapter(versionList,v.context,view,versionList)
         initLineaire(v,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 

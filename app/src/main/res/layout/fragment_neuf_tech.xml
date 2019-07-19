@@ -40,23 +40,14 @@
                         />
                         <TextView
                                 android:layout_width="0dp"
-                                android:layout_weight="6.8"
+                                android:layout_weight="11.8"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/neuf_tech_card_nom_car"
                                 android:text="nom_voiture"
                                 android:textSize="18dp"
                                 android:textColor="#000"
                         />
-                        <Button
-                                android:layout_width="0dp"
-                                android:layout_weight="5"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/neuf_tech_card_commande_button"
-                                android:background="@drawable/item_button_commande"
-                                android:text="Commnader"
-                                android:textSize="13sp"
-                                android:layout_marginTop="2dp"
-                                android:textColor="@color/colorWhite" />
+
 
                     </LinearLayout>
                     <LinearLayout
@@ -102,6 +93,30 @@
                             />
 
 
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                    >
+                        <Button
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_commande_button"
+                                android:background="@drawable/item_button_commande"
+                                android:text="Commnader"
+                                android:textSize="13sp"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/colorWhite" />
+                        <Button
+                                android:layout_width="0dp"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_composer_button"
+                                android:background="@drawable/item_button_commande"
+                                android:text="Composer"
+                                android:textSize="13sp"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/colorWhite" />
                     </LinearLayout>
                 </LinearLayout>
 
