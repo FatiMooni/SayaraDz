@@ -32,9 +32,9 @@ import kotlinx.android.synthetic.main.toolbar_accuille.*
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
-class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPressed,
-    NavigationView.OnNavigationItemSelectedListener,
-    NouveauAfficheTechnique.OnCommandPressed {
+
+class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
+    {
 
 
     private var pref: SharedPreferencesHelper? = null
@@ -47,7 +47,7 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
      * la focntion qui aide a switche entre les fragment
      */
 
-    override fun envoyerFragment(int: Int) {
+    fun envoyerFragment(int: Int) {
         var fragment: Fragment? = null
         when (int) {
             2 -> {
@@ -59,17 +59,18 @@ class AcuilleActivity : AppCompatActivity(), NouveauRechercheCars.OnSearchPresse
         chargerFragment(fragment)
     }
 
-    override fun envoyerFragment(int: Int, version: Version) {
+    fun envoyerFragment(int: Int, version: Version) {
         var fragment: Fragment? = null
         when (int) {
             1 -> {
-                fragment = NouveauAfficheTechnique(version)
+               // fragment = NouveauAfficheTechnique(version)
                 titre_fonction.text = getString(R.string.fiche_acc)
 
             }
         }
         chargerFragment(fragment)
     }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,9 @@
 package com.example.sayaradzmb.ui.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +19,7 @@ import com.example.sayaradzmb.model.Version
 
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
+import com.example.sayaradzmb.ui.activities.fragments.NouveauAfficheTechnique
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +32,7 @@ class VersionAdapter(
 ) : RecyclerView.Adapter<VersionAdapter.VersionViewHolder>(),Filterable, SharedPreferenceInterface, SuiviVoitureHelper {
 
 
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+
     private var onSelectedItem : ((Version) -> Unit)? = null
 
     private var currentCodeVersion: Int = -1
@@ -40,10 +44,7 @@ class VersionAdapter(
      * Second constrator
      */
 
-   constructor(versionList: ArrayList<Version>, context: Context, view : View, versionListFiltree: ArrayList<Version>, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(versionList,context,view,versionListFiltree) {
-        this.onSearchPressed = onSearchPressed
-        frag = 1
-    }
+
 
     constructor(versionList: ArrayList<Version>, context: Context, view : View, versionListFiltree: ArrayList<Version>,listener: (Version) -> Unit) : this(versionList,context,view,versionListFiltree) {
         this.onSelectedItem = listener
@@ -77,13 +78,19 @@ class VersionAdapter(
                         search.visibility = View.VISIBLE
                         Log.i("modele : ", version.toString())
                         search.setOnClickListener {
-                            onSearchPressed!!.envoyerFragment(1, version)
+                            val bundel = Bundle()
+                            bundel.putParcelable("affiche", version)
+                            val afficheFragment = NouveauAfficheTechnique()
+                            afficheFragment.arguments = bundel
+                            val activity = context as FragmentActivity
+                            activity.supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_id, afficheFragment, "toAfficheFrag")
+                                .commit()
                         }
                     }
                 }
-
                 0-> {
-                    holder.bind(version,onSelectedItem!!)
+                        holder.bind(version, onSelectedItem!!)
                 }
             }
 

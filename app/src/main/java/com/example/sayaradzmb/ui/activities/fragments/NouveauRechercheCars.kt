@@ -25,8 +25,7 @@ import com.example.sayaradzmb.servics.MarqueService
 
 @Suppress("UNCHECKED_CAST")
 class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,SharedPreferenceInterface {
-    private var onSearchPressed : OnSearchPressed? = null
-    override var itemRecycleView : RecyclerView? = null
+
     private var marqueList = ArrayList<Marque>()
     private var marqueAdapter : MarqueAdapter? = null
     private var searchView : SearchView? = null
@@ -46,22 +45,8 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
         return v
     }
 
-    /**
-     * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
-     */
-    interface OnSearchPressed{
-        fun envoyerFragment(int : Int,version : Version)
-    }
 
-    /**
-     * onAttach methode overriding
-     */
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
 
-        val activity = context as Activity
-        onSearchPressed = activity as OnSearchPressed
-    }
 
 
 
@@ -93,7 +78,7 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
      */
 
     private fun init(v : View){
-        marqueAdapter = MarqueAdapter(marqueList,v.context,v,marqueList,activity!!,onSearchPressed)
+        marqueAdapter = MarqueAdapter(marqueList,v.context,v,marqueList,activity!!)
         initLineaire(v,R.id.imd_rv_marque,LinearLayoutManager.VERTICAL,marqueAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 

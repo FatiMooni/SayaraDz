@@ -42,14 +42,13 @@ class MarqueAdapter(
 
     //
     var frag = 1
-    private var onSearchPressed : NouveauRechercheCars.OnSearchPressed? = null
+
     private var  comm : ((Version) -> Unit)? = null
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     private var modeleAdapter : ModeleAdapter? = null
     private var modeleList = ArrayList<Modele>()
-    override var itemRecycleView : RecyclerView? = null
     private var currentCodeMarque : Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
 
@@ -59,11 +58,7 @@ class MarqueAdapter(
 
 
 
-    constructor(marqueList: ArrayList<Marque>, context: Context, view : View, marqueListFiltree : ArrayList<Marque>,
-                activity : FragmentActivity, onSearchPressed : NouveauRechercheCars.OnSearchPressed?) : this(marqueList,context,view,marqueListFiltree,activity) {
-        this.onSearchPressed = onSearchPressed
-        frag = 1
-    }
+
 
     constructor(marqueList: ArrayList<Marque>, context: Context, view : View, marqueListFiltree : ArrayList<Marque>,
                 activity : FragmentActivity,listener: (Version) -> Unit) : this(marqueList,context,view,marqueListFiltree,activity) {
@@ -150,7 +145,7 @@ class MarqueAdapter(
 
 
     private fun init(v : View){
-        modeleAdapter = ModeleAdapter(modeleList,v.context,view,modeleList,activity,onSearchPressed)
+        modeleAdapter = ModeleAdapter(modeleList,v.context,view,modeleList,activity)
         initLineaire(v,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 

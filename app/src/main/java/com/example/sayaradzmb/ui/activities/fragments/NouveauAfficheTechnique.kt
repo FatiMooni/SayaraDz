@@ -31,15 +31,14 @@ import me.relex.circleindicator.CircleIndicator2
 @Suppress("UNCHECKED_CAST")
 @SuppressLint("ValidFragment")
 class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
-    var version: Version
 ) : Fragment(),RecycleViewHelper{
 
 
-    override var itemRecycleView: RecyclerView? = null
+
     private var voitureAdapter: ImageVoitureAdapter? = null
     private var couleurAdapter: CouleurAdapter? = null
     private var optionAdapter: OptionAdapter? = null
-    private var onCommandPressed : OnCommandPressed? = null
+    private var indicator : CircleIndicator2? = null
 
     /**
      * composant design
@@ -49,16 +48,22 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var description :TextView?=null
     private var suiviImage : ImageView?=null
     private var prixVoiture : TextView?= null
+    private var composerButton : Button? = null
     private var imagePhoto = ArrayList<CheminImage>()
     private var couleurs = ArrayList<Couleur>()
     private var options = ArrayList<Option>()
+    private var version :Version?=null
     @SuppressLint("SetTextI18n")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
+
+        val context = v.context
+        version = arguments!!.getParcelable("affiche") as Version
         Log.i("version : ",version.toString())
         nomVoiture = v.findViewById(R.id.neuf_tech_card_nom_car)
         commanderButton = v.findViewById(R.id.neuf_tech_card_commande_button)
+        composerButton =v.findViewById(R.id.neuf_tech_card_composer_button)
         description = v.findViewById(R.id.neuf_tech_card_description)
         suiviImage = v.findViewById(R.id.neuf_tech_card_suivi)
         prixVoiture = v.findViewById(R.id.neuf_tech_card_prix)
@@ -66,7 +71,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * initialisation
          */
-        nomVoiture!!.text = version.NomVersion
+        nomVoiture!!.text = version!!.NomVersion
         suiviImage!!.setOnClickListener {
             if (suiviImage!!.tag == "nonSuivi"){
                 /**
@@ -82,12 +87,14 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                 suiviImage!!.tag = "nonSuivi"
             }
         }
-        if(version.lignetarif != null) prixVoiture!!.text = "${version.lignetarif!!.Prix.toString()} DZD"
+
+        if(version!!.lignetarif != null) prixVoiture!!.text = "${version!!.lignetarif!!.Prix.toString()} DZD"
+
         else prixVoiture!!.text = "price not defined"
 
-        if (!version.images!!.isEmpty()) imagePhoto.addAll(version.images as ArrayList<CheminImage>)
-        if (!version.couleurs!!.isEmpty())couleurs.addAll(version.couleurs as ArrayList<Couleur>)
-        if (!version.options!!.isEmpty())options.addAll(version.options as ArrayList<Option>)
+        //if (version.images!!.isNotEmpty()) imagePhoto.addAll(version.images as ArrayList<CheminImage>)
+        if (version!!.couleurs!!.isNotEmpty())couleurs.addAll(version!!.couleurs as ArrayList<Couleur>)
+        if (version!!.options!!.isNotEmpty())options.addAll(version!!.options as ArrayList<Option>)
 
 
         /**
@@ -103,7 +110,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * fin initialisation
          */
-
+        composer(v)
         commander(v)
         return v
     }
@@ -112,31 +119,25 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
 
 
     private fun commander(v : View){
-        val commander = v.findViewById<Button>(R.id.neuf_tech_card_commande_button)
-        commander.setOnClickListener {
-            onCommandPressed!!.envoyerFragment(2)
+
+        commanderButton!!.setOnClickListener {
+            val bundel = Bundle()
+            bundel.putParcelable("command",version)
+            val commandeVoitureFragment = ListeVoitureCommande()
+            commandeVoitureFragment.arguments = bundel
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_id,commandeVoitureFragment,"toCommandeVoiture")
+                .addToBackStack(null)
+                .commit()
         }
     }
 
+    private fun composer(v : View){
+       composerButton!!.setOnClickListener{
 
-
-
-    /**
-     * l'interface qui aide a envoyer des donnee d'un fragment a l'activity
-     */
-    interface OnCommandPressed{
-        fun envoyerFragment(int : Int)
+       }
     }
 
-    /**
-     *
-     */
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        val activity = context as Activity
-        onCommandPressed = activity as OnCommandPressed
-    }
 
     /**
      * initialiser les recycleVIew

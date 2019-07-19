@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Couleur(
-    val CodeCouleur : Int,
-    val NomCouleur : String?,
-    val CodeHexa : String?,
-    val rel_ver_coul : RelationVerCol
+    val CodeCouleur: Int,
+    val NomCouleur: String?,
+    val CodeHexa: String?,
+    val rel_ver_coul: RelationVerCol?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
