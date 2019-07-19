@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Commande
 import com.example.sayaradzmb.ui.adapter.CommandesAdapter
 import com.example.sayaradzmb.viewmodel.CommandeViewModel
-import kotlinx.android.synthetic.main.activity_mycommand.*
+import kotlinx.android.synthetic.main.activity_user_command.*
 
 class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
 
@@ -24,7 +23,7 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mycommand)
+        setContentView(R.layout.activity_user_command)
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_black_24dp)
 

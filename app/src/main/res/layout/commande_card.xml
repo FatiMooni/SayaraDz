@@ -47,23 +47,14 @@
                           android:orientation="vertical"
                           android:layout_weight="25"
                           android:layout_height="wrap_content">
-            <android.support.design.card.MaterialCardView
-                    android:layout_width="70dp"
-                    app:cardBackgroundColor="@color/colorLightGrey"
-                    app:cardCornerRadius="50dp"
-                    android:layout_marginStart="5dp"
-                    android:id="@+id/first_state"
-                    android:layout_gravity="center"
-                    app:strokeColor="@color/colorGrey"
-                    app:strokeWidth="1dp"
-                    android:layout_height="40dp">
-                <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/accepted"
-                        android:id="@+id/commandé_icon"
-                        android:layout_height="match_parent"/>
-            </android.support.design.card.MaterialCardView>
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/pending"
+                        app:civ_border_width="1dp"
+                        android:layout_gravity="center"
+                        app:civ_border_color="@color/colorGrey"/>
                 <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:text="Commandé"
