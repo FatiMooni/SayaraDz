@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -66,6 +67,10 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
      * la requte d'avoir les differnet vehiule
      */
     fun avoirListVoiture(id : Int?,v : View){
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("charger les marque")
+        progress.show()
         val vService = ServiceBuilder.buildService(StockService::class.java)
         val requeteAppel = vService.avoirVoitureStock(13)
         requeteAppel.enqueue(object : Callback<List<VoitureCommande>> {
@@ -78,11 +83,14 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
                     }
                     Log.i("list Voiture",listVoiture.get(0).CodeHexa)
                     InitialiserListeVoiture(v)
+                    progress.dismiss()
                 }else{
 
                 }
             override fun onFailure(call: Call<List<VoitureCommande>>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
+                progress.dismiss()
+                avoirListVoiture(id,v)
             }
         })
     }

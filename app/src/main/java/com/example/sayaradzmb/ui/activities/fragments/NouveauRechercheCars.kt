@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -19,6 +20,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
 import android.support.v7.widget.SearchView
+import android.widget.ProgressBar
 import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.MarqueService
 
@@ -54,21 +56,27 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
      */
     private fun requeteMarque(){
         val vService = ServiceBuilder.buildService(MarqueService::class.java)
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("charger les marque")
+        progress.show()
         val requeteAppel = vService.getMarques()
         requeteAppel.enqueue(object : Callback<List<Marque>> {
             override fun onResponse(call: Call<List<Marque>>, response: Response<List<Marque>>) =
                 if(response.isSuccessful){
+
                     print(response.body()!!)
                     var lesMarque = response.body()!!
                     lesMarque.forEach{
                         e->marqueList.add(e)
                     }
-                    //marqueAdapter!!.addAllwithclear(marqueList)
+                    progress.dismiss()
                 }else{
 
                 }
             override fun onFailure(call: Call<List<Marque>>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
+                requeteMarque()
             }
         })
     }

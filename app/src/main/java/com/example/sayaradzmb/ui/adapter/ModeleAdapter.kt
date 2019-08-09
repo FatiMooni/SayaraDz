@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.ui.adapter
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -175,6 +176,10 @@ class ModeleAdapter(
 
     private fun requeteVersion(){
         versionList.clear()
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("charger les marque")
+        progress.show()
         val vService =  ServiceBuilder.buildService(VersionService::class.java)
         val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)
         requeteAppel.enqueue(object : Callback<List<Version>> {
@@ -189,11 +194,14 @@ class ModeleAdapter(
                     // avoir la liste des version de modele clique
                     modeleVersions.put(currentCodeModele,versionList)
                     print("allez")
+                    progress.dismiss()
                 }else{
 
                 }
             override fun onFailure(call: Call<List<Version>>, t: Throwable) {
                 Log.w("failConnexion","la liste version non reconnue")
+                progress.dismiss()
+                requeteVersion()
             }
         })
     }
