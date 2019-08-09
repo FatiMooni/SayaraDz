@@ -19,17 +19,20 @@
                 >
                     <include
                             layout="@layout/item_couleur"
+                            android:id="@+id/layout_color"
                             android:layout_weight="3"
                             android:layout_height="wrap_content"
                             android:layout_width="0dp"
                             android:gravity="center"/>
                     <TextView
+                            android:id="@+id/text_voiture_quantite"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="quantite"
+                            android:text="@string/quantite"
                     />
                     <Button
+                            android:id="@+id/button_voiture_options"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -40,7 +43,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/neuf_tech_card_commande_button"
                             android:background="@drawable/item_button_commande"
-                            android:text="Commnader"
+                            android:text="@string/commnader"
                             android:textSize="13sp"
                             android:layout_marginTop="2dp"
                             android:textColor="@color/colorWhite" />

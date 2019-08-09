@@ -68,5 +68,7 @@
     <string name="check_the_website">Check the website</string>
     <string name="menu_deconect">Log Out</string>
     <string name="recherche_avanc_e">Recherche Avancée</string>
+    <string name="commnader">Commnader</string>
+    <string name="quantite">quantite</string>
 
 </resources>

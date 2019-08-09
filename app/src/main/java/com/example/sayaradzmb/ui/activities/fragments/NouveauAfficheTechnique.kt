@@ -58,8 +58,15 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
         val context = v.context
+        /**
+         * Avoir la version choisie
+         */
         version = arguments!!.getParcelable("affiche") as Version
         Log.i("version : ",version.toString())
+
+        /**
+         * Avoir les component from layout
+         */
         nomVoiture = v.findViewById(R.id.neuf_tech_card_nom_car)
         commanderButton = v.findViewById(R.id.neuf_tech_card_commande_button)
         composerButton =v.findViewById(R.id.neuf_tech_card_composer_button)
@@ -112,9 +119,6 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         return v
     }
 
-
-
-
     private fun commander(v : View){
 
         commanderButton!!.setOnClickListener {
@@ -135,13 +139,11 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
        }
     }
 
-
     /**
      * initialiser les recycleVIew
      */
     private fun initVoituresImage(v : View){
         voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context)
-
         initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
