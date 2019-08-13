@@ -1,12 +1,28 @@
 package com.example.sayaradzmb.ui.activities
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.model.Commande
+import com.example.sayaradzmb.model.Offre
+import com.example.sayaradzmb.ui.adapter.CommandesAdapter
+import com.example.sayaradzmb.ui.adapter.OfferAdapter
+import com.example.sayaradzmb.viewmodel.CommandeViewModel
+import com.example.sayaradzmb.viewmodel.UserOffersViewModel
 import kotlinx.android.synthetic.main.activity_user_command.*
 
 class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface{
+
+    //**** Variables ****//
+    private lateinit var offerAdapter: OfferAdapter
+    lateinit var model: UserOffersViewModel
+    lateinit var idUser: String
+    private var offerList = ArrayList<Offre>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -21,6 +37,33 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface{
         }
 
         toolbar.title = "Mes Offres"
+
+
+        //initialize the adapter
+        prepareRecyclerView()
+
+        // Load our BooksViewModel or create a new one
+        model = ViewModelProviders.of(this).get(UserOffersViewModel::class.java)
+        // Listen for changes on the BooksViewModel
+        model.getOffre().observe(this, Observer<List<Offre>> {
+
+            offerList.addAll(it!!)
+            offerAdapter!!.notifyDataSetChanged()
+
+        })
+
+        //fetch data
+        idUser = avoirIdUser(this).toString()
+        model.loadOffers(idUser)
+
     }
 
+    private  fun prepareRecyclerView() {
+        val layout = LinearLayoutManager(this)
+        layout.orientation = LinearLayoutManager.VERTICAL
+        val adapter = findViewById<RecyclerView>(R.id.rv_command)
+        adapter.layoutManager = layout
+        offerAdapter = OfferAdapter(this, offerList)
+        adapter.adapter = offerAdapter
+    }
 }

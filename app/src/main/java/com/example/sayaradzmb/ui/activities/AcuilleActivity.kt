@@ -276,13 +276,12 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 Toast.makeText(this, "profile", Toast.LENGTH_LONG).show()
             }
             R.id.nav_offer -> {
-
+                val intent = Intent(this@AcuilleActivity, UserOffersActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_command -> {
                 val intent = Intent(this@AcuilleActivity, CommandesActivity::class.java)
-                // If you just use this that is not a valid context. Use ActivityName.this
                 startActivity(intent)
-                this@AcuilleActivity.finish()
             }
             R.id.nav_following -> {
 

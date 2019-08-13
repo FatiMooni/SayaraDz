@@ -72,8 +72,8 @@ class OffreActivity : AppCompatActivity(), SharedPreferenceInterface {
                 Snackbar.make(montant_offer, "Make sure that You Introduced the Ammount of Money", Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                val price =  montant_offer.text.toString().toInt()
-                val annPrice = annonce!!.Prix!!.toInt()
+                val price =  montant_offer.text.toString().replace("\\s".toRegex(), "").toInt()
+                val annPrice = annonce!!.Prix!!.replace("\\s".toRegex(), "").toInt()
                 if ((annPrice) >= (price)) {
                     Snackbar.make(
                         montant_offer,

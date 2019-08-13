@@ -18,11 +18,11 @@ import com.example.sayaradzmb.ui.activities.OffreApercuActivity
 import com.example.sayaradzmb.ui.activities.OffreActivity
 import java.util.ArrayList
 
-class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<VehiculeOccasion>) : RecyclerView.Adapter<OccasionCarsAdapter.ViewHolder>(){
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
+class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<VehiculeOccasion>) : RecyclerView.Adapter<CarsViewHolder>(){
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): CarsViewHolder {
         //p0.removeAllViews()
         val view = LayoutInflater.from(context).inflate(R.layout.used_cars_view, p0,false)
-        return ViewHolder(view)
+        return CarsViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +30,7 @@ class OccasionCarsAdapter(val context : Context, val annonceList : ArrayList<Veh
     }
 
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
+    override fun onBindViewHolder(p0: CarsViewHolder, p1: Int) {
         val annonceItem = annonceList[p1]
         p0.bindInfo(annonceItem)
     }

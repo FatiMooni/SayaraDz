@@ -48,7 +48,7 @@
                           android:layout_weight="25"
                           android:layout_height="wrap_content">
                 <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_image"
+                        android:id="@+id/first_step"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/pending"
@@ -67,23 +67,14 @@
                       android:orientation="vertical"
                       android:layout_weight="25"
                       android:layout_height="wrap_content">
-            <android.support.design.card.MaterialCardView
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/second_step"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/pending"
+                    app:civ_border_width="1dp"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="@color/colorLightGrey"
-                    app:cardCornerRadius="50dp"
-                    android:id="@+id/second_state"
-                    app:strokeColor="@color/colorGrey"
-                    app:strokeWidth="1dp"
-                    app:cardElevation="5dp"
-                    android:layout_height="30dp">
-                <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/accepted"
-                        android:id="@+id/rsrv_icon"
-                        android:layout_height="match_parent"/>
-            </android.support.design.card.MaterialCardView>
+                    app:civ_border_color="@color/colorGrey"/>
             <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:text="Reservé"
@@ -96,23 +87,14 @@
                       android:orientation="vertical"
                       android:layout_weight="25"
                       android:layout_height="wrap_content">
-            <android.support.design.card.MaterialCardView
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/third_step"
                     android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/pending"
+                    app:civ_border_width="1dp"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="@color/colorLightGrey"
-                    app:cardCornerRadius="50dp"
-                    android:id="@+id/third_state"
-                    app:strokeColor="@color/colorGrey"
-                    app:strokeWidth="1dp"
-                    app:cardElevation="5dp"
-                    android:layout_height="30dp">
-                <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/pending_icon"
-                        android:src="@drawable/canceld"
-                        android:layout_height="match_parent"/>
-            </android.support.design.card.MaterialCardView>
+                    app:civ_border_color="@color/colorGrey"/>
             <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:textAlignment="center"
@@ -125,23 +107,14 @@
                       android:orientation="vertical"
                       android:layout_weight="25"
                       android:layout_height="wrap_content">
-            <android.support.design.card.MaterialCardView
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
                     android:layout_width="30dp"
-                    app:cardBackgroundColor="@color/colorLightGrey"
-                    app:cardCornerRadius="50dp"
-                    android:id="@+id/fourth_state"
-                    app:strokeColor="@color/colorGrey"
-                    app:strokeWidth="1dp"
-                    app:cardElevation="5dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/pending"
+                    app:civ_border_width="1dp"
                     android:layout_gravity="center"
-                    android:layout_height="30dp">
-                <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/pending"
-                        android:id="@+id/dileverd_icon"
-                        android:layout_height="match_parent"/>
-            </android.support.design.card.MaterialCardView>
+                    app:civ_border_color="@color/colorGrey"/>
             <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:text="Délivrée"

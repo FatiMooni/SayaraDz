@@ -4,8 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import android.widget.Toast
-import com.example.sayaradzmb.Repository.servics.OffreService
+import com.example.sayaradzmb.repository.servics.OffreService
 import com.example.sayaradzmb.model.Offre
 import com.example.sayaradzmb.servics.ServiceBuilder
 import okhttp3.MediaType
@@ -30,14 +29,6 @@ class OffreViewModel : ViewModel() {
 
         // Here we will create service
         val service = prepareService()
-
-        //creation d'une instance sur le service des annonces
-
-
-        //les differentes parts du post request
-        val code = RequestBody.create(MediaType.parse("text/plain"), idAnnonce.toString())
-        val idAu = RequestBody.create(MediaType.parse("text/plain"), id)
-        val price= RequestBody.create(MediaType.parse("text/plain"), Montant.toString())
 
 
         //post request
