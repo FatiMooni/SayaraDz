@@ -70,10 +70,11 @@ class AnnonceCardAdapter(val context: Context, private val annonces: ArrayList<A
             val ver = annonce.version!!
             objet.annonce_info.text = ver.NomMarque.plus(" ").plus(ver.NomModele).plus(" ").plus(ver.NomVersion)
             objet.annonce_price_info.text = annonce.Prix
-            objet.offer_num.text = annonce.NombreOffres.toString()
+            objet.annonce_offer_info.text= annonce.NombreOffres.toString()
             objet.offer_num.setOnClickListener {
                 // preparé l'activité d'ajout
                 val intent = Intent(context, AnnonceOffersActivity::class.java)
+                intent.putExtra("annonce", annonce)
                 // lancer l'activité
                 ContextCompat.startActivity(context, intent, null)
             }

@@ -18,7 +18,13 @@ data class VehiculeOccasion(
     var Annee : String?,
     var images: List<CheminImage>?
 
-) : Parcelable {
+) : Parcelable,Comparable<VehiculeOccasion> {
+
+    override fun compareTo(other: VehiculeOccasion): Int {
+        return if(other.idAnnonce == this.idAnnonce) 0
+        else 1
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
@@ -31,7 +37,8 @@ data class VehiculeOccasion(
         parcel.readString(),
         parcel.readString(),
         parcel.createTypedArrayList(CheminImage)
-    )
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(idAnnonce)
@@ -60,4 +67,5 @@ data class VehiculeOccasion(
             return arrayOfNulls(size)
         }
     }
+
 }

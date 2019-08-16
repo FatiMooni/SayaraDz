@@ -19,7 +19,7 @@ import com.example.sayaradzmb.viewmodel.OccasionViewModel
 
 
 class OccasionSample : Fragment(),SharedPreferenceInterface{
-    private var annonceList = ArrayList<VehiculeOccasion>()
+    private var annonceList = ArrayList<Comparable<*>>()
     private var annonceAdapter : OccasionCarsAdapter? = null
     val filter = VehiculeRechFilters(null, null, null, null, null, null, null)
     var maView: View? = null

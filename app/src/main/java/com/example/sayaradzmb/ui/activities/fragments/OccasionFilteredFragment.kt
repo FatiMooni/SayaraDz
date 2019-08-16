@@ -43,7 +43,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
     private var filter: VehiculeRechFilters? = null
     private var versionInfo: TextView? = null
     private var idUser: String? = null
-    private var annonceList = ArrayList<VehiculeOccasion>()
+    private var annonceList = ArrayList<Comparable<*>>()
     private var annonceAdapter: OccasionCarsAdapter? = null
     private var model = OccasionViewModel()
 

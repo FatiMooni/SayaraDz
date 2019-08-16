@@ -11,6 +11,10 @@
     <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp"
+            android:elevation="10dp"
+            android:id="@+id/card_holder"
             app:layout_constraintTop_toTopOf="parent"
     >
         <RelativeLayout android:layout_width="match_parent"
@@ -21,36 +25,54 @@
                       android:textSize="@dimen/primary_title"
                       android:textStyle="bold"
                       android:layout_margin="5dp"
+                      android:drawableStart="@drawable/star"
+                      android:drawablePadding="10dp"
                       android:id="@+id/car_announce_title"
                       android:text="Offre"
                       android:layout_height="wrap_content"/>
-
+            <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/car_img_viewer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_duration="1000"
+                    android:elevation="10dp"
+                    app:el_expanded="false"
+                    android:layout_below="@id/car_announce_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:el_parallax="0.5">
             <android.support.v4.view.ViewPager
                       android:layout_width="match_parent"
-                      android:id="@+id/car_img_viewer"
-                      android:layout_below="@id/car_announce_title"
-                      android:layout_height="175dp"/>
+                      android:id="@+id/img_viewer"
+                      android:layout_height="150dp"/>
+            </net.cachapa.expandablelayout.ExpandableLayout>
 
             <TextView android:layout_width="wrap_content"
-                      android:drawableStart="@drawable/star"
+                      android:drawableStart="@drawable/price_tag"
                       android:drawablePadding="10dp"
                       android:gravity="center_horizontal"
                       android:id="@+id/car_announce_price"
                       android:layout_below="@id/car_img_viewer"
                       android:text="25932000 DZA"
+                      android:layout_marginStart="5dp"
+                      android:textColor="@color/colorBlack"
+                      android:textSize="@dimen/secondary_title"
                       android:layout_height="wrap_content"/>
 
             <TextView android:layout_width="wrap_content"
-                      android:drawableStart="@drawable/star"
+                      android:layout_marginStart="30dp"
+                      android:drawableStart="@drawable/offer_tag"
                       android:layout_alignBaseline="@id/car_announce_price"
                       android:layout_toEndOf="@id/car_announce_price"
                       android:drawablePadding="10dp"
-                      android:text="25932000 DZA"
+                      android:text="2 offre"
+                      android:textColor="@color/colorBlack"
+                      android:textSize="@dimen/secondary_title"
+                      android:id="@+id/car_announce_offer"
                       android:layout_height="wrap_content"/>
             <android.support.v7.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:text="more"
-                    android:layout_below="@id/car_announce_price"
+                    android:layout_alignBaseline="@id/car_announce_price"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/expand_btn"
                     android:layout_margin="10dp"
@@ -59,10 +81,10 @@
                 android:layout_below="@id/expand_btn"
                 android:id="@+id/expandable_layout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:el_duration="1000"
                 android:elevation="10dp"
-                app:el_expanded="true"
+                app:el_expanded="false"
                 app:layout_constraintTop_toTopOf="parent"
                 app:el_parallax="0.5">
 
@@ -269,5 +291,11 @@
         </RelativeLayout>
     </android.support.design.card.MaterialCardView>
 
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rv_offers"
+            tools:listitem="@layout/offer_owner_card"
+            app:layout_constraintTop_toBottomOf="@id/card_holder"
+            android:layout_height="wrap_content"/>
 
 </android.support.constraint.ConstraintLayout>

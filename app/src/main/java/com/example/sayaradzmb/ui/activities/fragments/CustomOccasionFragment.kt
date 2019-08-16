@@ -19,7 +19,7 @@ import retrofit2.Response
 open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
 
     //pour utiliser Linear Helper
-    private var annonceList = ArrayList<VehiculeOccasion>()
+    private var annonceList = ArrayList<Comparable<*>>()
     private var annonceAdapter : OccasionCarsAdapter? = null
 
 
@@ -51,7 +51,8 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
                     for (e in response.body()!!){
                         annonceList.add(e)
                     }
-                    annonceAdapter!!.notifyDataSetChanged()
+                    //annonceAdapter!!.notifyDataSetChanged()
+                    annonceAdapter!!.swapData(annonceList)
                 }
                 else {
                     Log.i("response assert" , "couldn't get the data correctly")

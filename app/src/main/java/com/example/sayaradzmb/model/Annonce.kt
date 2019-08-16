@@ -1,5 +1,8 @@
 package com.example.sayaradzmb.model
 
+import android.os.Parcel
+import android.os.Parcelable
+
 
 data class Annonce(
     var idAnnonce: Int?,
@@ -13,4 +16,47 @@ data class Annonce(
     var Description: String,
     var NombreOffres : Int,
 var images: List<CheminImage>?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readParcelable(VersionInfo::class.java.classLoader),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.createTypedArrayList(CheminImage)
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(idAnnonce)
+        parcel.writeString(Prix)
+        parcel.writeString(idAutomobiliste)
+        parcel.writeString(Couleur)
+        parcel.writeString(Carburant)
+        parcel.writeParcelable(version, flags)
+        parcel.writeValue(CodeCouleur)
+        parcel.writeString(Km)
+        parcel.writeString(Description)
+        parcel.writeInt(NombreOffres)
+        parcel.writeTypedList(images)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Annonce> {
+        override fun createFromParcel(parcel: Parcel): Annonce {
+            return Annonce(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Annonce?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

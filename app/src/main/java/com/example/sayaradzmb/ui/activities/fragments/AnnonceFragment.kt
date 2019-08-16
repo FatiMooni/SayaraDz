@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -18,6 +19,7 @@ import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.ui.adapter.AnnonceCardAdapter
 import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
+import kotlinx.android.synthetic.main.fragement_annonce.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,6 +58,10 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
             startActivity(intent)
         }
 
+        refreshLayout.setOnRefreshListener {
+            recupereAnnonce(idUser)
+            customAdapter.notifyDataSetChanged()
+        }
         return activityView
     }
 
