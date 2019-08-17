@@ -12,9 +12,9 @@ interface SuiviVoitureHelper {
 
     fun toggleSuivi(suivi : Boolean,imageSuivi : ImageView,drawableSuivi : Int,drawableNonSuivi : Int){
         if (suivi){
-            processusSuivre(R.drawable.star,imageSuivi,"Suivi")
+            processusSuivre(drawableSuivi,imageSuivi,"Suivi")
         }else{
-            processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
+            processusSuivre(drawableNonSuivi,imageSuivi,"nonSuivi")
         }
     }
 }

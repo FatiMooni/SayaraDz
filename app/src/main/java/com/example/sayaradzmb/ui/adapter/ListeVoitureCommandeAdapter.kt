@@ -47,7 +47,7 @@ class ListeVoitureCommandeAdapter(
          * buttonCouleur
          */
         var drawable = holder.color.background as GradientDrawable
-        ColorHelper.colorerButton(drawable,voiture.CodeHexa)
+        ColorHelper.colorerButton(drawable,voiture.Couleur!!.CodeHexa!!)
         /**
          * quantite
          */

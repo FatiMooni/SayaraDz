@@ -1,8 +1,6 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -15,23 +13,27 @@ import com.example.sayaradzmb.R
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.sayaradzmb.ui.activities.CompositionActivity
+import com.example.sayaradzmb.helper.*
 import com.example.sayaradzmb.ui.adapter.CouleurAdapter
 import com.example.sayaradzmb.ui.adapter.ImageVoitureAdapter
 import com.example.sayaradzmb.ui.adapter.OptionAdapter
-import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
-import com.example.sayaradzmb.model.CheminImage
 import com.example.sayaradzmb.model.Version
+import com.example.sayaradzmb.servics.ServiceBuilder
+import com.example.sayaradzmb.servics.VersionService
 import com.squareup.picasso.Picasso
 import me.relex.circleindicator.CircleIndicator2
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 @Suppress("UNCHECKED_CAST")
 @SuppressLint("ValidFragment")
 class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
-) : Fragment(),RecycleViewHelper{
+) : Fragment(),RecycleViewHelper,SuiviVoitureHelper,SharedPreferenceInterface{
 
 
 
@@ -39,6 +41,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var couleurAdapter: CouleurAdapter? = null
     private var optionAdapter: OptionAdapter? = null
     private var indicator : CircleIndicator2? = null
+    val vService =  ServiceBuilder.buildService(VersionService::class.java)
 
     /**
      * composant design
@@ -49,7 +52,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private var suiviImage : ImageView?=null
     private var prixVoiture : TextView?= null
     private var composerButton : Button? = null
-    private var imagePhoto = ArrayList<CheminImage>()
+    private var imagePhoto = ArrayList<String>()
     private var couleurs = ArrayList<Couleur>()
     private var options = ArrayList<Option>()
     private var version :Version?=null
@@ -77,26 +80,62 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * initialisation
          */
+        toggleSuivi(version!!.suivie,suiviImage!!,R.drawable.heart,R.drawable.heart_empty)
         nomVoiture!!.text = version!!.NomVersion
+        /**
+         * gestion de l'abbonnement
+         */
         suiviImage!!.setOnClickListener {
             if (suiviImage!!.tag == "nonSuivi"){
                 /**
                  * faire l'abonnement
                  */
+
+                val requeteAppel = vService.suivreVersion(version!!.CodeVersion!!,avoirInfoUser(this.context!!))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste version non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
                 Picasso.get().load(R.drawable.heart).into(suiviImage)
                 suiviImage!!.tag = "Suivi"
             }else{
                 /**
                  * desabonner
                  */
+                val requeteAppel = vService.desuivreVersion(version!!.CodeVersion!!,avoirIdUser(this.context!!))
+                requeteAppel.enqueue(object : Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
+                        if(response.isSuccessful){
+                            println(response.body().toString())
+                        }else{
+                            println("la liste version non reconnue ${response}")
+
+                        }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                    }
+                })
                 Picasso.get().load(R.drawable.heart_empty).into(suiviImage)
                 suiviImage!!.tag = "nonSuivi"
             }
         }
-        if(version!!.lignetarif != null) prixVoiture!!.text = "${version!!.lignetarif!!.Prix.toString()} DZD"
+
+        /**
+         * gestion du prix
+         */
+        if(version!!.lignetarif != null) prixVoiture!!.text = "${version!!.lignetarif!!.Prix.toString()} DA"
         else prixVoiture!!.text = "price not defined"
 
-        //if (version.images!!.isNotEmpty()) imagePhoto.addAll(version.images as ArrayList<CheminImage>)
+        // var j'ai pas une liste de voiture mais pour chaque couleur j'ai une voiture
+        //if (version!!.images!!.isNotEmpty()) imagePhoto.addAll(version!!.images as ArrayList<CheminImage>)
         if (version!!.couleurs!!.isNotEmpty())couleurs.addAll(version!!.couleurs as ArrayList<Couleur>)
         if (version!!.options!!.isNotEmpty())options.addAll(version!!.options as ArrayList<Option>)
 
@@ -107,14 +146,21 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * l'initialisation des recycle view
          */
-         initVoituresImage(v)
+
          initCouleurs(v)
+         initVoituresImage(v)
          initOption(v)
 
         /**
          * fin initialisation
          */
+        /**
+         * Composer
+         */
         composer(v)
+        /**
+         * Commander
+         */
         commander(v)
         return v
     }
@@ -135,7 +181,8 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
 
     private fun composer(v : View){
        composerButton!!.setOnClickListener{
-
+            FragmentHelper.switchActivityExtra(this.context!!,
+                CompositionActivity::class.java,this.activity!!,"version",version!! as Version)
        }
     }
 
@@ -143,7 +190,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      * initialiser les recycleVIew
      */
     private fun initVoituresImage(v : View){
-        voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context)
+        voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context,couleurAdapter!!)
         initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
@@ -151,10 +198,19 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         initLineaire(v,R.id.neuf_tech_rv_couleur,LinearLayoutManager.HORIZONTAL,couleurAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initOption(v: View?) {
-        optionAdapter = OptionAdapter(options,v!!.context)
+        optionAdapter = OptionAdapter(options,v!!.context,1)
         initLineaire(v,R.id.io_rv_option,LinearLayoutManager.VERTICAL,optionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
 
     }
+
+    /**
+     * on stop clear the list of couleurs
+     */
+    override fun onStop() {
+        super.onStop()
+        couleurs.clear()
+    }
+
 }
 
 

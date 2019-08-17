@@ -15,6 +15,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    androidExtensions {
+        experimental = true
+    }
     buildTypes {
         release {
 

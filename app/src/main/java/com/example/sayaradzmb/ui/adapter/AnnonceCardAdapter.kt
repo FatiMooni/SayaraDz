@@ -63,7 +63,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
 
         @SuppressLint("SetTextI18n")
          fun bindInfo(annonce : Annonce, version : Version) {
-            véhicule = version.modele.marque.NomMarque + " " + version.modele.NomModele + " " + version.NomVersion
+            véhicule = version.modele!!.marque.NomMarque + " " + version.modele!!.NomModele + " " + version.NomVersion
             objet.annonce_info.text = véhicule
             objet.annonce_price_info.text = annonce.Prix
             objet.offer_num.text = annonce.NombreOffres.toString()

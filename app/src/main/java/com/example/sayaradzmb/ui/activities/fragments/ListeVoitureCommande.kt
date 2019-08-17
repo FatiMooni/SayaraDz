@@ -81,7 +81,8 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
                     listStock.forEach {
                         e-> listVoiture.add(e)
                     }
-                    Log.i("list Voiture",listVoiture.get(0).CodeHexa)
+                    //errore
+                    Log.i("list Voiture", listVoiture!!.size.toString())
                     InitialiserListeVoiture(v)
                     progress.dismiss()
                 }else{

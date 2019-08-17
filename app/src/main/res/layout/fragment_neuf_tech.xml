@@ -142,9 +142,6 @@
                     android:id="@+id/neuf_tech_rv"
                     android:layout_marginBottom="50dp"
                     android:layout_gravity="center"/>
-            <ImageView android:layout_width="wrap_content"
-                       android:src="@drawable/picture_car"
-                       android:layout_height="250dp"/>
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
@@ -152,24 +149,24 @@
                           android:layout_gravity="center"
                           android:layout_marginBottom="20dp"
             >
-             <android.support.v7.widget.AppCompatImageButton
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:src="@drawable/previous_sign"
-                     android:layout_gravity="left"
-                     android:backgroundTint="@android:color/transparent"
-             />
-            <android.support.v7.widget.RecyclerView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/neuf_tech_rv_couleur"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
-                <android.support.v7.widget.AppCompatImageButton
+                 <android.support.v7.widget.AppCompatImageButton
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/previous_sign"
+                         android:layout_gravity="left"
+                         android:backgroundTint="@android:color/transparent"
+                 />
+                <android.support.v7.widget.RecyclerView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/next_sign"
+                        android:layout_height="match_parent"
+                        android:id="@+id/neuf_tech_rv_couleur"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/next_sign"
                         android:backgroundTint="@android:color/transparent"
                 />
             </LinearLayout>
