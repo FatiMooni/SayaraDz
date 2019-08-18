@@ -14,13 +14,13 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.model.VehiculeRechFilters
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.viewmodel.OccasionViewModel
 
 
 class OccasionSample : Fragment(),SharedPreferenceInterface{
     private var annonceList = ArrayList<Comparable<*>>()
-    private var annonceAdapter : OccasionCarsAdapter? = null
+    private var annonceAdapter : CustomCardsAdapter? = null
     val filter = VehiculeRechFilters(null, null, null, null, null, null, null)
     var maView: View? = null
     var idUser: String? = null
@@ -59,7 +59,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = v.findViewById<RecyclerView>(R.id.recyler_view_voiture_occasion)
         adapter.layoutManager = layout
-        annonceAdapter = OccasionCarsAdapter(v.context,annonceList )
+        annonceAdapter = CustomCardsAdapter(v.context,annonceList )
         adapter.adapter = annonceAdapter
     }
 

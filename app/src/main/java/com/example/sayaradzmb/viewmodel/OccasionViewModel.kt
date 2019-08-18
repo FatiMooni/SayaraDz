@@ -41,7 +41,7 @@ class OccasionViewModel : ViewModel() {
             override fun onResponse(call: Call<List<VehiculeOccasion>>, response: Response<List<VehiculeOccasion>>) {
                 if(response.isSuccessful){
                     for (e in response.body()!!){
-                        annonceList!!.add(e)
+                        annonceList.add(e)
                     }
                     usedcars!!.value = annonceList
                 }

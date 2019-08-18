@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.repository.servics
 
 import com.example.sayaradzmb.model.Offre
+import com.example.sayaradzmb.model.UserOffre
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +22,7 @@ interface OffreService {
 
     @GET ( "automobiliste/{idAutomobiliste}/offres")
             fun LoadUserOffers(@Path("idAutomobiliste")idAutomobiliste : String
-            ): Call<List<Offre>>
+            ): Call<List<UserOffre>>
 
     @PUT ("vehicules/annonces/offres/{idOffre}/{state}")
             fun UpdateOfferState(@Path("idOffre") idOffre: Int,

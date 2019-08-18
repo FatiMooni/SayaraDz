@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
@@ -20,7 +19,6 @@ import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.ui.activities.AnnonceOffersActivity
-import com.example.sayaradzmb.ui.activities.OffreApercuActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.annonce_view.view.*
 import okhttp3.ResponseBody

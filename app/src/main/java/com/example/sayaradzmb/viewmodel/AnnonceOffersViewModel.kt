@@ -72,7 +72,7 @@ class AnnonceOffersViewModel : ViewModel() {
         })
     }
 
-    fun deleteOffer(offer: Offre, position: Int) {
+  /***  fun deleteOffer(offer: Offre, position: Int) {
         val service = ServiceBuilder.buildService(OffreService::class.java)
         val deleteReq = service.DeleteOffer(offer.idOffre)
 
@@ -96,7 +96,7 @@ class AnnonceOffersViewModel : ViewModel() {
 
         })
 
-    }
+    }***/
 
 }
 

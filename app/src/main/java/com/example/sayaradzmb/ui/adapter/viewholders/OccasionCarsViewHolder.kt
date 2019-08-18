@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.ui.activities.OffreActivity
-import com.example.sayaradzmb.ui.activities.OffreApercuActivity
+import com.example.sayaradzmb.ui.activities.AnnonceApercuActivity
 import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
 
 class OccasionCarsViewHolder (private val view : View): BaseViewHolder<VehiculeOccasion>(view){
@@ -35,7 +35,7 @@ class OccasionCarsViewHolder (private val view : View): BaseViewHolder<VehiculeO
         view.findViewById<Button>(R.id.annonce_details).setOnClickListener {
             Log.i("Aperçu announce", "am getting in !!")
             // preparé l'activité d'ajout
-            val intent = Intent(view.context, OffreApercuActivity::class.java)
+            val intent = Intent(view.context, AnnonceApercuActivity::class.java)
             //Bundle
             val bundle = Bundle()
             bundle.putParcelable("annonce",item)

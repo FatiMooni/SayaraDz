@@ -2,22 +2,17 @@ package com.example.sayaradzmb.ui.adapter.viewholders
 
 import android.app.AlertDialog
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.AlertDialogLayout
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.Adapter
-import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Offre
-import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 
-class OffersViewHolder(private val view: View , val listener: OccasionCarsAdapter.OnClickItemListener) : BaseViewHolder<Offre>(view) , View.OnClickListener {
+class OffersViewHolder(private val view: View , val listener: CustomCardsAdapter.OnClickItemListener) : BaseViewHolder<Offre>(view) , View.OnClickListener {
     override fun onClick(v: View?) {
 
     }

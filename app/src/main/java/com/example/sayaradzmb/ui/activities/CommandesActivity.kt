@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Commande
-import com.example.sayaradzmb.ui.adapter.CommandesAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.viewmodel.CommandeViewModel
 import kotlinx.android.synthetic.main.activity_user_command.*
 
@@ -17,8 +17,8 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
 
     lateinit var model: CommandeViewModel
     lateinit var idUser: String
-    private var commandeList = ArrayList<Commande>()
-    private var commandeAdapter: CommandesAdapter? = null
+    private var commandeList = ArrayList<Comparable<*>>()
+    private var commandeAdapter: CustomCardsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -41,8 +41,7 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
         // Listen for changes on the BooksViewModel
         model.getCommande().observe(this, Observer<List<Commande>> {
 
-            commandeList.addAll(it!!)
-            commandeAdapter!!.notifyDataSetChanged()
+            commandeAdapter!!.swapData(it!!)
 
         })
 
@@ -57,7 +56,7 @@ class CommandesActivity : AppCompatActivity(), SharedPreferenceInterface {
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = findViewById<RecyclerView>(R.id.rv_command)
         adapter.layoutManager = layout
-        commandeAdapter = CommandesAdapter(this, commandeList)
+        commandeAdapter = CustomCardsAdapter(this, commandeList)
         adapter.adapter = commandeAdapter
     }
 }

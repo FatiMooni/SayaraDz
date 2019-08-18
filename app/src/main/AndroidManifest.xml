@@ -59,7 +59,8 @@
                 android:name=".ui.activities.AjouterAnnonceActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.activities.OffreApercuActivity"
+                android:name=".ui.activities.AnnonceApercuActivity"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.MainActivity"

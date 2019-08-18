@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll"
-                tools:context=".ui.activities.OffreApercuActivity">
+                tools:context=".ui.activities.AnnonceApercuActivity">
 
 
             <android.support.v7.widget.CardView

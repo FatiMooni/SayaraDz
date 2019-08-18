@@ -1,9 +1,24 @@
 package com.example.sayaradzmb.model
 
-import android.os.Parcel
-import android.os.Parcelable
+
 
 data class Offre(
+    var idOffre: Int,
+    var idAutomobiliste: String,
+    var Montant : String,
+    var idAnnonce: String,
+    var Date : String,
+    var Etat : Int,
+    var automobiliste : Automobiliste
+
+): Comparable<Offre> {
+    override fun compareTo(other: Offre): Int {
+        return if (other.idOffre == this.idOffre) -1
+        else idOffre
+    }
+}
+
+data class UserOffre(
     var idOffre: Int,
     var idAutomobiliste: String,
     var Montant : String,
@@ -13,12 +28,11 @@ data class Offre(
     var automobiliste : Automobiliste,
     var vehicule : VersionInfo,
     var annonce : AnnonceInfo
-
-): Comparable<Offre> {
-    override fun compareTo(other: Offre): Int {
-        return 0
+) : Comparable<UserOffre>{
+    override fun compareTo(other: UserOffre): Int {
+        return if (other.idOffre == this.idOffre) -1
+        else idOffre
     }
-
 
 }
 

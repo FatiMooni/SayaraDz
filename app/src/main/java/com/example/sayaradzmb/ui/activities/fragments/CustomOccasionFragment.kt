@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.model.VehiculeRechFilters
@@ -20,7 +20,7 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
 
     //pour utiliser Linear Helper
     private var annonceList = ArrayList<Comparable<*>>()
-    private var annonceAdapter : OccasionCarsAdapter? = null
+    private var annonceAdapter : CustomCardsAdapter? = null
 
 
     @Suppress("UNCHECKED_CAST")
@@ -29,7 +29,7 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = v.findViewById<RecyclerView>(R.id.recyler_view_voiture_occasion)
         adapter.layoutManager = layout
-        annonceAdapter = OccasionCarsAdapter(v.context,annonceList )
+        annonceAdapter = CustomCardsAdapter(v.context,annonceList )
         adapter.adapter = annonceAdapter
     }
 

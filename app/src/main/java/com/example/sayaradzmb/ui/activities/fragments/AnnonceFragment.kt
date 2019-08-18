@@ -58,10 +58,10 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
             startActivity(intent)
         }
 
-        refreshLayout.setOnRefreshListener {
+       /* refresh_layout.setOnRefreshListener {
             recupereAnnonce(idUser)
             customAdapter.notifyDataSetChanged()
-        }
+        }*/
         return activityView
     }
 

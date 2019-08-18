@@ -3,28 +3,27 @@ package com.example.sayaradzmb.ui.activities
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Offre
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
 import com.example.sayaradzmb.viewmodel.AnnonceOffersViewModel
 import kotlinx.android.synthetic.main.activity_annonce_offers.*
 import kotlinx.android.synthetic.main.content_annonce_offers.*
-import java.text.FieldPosition
 
 class AnnonceOffersActivity : AppCompatActivity() {
 
     private var offersList = ArrayList<Comparable<*>>()
-    private var offerAdapter: OccasionCarsAdapter? = null
+    private var offerAdapter: CustomCardsAdapter? = null
     private var model = AnnonceOffersViewModel()
     private var annonce: Annonce? = null
 
@@ -37,7 +36,10 @@ class AnnonceOffersActivity : AppCompatActivity() {
 
         prepareRecyclerView()
 
-        offerAdapter!!.SetOnItemClickListener(object : OccasionCarsAdapter.OnClickItemListener {
+        offerAdapter!!.setOnItemClickListener(object : CustomCardsAdapter.OnClickItemListener {
+            override fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
             override fun onClickItem(id: Int, state: String, position: Int) {
                 Toast.makeText(this@AnnonceOffersActivity, "you did it :::", Toast.LENGTH_LONG).show()
@@ -74,7 +76,7 @@ class AnnonceOffersActivity : AppCompatActivity() {
             override fun onSwiped(holder: RecyclerView.ViewHolder, p1: Int) {
                 val item = offerAdapter!!.getItemAt(holder.adapterPosition)
                 if (item is Offre)
-                   model.deleteOffer(item, holder.adapterPosition)
+                   model.updateOffersList(item.idOffre,"refuser" , holder.adapterPosition)
                 else throw IllegalArgumentException("Invalid view type")
             }
 
@@ -98,7 +100,7 @@ class AnnonceOffersActivity : AppCompatActivity() {
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = findViewById<RecyclerView>(R.id.rv_offers)
         adapter.layoutManager = layout
-        offerAdapter = OccasionCarsAdapter(this, offersList)
+        offerAdapter = CustomCardsAdapter(this, offersList)
         adapter.adapter = offerAdapter
     }
 

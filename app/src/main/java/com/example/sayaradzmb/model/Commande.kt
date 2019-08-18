@@ -12,7 +12,12 @@ data class Commande (
         var Reservation : Int?,
         var automobiliste : Automobiliste,
         var vehicule : Vehicule
-) : Parcelable {
+) : Parcelable , Comparable<Commande> {
+    override fun compareTo(other: Commande): Int {
+        return if (this.idCommande == other.idCommande) -1
+        else this.idCommande
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,

@@ -23,7 +23,7 @@ import com.example.sayaradzmb.customs.CustomFiltersInitializer
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.model.VehiculeRechFilters
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.viewmodel.OccasionViewModel
 
 class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitializer, Fragment() {
@@ -44,7 +44,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
     private var versionInfo: TextView? = null
     private var idUser: String? = null
     private var annonceList = ArrayList<Comparable<*>>()
-    private var annonceAdapter: OccasionCarsAdapter? = null
+    private var annonceAdapter: CustomCardsAdapter? = null
     private var model = OccasionViewModel()
 
 
@@ -71,8 +71,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
         // Listen for changes on the BooksViewModel
         model.getUsedCars().observe(this, Observer<List<VehiculeOccasion>> {
 
-            annonceList.addAll(it!!)
-            annonceAdapter!!.notifyDataSetChanged()
+            annonceAdapter!!.swapData(it!!)
 
         })
 
@@ -301,7 +300,7 @@ class OccasionFilteredFragment : SharedPreferenceInterface, CustomFiltersInitial
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = v.findViewById<RecyclerView>(R.id.recyler_view_voiture_occasion)
         adapter.layoutManager = layout
-        annonceAdapter = OccasionCarsAdapter(v.context, annonceList)
+        annonceAdapter = CustomCardsAdapter(v.context, annonceList)
         adapter.adapter = annonceAdapter
     }
 
