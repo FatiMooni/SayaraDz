@@ -64,7 +64,42 @@ class UserOffersViewModel : ViewModel() {
 
         })
     }
+    fun deleteOffer(position: Int) {
+        val service = ServiceBuilder.buildService(OffreService::class.java)
+        val deleteReq = service.DeleteOffer(position)
 
+        deleteReq.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("delete annonce", "Something went wrong", t)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+
+                    val list = offreList!!.value!!.toMutableList()
+                    list.removeAt(getPosition(position))
+                    offreList!!.value = list
+
+                } else {
+                    Log.w("delete annonce", "the req passed nut Something went wrong")
+
+                }
+            }
+
+        })
+
+    }
+
+    fun getPosition(id : Int) : Int{
+        val list = offreList!!.value
+        var index = -1
+        list!!.forEach {
+            if (it.idOffre == id) {
+                index = list.indexOf(it)
+            }
+        }
+        return index
+    }
     fun deleteOffer(idOffer: Int, position: Int) {
         val service = ServiceBuilder.buildService(OffreService::class.java)
         val deleteReq = service.DeleteOffer(idOffer)

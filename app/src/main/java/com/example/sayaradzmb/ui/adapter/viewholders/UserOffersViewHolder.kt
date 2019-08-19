@@ -7,14 +7,15 @@ import android.support.design.chip.Chip
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.selection.ItemDetailsLookup
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.model.Offre
 import com.example.sayaradzmb.model.UserOffre
 import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 
-class UserOffersViewHolder(val view : View,
-                           private val listener: CustomCardsAdapter.OnClickItemListener)
-    : BaseViewHolder<UserOffre>(view) , View.OnClickListener , View.OnLongClickListener{
+class UserOffersViewHolder(
+    val view: View,
+    private val listener: CustomCardsAdapter.OnClickItemListener
+) : BaseViewHolder<UserOffre>(view), View.OnClickListener, View.OnLongClickListener {
     /**
      * Called when a view has been clicked.
      *
@@ -53,7 +54,7 @@ class UserOffersViewHolder(val view : View,
 
 
         view.findViewById<ImageButton>(R.id.card_menu).setOnClickListener {
-           listener.onPopupMenuRequested(item, view , adapterPosition)
+            listener.onPopupMenuRequested(item, view, adapterPosition)
         }
 
         when (state) {
@@ -82,5 +83,17 @@ class UserOffersViewHolder(val view : View,
             }
         }
     }
+
+    fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+        object : ItemDetailsLookup.ItemDetails<Long>() {
+            override fun getSelectionKey(): Long? {
+                return itemId
+            }
+
+            override fun getPosition(): Int {
+                return adapterPosition
+            }
+
+        }
 
 }

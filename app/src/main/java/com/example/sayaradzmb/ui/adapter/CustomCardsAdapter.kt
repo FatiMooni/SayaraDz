@@ -1,27 +1,32 @@
 package com.example.sayaradzmb.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.support.design.card.MaterialCardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.selection.SelectionTracker
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.model.Commande
 import com.example.sayaradzmb.model.Offre
 import com.example.sayaradzmb.model.UserOffre
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.ui.adapter.viewholders.*
-import com.facebook.internal.Mutable
-import java.util.*
-import kotlin.collections.ArrayList
 
 class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>>) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private var onClickItem: OnClickItemListener? = null
+    private var tracker: SelectionTracker<Long>? = null
 
+    fun setTracker(tracker: SelectionTracker<Long>?) {
+        this.tracker = tracker
+    }
 
 
     companion object {
@@ -33,6 +38,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
 
     init {
         data = ArrayList()
+        setHasStableIds(true)
     }
 
     fun swapData(newData: List<Comparable<*>>) {
@@ -47,6 +53,16 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
             is VehiculeOccasion -> TYPE_OCCASION
             is Commande -> TYPE_COMMANDE
             is UserOffre -> TYPE_USEROFFER
+            else -> throw IllegalArgumentException("Invalid type of data $position")
+        }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return when (val el = data[position]) {
+            is Offre -> el.idOffre.toLong()
+            is VehiculeOccasion -> el.idAnnonce.toLong()
+            is Commande -> el.idCommande.toLong()
+            is UserOffre -> el.idOffre.toLong()
             else -> throw IllegalArgumentException("Invalid type of data $position")
         }
     }
@@ -79,6 +95,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
         return data[position]
     }
 
+
     override fun getItemCount(): Int {
         return data.size
     }
@@ -91,11 +108,17 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
             is OffersViewHolder -> holder.bind(element as Offre)
             is OccasionCarsViewHolder -> holder.bind(element as VehiculeOccasion)
             is CommandeViewHolder -> holder.bind(element as Commande)
-            /**
-             * TODO("something")
-             * **/
             is UserOffersViewHolder -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 holder.bind(element as UserOffre)
+                val parent = holder.view.findViewById<MaterialCardView>(R.id.root_card)
+                if(tracker!!.isSelected(element.idOffre.toLong())) {
+                    parent.background = ColorDrawable(
+                        Color.parseColor("#80deea")
+                    )
+                } else {
+                    // Reset color to white if not selected
+                    parent.background = ColorDrawable(Color.WHITE)
+                }
             }
             else -> throw IllegalArgumentException()
         }
@@ -105,17 +128,13 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
     //Pour les action associés aux childView ( Buttons , Menu ... etc)
     interface OnClickItemListener {
         fun onClickItem(id: Int, state: String, position: Int)
-        fun onPopupMenuRequested(value : Comparable<*>,view : View, position: Int)
+        fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int)
     }
-
 
 
     fun setOnItemClickListener(listener: OnClickItemListener) {
         this.onClickItem = listener
     }
-
-
-
 
 
 }
