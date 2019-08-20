@@ -19,6 +19,8 @@ import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.ui.adapter.AcceuilleCardAdapter
 import com.example.sayaradzmb.viewmodel.AcceuilleViewModel
 import com.example.sayaradzmb.viewmodel.UserOffersViewModel
+import kotlinx.android.synthetic.main.fragement_accuille.*
+import kotlinx.android.synthetic.main.fragement_accuille.view.*
 
 class AccuilleFragment : Fragment(),SharedPreferenceInterface{
     private var carsList  = ArrayList<Comparable<*>>()
@@ -44,7 +46,7 @@ class AccuilleFragment : Fragment(),SharedPreferenceInterface{
         //Initialize the modelView
         model =  ViewModelProviders.of(this).get(AcceuilleViewModel::class.java)
         // Listen for changes on the BooksViewModel
-        model!!.getUsedCars().observe(this, Observer<List<VehiculeOccasion>> {
+        model.getUsedCars().observe(this, Observer<List<VehiculeOccasion>> {
 
             customUsedAdapter.swapData(it!!)
             // Toast.makeText(this@UserOffersActivity, it.toString(), Toast.LENGTH_SHORT).show()
@@ -55,6 +57,28 @@ class AccuilleFragment : Fragment(),SharedPreferenceInterface{
         carsList.add(5)
         carsList.add(5)
 
+        //listeners for the buttons
+        activityView.btn_frag_ann.setOnClickListener {
+            val nextFrag = AnnonceFragment()
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
+        }
+        activityView.btn_frag_old.setOnClickListener {
+            val nextFrag = OccasionFragment()
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
+        }
+        activityView.btn_frag_new.setOnClickListener {
+            val nextFrag = NouveauRechercheCars()
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
+        }
 
         // preparer Recycler view
         intialiserNewRecyclerView()
@@ -67,7 +91,11 @@ class AccuilleFragment : Fragment(),SharedPreferenceInterface{
 
         })
         model.loadUsedCars(idUser)
-
+        if(followedList.isEmpty()){
+            activityView.tx_text.visibility = View.GONE
+            activityView.tx_title.visibility = View.GONE
+            activityView.gerer_btn.visibility = View.GONE
+        }
         return  activityView
     }
 

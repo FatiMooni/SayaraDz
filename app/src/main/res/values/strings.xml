@@ -83,7 +83,7 @@
     <string name="seller">Seller Personnel Info</string>
     <string name="appeler">Appeler</string>
     <string name="owner">Your Personnel Indo</string>
-    <string name="Gérer">gerer</string>
+    <string name="Gérer">Gérer</string>
     <string name="confirm">Confirmer</string>
 
     <string name="modele">Modèle</string>
@@ -91,4 +91,5 @@
     <string name="version">Version</string>
     <string name="title_activity_annonce_offers">AnnonceOffersActivity</string>
     <string name="offre">Offre</string>
+    <string name="nouvelles_voitures">Nouvelles Versions</string>
 </resources>

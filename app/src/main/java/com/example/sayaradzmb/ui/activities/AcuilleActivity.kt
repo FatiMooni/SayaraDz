@@ -99,7 +99,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         navView.setNavigationItemSelectedListener(this)
 
         //////
-        header_holder.background = this.resources.getDrawable(R.drawable.background_acc, null)
+        header_holder.background = this.resources.getDrawable(R.drawable.background, null)
         chargerFragment(AccuilleFragment())
 
     }
@@ -246,7 +246,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
 
-                    header_holder.background = this.resources.getDrawable(R.drawable.background_acc, null)
+                    header_holder.background = this.resources.getDrawable(R.drawable.background, null)
                     titre.text = getString(R.string.acc)
 
                 }

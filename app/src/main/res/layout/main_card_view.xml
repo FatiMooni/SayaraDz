@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.card.MaterialCardView
-        android:layout_width="190dp"
+        android:layout_width="200dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="220dp"
+        android:layout_height="250dp"
+        app:strokeWidth="0.7dp"
+        app:strokeColor="@color/colorLightGrey"
         app:cardBackgroundColor="@color/colorLightGrey"
-        android:layout_margin="5dp"
-        app:cardElevation="5dp"
+        android:layout_margin="7dp"
+        app:cardElevation="10dp"
         app:cardCornerRadius="5dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
    <RelativeLayout android:layout_width="match_parent"
                    android:layout_height="wrap_content">
     <android.support.v7.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="170dp"
             android:background="#fcfcfc"
             android:src="@drawable/no_picture"
             android:scaleType="fitCenter"
