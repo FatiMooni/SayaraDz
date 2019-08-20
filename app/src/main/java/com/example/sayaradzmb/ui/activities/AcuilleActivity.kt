@@ -245,6 +245,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 }
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
+
                     header_holder.background = this.resources.getDrawable(R.drawable.background_acc, null)
                     titre.text = getString(R.string.acc)
 

@@ -36,7 +36,7 @@ class AccuilleFragment : Fragment(),SharedPreferenceInterface{
 
 
         //retourner la vue pour ce fragment
-        activityView = inflater.inflate(R.layout.fragement_accuille,null)
+        activityView = inflater.inflate(R.layout.fragement_accuille,container,false)
 
         val idUser = avoirIdUser(this.context!!).toString()
 

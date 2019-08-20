@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/navigation_bar"
             android:layout_marginBottom="0dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_below="@+id/frameLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="0dp"

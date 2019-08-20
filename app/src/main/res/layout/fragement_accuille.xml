@@ -1,162 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_rowWeight="100"
-        app:layout_scrollFlags="exitUntilCollapsed|scroll"
-        android:layout_height="match_parent">
-
-
-    <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Find your car \nin the easiest way."
-            android:textColor="#fff"
-            android:textSize="25sp"
-            android:id="@+id/text_holder"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="160dp"
-            android:layout_marginStart="16dp"/>
-
-    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginBottom="15dp"
-            android:weightSum="90"
-            android:gravity="center_horizontal"
-            android:id="@+id/buttons_holder"
-            app:layout_constraintTop_toBottomOf="@id/text_holder"
-
-    >
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/btn1"
-                android:text="New \ncars"
-                android:layout_weight="25"
-                android:layout_margin="2dp"
-                android:padding="5dp"
-                android:textColor="@color/colorPrimaryDark"
-        />
-
-        <Button
-                android:layout_weight="25"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/btn2"
-                android:text="Used \ncars"
-                android:layout_margin="2dp"
-                android:textColor="@color/colorPrimaryDark"
-        />
-
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Offers"
-                android:drawableTop="@drawable/btn3"
-                android:layout_weight="25"
-                android:layout_margin="2dp"
-                android:drawablePadding="10dp"
-                android:padding="5dp"
-                android:textColor="@color/colorPrimaryDark"
-        />
+            android:layout_rowWeight="100"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll"
+            android:layout_height="match_parent">
 
 
-    </LinearLayout>
-
-
-    <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/first_holder"
-            app:layout_constraintTop_toBottomOf="@id/buttons_holder"
-            app:layout_constraintLeft_toLeftOf="parent"
-    >
-
-        <TextView android:layout_width="wrap_content"
-                  android:text="New Cars"
-                  android:textSize="25sp"
-                  android:layout_height="wrap_content"/>
-
-        <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:itemCount="1"
-                tools:listitem="@layout/main_card_view"
-                android:id="@+id/recyler_view_new"
-        >
-
-        </android.support.v7.widget.RecyclerView>
-
-
-    </android.support.v7.widget.LinearLayoutCompat>
-    <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/second_holder"
-            android:layout_below="@id/first_holder"
-            app:layout_constraintTop_toBottomOf="@id/first_holder"
-            tools:layout_editor_absoluteX="16dp">
         <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Following"
+                android:text="Find your car \nin the easiest way."
+                android:textColor="#fff"
                 android:textSize="25sp"
-        />
-        <android.support.v7.widget.RecyclerView
+                android:id="@+id/text_holder"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="160dp"
+                android:layout_marginStart="16dp"/>
+
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recyler_view_following"
+                android:layout_height="75dp"
+                android:layout_marginTop="-45dp"
+                android:layout_marginBottom="15dp"
+                android:weightSum="90"
+                android:gravity="center_horizontal"
+                android:id="@+id/buttons_holder"
+                app:layout_constraintTop_toBottomOf="@id/text_holder"
+
+        >
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/btn1"
+                    android:text="New \ncars"
+                    android:layout_weight="30"
+                    android:layout_margin="2dp"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+            />
+
+            <Button
+                    android:layout_weight="25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/btn2"
+                    android:text="Used \ncars"
+                    android:layout_margin="2dp"
+                    android:textColor="@color/colorPrimaryDark"
+            />
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Offers"
+                    android:drawableStart="@drawable/btn3"
+                    android:layout_weight="25"
+                    android:layout_margin="2dp"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+            />
+
+
+        </LinearLayout>
+
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/first_holder"
+                app:layout_constraintTop_toBottomOf="@id/buttons_holder"
+                app:layout_constraintLeft_toLeftOf="parent"
         >
 
-        </android.support.v7.widget.RecyclerView>
+            <TextView android:layout_width="wrap_content"
+                      android:text="New Cars"
+                      android:textSize="25sp"
+                      android:layout_height="wrap_content"/>
 
-    </android.support.v7.widget.LinearLayoutCompat>
-    <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/second_holder"
-            app:layout_constraintTop_toBottomOf="@id/second_holder"
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/main_card_view"
+                    tools:itemCount="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recyler_view_new"
             >
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="Old Cars"
-        />
-        <android.support.v7.widget.RecyclerView
+            </android.support.v7.widget.RecyclerView>
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+        <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recyler_view_anciens"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/second_holder"
+                android:layout_below="@id/first_holder"
+                app:layout_constraintTop_toBottomOf="@id/first_holder"
+                tools:layout_editor_absoluteX="16dp">
+            <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Following"
+                    android:textSize="25sp"
+            />
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recyler_view_following"
+            >
+
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/second_holder"
+                app:layout_constraintTop_toBottomOf="@id/second_holder"
         >
 
-        </android.support.v7.widget.RecyclerView>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Old Cars"
+            />
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recyler_view_anciens"
+            >
+
+            </android.support.v7.widget.RecyclerView>
 
 
-    </android.support.v7.widget.LinearLayoutCompat>
-    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline" app:layout_constraintGuide_begin="20dp"
-                                          android:orientation="vertical"/>
-    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline2" app:layout_constraintGuide_begin="20dp"
-                                          android:orientation="horizontal"/>
-    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline3" app:layout_constraintGuide_begin="20dp"
-                                          android:orientation="vertical"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+        <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:id="@+id/guideline" app:layout_constraintGuide_begin="20dp"
+                                              android:orientation="vertical"/>
+        <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:id="@+id/guideline2" app:layout_constraintGuide_begin="20dp"
+                                              android:orientation="horizontal"/>
+        <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:id="@+id/guideline3" app:layout_constraintGuide_begin="20dp"
+                                              android:orientation="vertical"/>
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
