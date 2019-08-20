@@ -3,6 +3,7 @@ package com.example.sayaradzmb.model
 import android.os.Parcel
 import android.os.Parcelable
 
+
 data class Vehicule (
 
     var NumChassis : Int,
@@ -11,7 +12,16 @@ data class Vehicule (
     var NomModele : String,
     var NomVersion : String
 
-) : Parcelable {
+) : Parcelable , Comparable<Vehicule> {
+    /**
+     * Compares this object with the specified object for order. Returns zero if this object is equal
+     * to the specified [other] object, a negative number if it's less than [other], or a positive number
+     * if it's greater than [other].
+     */
+    override fun compareTo(other: Vehicule): Int {
+        return 0
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,

@@ -126,7 +126,7 @@
                          app:layout_constraintStart_toStartOf="parent"
                          app:layout_constraintEnd_toEndOf="parent"
                          app:layout_constraintTop_toBottomOf="@id/commande_personal_info"
-                         layout="@layout/apercu_annonce_contenu"/>
+                         layout="@layout/content_apercu_annonce"/>
             </android.support.v7.widget.CardView>
 
         </android.support.constraint.ConstraintLayout>

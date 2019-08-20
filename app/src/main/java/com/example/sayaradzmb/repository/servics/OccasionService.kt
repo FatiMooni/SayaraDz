@@ -19,4 +19,7 @@ interface OccasionService {
         @Query("CodeVersion") CodeVersion : Int?
     ) : Call<List<VehiculeOccasion>>
 
+    @GET("annonces/nouvelles/{id}")
+    fun GetLatestAnnouncement(@Path("id") id: String): Call<List<VehiculeOccasion>>
+
 }

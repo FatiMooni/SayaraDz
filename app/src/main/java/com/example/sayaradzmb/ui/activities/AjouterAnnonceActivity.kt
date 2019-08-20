@@ -8,7 +8,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -40,8 +39,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.ajouter_annonce_activity.*
-import kotlinx.android.synthetic.main.ajouter_annonce_contenu.*
+import kotlinx.android.synthetic.main.activity_ajouter_annonce.*
+import kotlinx.android.synthetic.main.content_ajouter_annonce.*
 import kotlinx.android.synthetic.main.photos_annonce_dialog.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -107,7 +106,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         super.onCreate(savedInstanceState)
 
         idUser = avoirIdUser(this)
-        setContentView(R.layout.ajouter_annonce_activity)
+        setContentView(R.layout.activity_ajouter_annonce)
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_black_24dp)
 

@@ -15,7 +15,7 @@ import com.example.sayaradzmb.model.Automobiliste
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
 import com.example.sayaradzmb.viewmodel.AnnonceViewModel
-import kotlinx.android.synthetic.main.ajouter_annonce_activity.*
+import kotlinx.android.synthetic.main.activity_ajouter_annonce.*
 
 class AnnonceApercuActivity : AppCompatActivity(), SharedPreferenceInterface {
     /**

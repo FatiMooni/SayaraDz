@@ -1,5 +1,7 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,21 +9,27 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.ui.adapter.FollowedCarsCardAdapter
-import com.example.sayaradzmb.ui.adapter.NewCarsCardAdapter
-import com.example.sayaradzmb.ui.adapter.UsedCarsCardAdapter
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.helper.SharedPreferencesHelper
+import com.example.sayaradzmb.model.UserOffre
+import com.example.sayaradzmb.model.VehiculeOccasion
+import com.example.sayaradzmb.ui.adapter.AcceuilleCardAdapter
+import com.example.sayaradzmb.viewmodel.AcceuilleViewModel
+import com.example.sayaradzmb.viewmodel.UserOffersViewModel
 
-class AccuilleFragment : Fragment(){
-    private var carsList  = ArrayList<Int>()
-    private var usedList  = ArrayList<Int>()
-    private var followedList  = ArrayList<Int>()
+class AccuilleFragment : Fragment(),SharedPreferenceInterface{
+    private var carsList  = ArrayList<Comparable<*>>()
+    private var usedList  = ArrayList<Comparable<*>>()
+    private var followedList  = ArrayList<Comparable<*>>()
     private lateinit var activityView: View
-    private lateinit var customNewAdapter : NewCarsCardAdapter
-    private lateinit var customUsedAdapter : UsedCarsCardAdapter
-    private lateinit var customFollowedAdapter : FollowedCarsCardAdapter
+    private lateinit var customNewAdapter : AcceuilleCardAdapter
+    private lateinit var customUsedAdapter : AcceuilleCardAdapter
+    private lateinit var customFollowedAdapter : AcceuilleCardAdapter
 
+    private lateinit var model : AcceuilleViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,18 +38,35 @@ class AccuilleFragment : Fragment(){
         //retourner la vue pour ce fragment
         activityView = inflater.inflate(R.layout.fragement_accuille,null)
 
+        val idUser = avoirIdUser(this.context!!).toString()
+
+
+        //Initialize the modelView
+        model =  ViewModelProviders.of(this).get(AcceuilleViewModel::class.java)
+        // Listen for changes on the BooksViewModel
+        model!!.getUsedCars().observe(this, Observer<List<VehiculeOccasion>> {
+
+            customUsedAdapter.swapData(it!!)
+            // Toast.makeText(this@UserOffersActivity, it.toString(), Toast.LENGTH_SHORT).show()
+
+        })
+
         carsList.add(1)
         carsList.add(5)
         carsList.add(5)
 
-        usedList.add(4)
-        usedList.add(6)
 
         // preparer Recycler view
         intialiserNewRecyclerView()
         intialiserUsedRecyclerView()
-        intialiserFollowedRecyclerView()
+        customNewAdapter.swapData(carsList)
+        customNewAdapter.setOnCardButtonClickListener(object : AcceuilleCardAdapter.OnCardButtonListener{
+            override fun OnCardButton(item: Comparable<*>?, itemType: Int) {
+                Toast.makeText(context,itemType.toString(),Toast.LENGTH_SHORT).show()
+            }
 
+        })
+        model.loadUsedCars(idUser)
 
         return  activityView
     }
@@ -53,7 +78,7 @@ class AccuilleFragment : Fragment(){
         layout.orientation = LinearLayoutManager.HORIZONTAL
         rv.layoutManager = layout
         customNewAdapter =
-            NewCarsCardAdapter(activityView.context!!, carsList)
+            AcceuilleCardAdapter(activityView.context!!, carsList)
         rv.adapter = customNewAdapter
     }
 
@@ -63,7 +88,7 @@ class AccuilleFragment : Fragment(){
         layout.orientation = LinearLayoutManager.HORIZONTAL
         rv.layoutManager = layout
         customUsedAdapter =
-            UsedCarsCardAdapter(activityView.context!!, usedList)
+            AcceuilleCardAdapter(activityView.context!!, usedList)
         rv.adapter = customUsedAdapter
     }
 
@@ -73,7 +98,7 @@ class AccuilleFragment : Fragment(){
         layout.orientation = LinearLayoutManager.HORIZONTAL
         rv.layoutManager = layout
         customFollowedAdapter =
-            FollowedCarsCardAdapter(activityView.context!!, followedList)
+            AcceuilleCardAdapter(activityView.context!!, followedList)
         rv.adapter = customFollowedAdapter
     }
 

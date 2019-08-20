@@ -50,6 +50,6 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/ajouter_annonce_contenu"/>
+    <include layout="@layout/content_ajouter_annonce"/>
 
 </android.support.design.widget.CoordinatorLayout>

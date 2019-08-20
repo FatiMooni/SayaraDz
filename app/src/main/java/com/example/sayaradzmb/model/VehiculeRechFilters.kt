@@ -8,7 +8,6 @@ data class VehiculeRechFilters (
     var carburant: String?,
     var minPrix : Int?,
     var maxPrix : Int?,
-
     var minAnnee : Int?,
     var maxAnnee : Int?,
     var maxKm : Int?

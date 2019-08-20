@@ -82,7 +82,7 @@ class AnnonceCardAdapter(val context: Context, private val annonces: ArrayList<A
 
             objet.button_apercu.setOnClickListener {
                 //Inflate the dialog --> ajouter le contenu en xml au dialog
-                val mDialogView = LayoutInflater.from(objet.context).inflate(R.layout.apercu_annonce_contenu, null)
+                val mDialogView = LayoutInflater.from(objet.context).inflate(R.layout.content_apercu_annonce, null)
 
                 //AlertDialogBuilder
                 val mBuilder = AlertDialog.Builder(objet.context)

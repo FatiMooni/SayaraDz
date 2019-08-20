@@ -99,7 +99,8 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         navView.setNavigationItemSelectedListener(this)
 
         //////
-        chargerFragment(NouveauRechercheCars())
+        header_holder.background = this.resources.getDrawable(R.drawable.background_acc, null)
+        chargerFragment(AccuilleFragment())
 
     }
 

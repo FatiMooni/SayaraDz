@@ -81,7 +81,7 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface {
         model.getOffre().observe(this, Observer<List<UserOffre>> {
 
             offerAdapter.swapData(it!!)
-            Toast.makeText(this@UserOffersActivity, it.toString(), Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this@UserOffersActivity, it.toString(), Toast.LENGTH_SHORT).show()
 
         })
 
@@ -97,6 +97,7 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface {
                         tracker?.selection?.forEach {
                             model.deleteOffer(it.toInt())
                         }
+                        Toast.makeText(this,"$Items sont étés supprimés", Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("Annuler", null)
                     .show()
@@ -152,6 +153,7 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface {
                     when (item.itemId) {
                         R.id.btn_dcln -> {
                             model.updateOffersList((value as UserOffre).idOffre, "annuler", position)
+                            Toast.makeText(this@UserOffersActivity,"L'offre a été annulé", Toast.LENGTH_SHORT).show()
                             true
                         }
                         R.id.btn_aperçu -> {
@@ -165,7 +167,6 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface {
                                 AnnonceApercuActivity.EXTRA_AUTOMOBILISTE,
                                 value.automobiliste
                             )
-
                             intent.putExtra(
                                 AnnonceApercuActivity.EXTRA_ANNONCE_NAME,
                                 value.vehicule.NomMarque.plus(" " + value.vehicule.NomModele).plus(" " + value.vehicule.NomVersion)
