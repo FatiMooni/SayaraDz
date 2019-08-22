@@ -16,7 +16,7 @@
 
     <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
-            android:src="@drawable/add_icon"
+            android:src="@drawable/more_arrow"
             app:rippleColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
             android:id="@+id/btn_more"

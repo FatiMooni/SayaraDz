@@ -37,6 +37,10 @@ class AnnonceOffersActivity : AppCompatActivity() {
         prepareRecyclerView()
 
         offerAdapter!!.setOnItemClickListener(object : CustomCardsAdapter.OnClickItemListener {
+            override fun onButtonClickItem(value: Comparable<*>, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
             override fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

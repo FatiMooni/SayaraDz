@@ -28,7 +28,6 @@ class AnnonceViewModel: ViewModel() {
 
     fun loadAnnounce(id: Int) {
 
-        // Here we will load the books from the Google Books API
         val service = prepareService()
         val requestCall = service.GetAnnounceAt(id)
         requestCall.enqueue(object : Callback<Annonce> {

@@ -1,37 +1,42 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v4.view.ViewPager
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
-import com.example.sayaradzmb.ui.adapter.AnnonceCardAdapter
-import com.example.sayaradzmb.repository.servics.AnnonceService
-import com.example.sayaradzmb.servics.ServiceBuilder
-import kotlinx.android.synthetic.main.fragement_annonce.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.sayaradzmb.ui.activities.AnnonceOffersActivity
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
+import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
+import com.example.sayaradzmb.viewmodel.UserAnnonceViewModel
+import kotlinx.android.synthetic.main.annonce_view.view.*
+import kotlinx.android.synthetic.main.user_offer_card.view.*
 
-class AnnonceFragment : Fragment(),SharedPreferenceInterface {
+class AnnonceFragment : Fragment(), SharedPreferenceInterface {
 
-     /****
+    /****
      *** This fragment to display the different
      ***/
-    private var annoncesList = ArrayList<Annonce>()
-    private lateinit var customAdapter: AnnonceCardAdapter
+    private var annoncesList = ArrayList<Comparable<*>>()
+    private lateinit var customAdapter: CustomCardsAdapter
     private lateinit var activityView: View
+    private lateinit var model: UserAnnonceViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -46,7 +51,11 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
 
         val idUser = avoirIdUser(activityView.context).toString()
         //Recuperer les annonces
-        recupereAnnonce(idUser)
+        model = ViewModelProviders.of(this).get(UserAnnonceViewModel::class.java)
+
+        model.getAnnonce().observe(this, Observer {
+            customAdapter.swapData(it!!)
+        })
 
         //pour passer à une autre vue : ajouter une nouvelle annonce
         val addBtn = activityView.findViewById<FloatingActionButton>(R.id.ajouter_annonce_button)
@@ -57,12 +66,82 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
             // lancer l'activité
             startActivity(intent)
         }
+        customAdapter.setOnItemClickListener(object : CustomCardsAdapter.OnClickItemListener {
+            override fun onClickItem(id: Int, state: String, position: Int) {
 
-       /* refresh_layout.setOnRefreshListener {
+            }
+
+            override fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int) {
+                Toast.makeText(context,"jjjjjjjj",Toast.LENGTH_LONG).show()
+                val popup = PopupMenu(view.context, view.delete_icon_btn)
+                val inflat: MenuInflater = popup.menuInflater
+                inflat.inflate(R.menu.card_menu, popup.menu)
+                popup.setOnMenuItemClickListener {item ->
+                    //do your things in each of the following cases
+                    when (item.itemId) {
+                        R.id.delete_annonce -> {
+                            model.supprimerAnnonce((value as Annonce).idAnnonce!!)
+                            true
+                        }
+                        R.id.edit_annonce -> {
+                            true
+                        }
+                        R.id.apercu_annonce -> {
+                            //Inflate the dialog --> ajouter le contenu en xml au dialog
+                            val mDialogView =
+                                LayoutInflater.from(context).inflate(R.layout.content_apercu_annonce, null)
+
+                            //AlertDialogBuilder
+                            val mBuilder = AlertDialog.Builder(context!!)
+                                .setView(mDialogView)
+                                .setIcon(R.drawable.cancel)
+
+                            //init the adapter
+                            val pAdapter = VehiculeImageAdapter(mBuilder.context, (value as Annonce).images!!)
+                            val ver = value.version!!
+                            //Setting the data
+                            mDialogView.findViewById<TextView>(R.id.marque_title).text =
+                                ver.NomMarque.plus(" ").plus(ver.NomModele).plus(" ").plus(ver.NomVersion)
+
+                            mDialogView.findViewById<TextView>(R.id.prix_specification).text = (value as Annonce).Prix
+                            mDialogView.findViewById<TextView>(R.id.KM_title).text = (value as Annonce).Km
+                            mDialogView.findViewById<TextView>(R.id.color_title).text =
+                                (value as Annonce).CodeCouleur.toString()
+                            mDialogView.findViewById<TextView>(R.id.year_title).text = "jan 2018"
+                            mDialogView.findViewById<TextView>(R.id.type_title).text = (value as Annonce).Carburant
+                            mDialogView.findViewById<TextView>(R.id.text_description).text =
+                                (value as Annonce).Description
+                            mDialogView.findViewById<ViewPager>(R.id.images_viewer).adapter = pAdapter
+
+
+                            //afficher le dialog
+                            mBuilder.show()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
+            }
+
+            override fun onButtonClickItem(value: Comparable<*>, position: Int) {
+                val intent = Intent(context, AnnonceOffersActivity::class.java)
+                intent.putExtra("annonce", value as Annonce)
+                startActivity(intent)
+            }
+
+        })
+        model.loadAnnounces(idUser)
+
+        /*refresh_layout.setOnRefreshListener {
             recupereAnnonce(idUser)
             customAdapter.notifyDataSetChanged()
         }*/
         return activityView
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun intialiserRecyclerView() {
@@ -71,33 +150,10 @@ class AnnonceFragment : Fragment(),SharedPreferenceInterface {
         layout.orientation = LinearLayoutManager.VERTICAL
         rv.layoutManager = layout
         customAdapter =
-            AnnonceCardAdapter(activityView.context!!, annoncesList)
+            CustomCardsAdapter(activityView.context!!, annoncesList)
         rv.adapter = customAdapter
 
     }
 
-    private fun recupereAnnonce(id: String) {
-        val service = ServiceBuilder.buildService(AnnonceService::class.java)
-        val requestCall = service.GetAnnouncement(id)
-
-        requestCall.enqueue(object : Callback<List<Annonce>> {
-
-            override fun onFailure(call: Call<List<Annonce>>, t: Throwable) {
-                Log.e("get", " Could't get the data ", t)
-            }
-
-            override fun onResponse(call: Call<List<Annonce>>, response: Response<List<Annonce>>) {
-                if (response.isSuccessful) {
-                    annoncesList.addAll(response.body()!!)
-                    customAdapter.notifyDataSetChanged()
-
-                } else {
-                    Toast.makeText(view!!.context, response.message(), Toast.LENGTH_LONG).show()
-                    Log.w("bind into list", "there is an error")
-                }
-            }
-
-        })
-    }
 
 }

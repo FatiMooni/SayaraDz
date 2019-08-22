@@ -12,10 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.selection.SelectionTracker
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.model.Commande
-import com.example.sayaradzmb.model.Offre
-import com.example.sayaradzmb.model.UserOffre
-import com.example.sayaradzmb.model.VehiculeOccasion
+import com.example.sayaradzmb.model.*
 import com.example.sayaradzmb.ui.adapter.viewholders.*
 
 class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>>) :
@@ -34,6 +31,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
         const val TYPE_OCCASION = 1
         const val TYPE_COMMANDE = 2
         const val TYPE_USEROFFER = 3
+        const val TYPE_ANNOUNCE = 4
     }
 
     init {
@@ -53,6 +51,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
             is VehiculeOccasion -> TYPE_OCCASION
             is Commande -> TYPE_COMMANDE
             is UserOffre -> TYPE_USEROFFER
+            is Annonce -> TYPE_ANNOUNCE
             else -> throw IllegalArgumentException("Invalid type of data $position")
         }
     }
@@ -63,6 +62,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
             is VehiculeOccasion -> el.idAnnonce.toLong()
             is Commande -> el.idCommande.toLong()
             is UserOffre -> el.idOffre.toLong()
+            is Annonce -> el.idAnnonce!!.toLong()
             else -> throw IllegalArgumentException("Invalid type of data $position")
         }
     }
@@ -85,6 +85,10 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
             TYPE_USEROFFER -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.user_offer_card, p0, false)
                 UserOffersViewHolder(view, onClickItem!!)
+            }
+            TYPE_ANNOUNCE -> {
+                val annonceView = LayoutInflater.from(context).inflate(R.layout.annonce_view, p0, false)
+                AnnonceViewHolder(annonceView,listener = onClickItem!!)
             }
             else -> throw IllegalArgumentException("Invalid view type")
 
@@ -120,6 +124,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
                     parent.background = ColorDrawable(Color.WHITE)
                 }
             }
+            is AnnonceViewHolder -> holder.bind(element as Annonce)
             else -> throw IllegalArgumentException()
         }
 
@@ -129,6 +134,7 @@ class CustomCardsAdapter(val context: Context, var data: ArrayList<Comparable<*>
     interface OnClickItemListener {
         fun onClickItem(id: Int, state: String, position: Int)
         fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int)
+        fun onButtonClickItem(value: Comparable<*>,position: Int)
     }
 
 

@@ -3,7 +3,8 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.example.firsttry.ScrollingActivity">
     <item android:id="@+id/action_settings"
-          android:title="aaa"
+          android:title="save"
+          android:icon="@drawable/save"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="ifRoom"/>
 </menu>

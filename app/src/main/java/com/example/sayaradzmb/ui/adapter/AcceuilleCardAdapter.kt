@@ -16,6 +16,9 @@ import com.example.sayaradzmb.ui.adapter.viewholders.UsedCarsViewHolder
 
 class AcceuilleCardAdapter(val context: Context, var data: ArrayList<Comparable<*>>) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    private  var listener : OnCardButtonListener? = null
+
     companion object {
         const val TYPE_ITEM_OCCASION = 0
         const val TYPE_ITEM_NEW = 1
@@ -25,12 +28,12 @@ class AcceuilleCardAdapter(val context: Context, var data: ArrayList<Comparable<
     override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return if (viewType == TYPE_LAST) {
             val view = LayoutInflater.from(context).inflate(R.layout.add_card_view, p0, false)
-            LastItemViewHolder(view, listener)
+            LastItemViewHolder(view, listener!!)
         } else {
             val view = LayoutInflater.from(context).inflate(R.layout.main_card_view, p0, false)
             when (viewType) {
                 TYPE_ITEM_NEW -> NewCarsViewHolder(view)
-                TYPE_ITEM_OCCASION -> UsedCarsViewHolder(view)
+                TYPE_ITEM_OCCASION -> UsedCarsViewHolder(view,listener!!)
                 else -> throw IllegalArgumentException("Invalid type of data $viewType")
             }
         }
@@ -77,7 +80,6 @@ class AcceuilleCardAdapter(val context: Context, var data: ArrayList<Comparable<
     interface OnCardButtonListener{
         fun OnCardButton(item : Comparable<*>? , itemType : Int)
     }
-    private  var listener : OnCardButtonListener? = null
 
     fun  setOnCardButtonClickListener(listener: OnCardButtonListener){
         this.listener = listener

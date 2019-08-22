@@ -57,6 +57,7 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.AjouterAnnonceActivity"
+                android:parentActivityName=".ui.activities.AcuilleActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.AnnonceApercuActivity"
@@ -71,7 +72,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.fragments.OccasionSample"/>
         <activity android:name=".ui.activities.CommandesActivity"/>
         <activity android:name=".ui.activities.UserOffersActivity"/>
 

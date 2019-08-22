@@ -28,9 +28,13 @@ import android.view.View
 import android.widget.*
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
-import com.example.sayaradzmb.model.*
+import com.example.sayaradzmb.model.Annonce
+import com.example.sayaradzmb.model.Carburant
+import com.example.sayaradzmb.model.Option
+import com.example.sayaradzmb.model.fuel_type
 import com.example.sayaradzmb.repository.servics.AnnonceService
-import com.example.sayaradzmb.servics.*
+import com.example.sayaradzmb.servics.OptionService
+import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.ui.adapter.FuelSpinnerAdapter
 import com.example.sayaradzmb.viewmodel.AjouterAnnonceViewModel
 import com.karumi.dexter.Dexter
@@ -78,9 +82,6 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
     private var fileUri: Uri? = null
     private var postPath = ArrayList<String>()
     private var carburantList = ArrayList<Carburant>()
-    private lateinit var versionService: VersionService
-    private lateinit var marqueService: MarqueService
-    private lateinit var modeleService: ModeleService
     private lateinit var optionService: OptionService
 
     //pour le post request
@@ -94,8 +95,12 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
     private var album = ArrayList<MultipartBody.Part>()
 
     //viewmodel instance
-    lateinit var model : AjouterAnnonceViewModel
+    lateinit var model: AjouterAnnonceViewModel
 
+    companion object {
+        const val TAKE_PHOTO_REQUEST: Int = 2
+        const val PICK_PHOTO_REQUEST: Int = 1
+    }
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,16 +149,16 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
         /** Listen for changes on the AjouterAnnonceViewModel **/
         //Marque liste
-        model.getMarque().observe(this, Observer<Map<Int?,String?>> {
-            spinnerMarqueSet(it!!.values.toList(),it.keys.toList())
+        model.getMarque().observe(this, Observer<Map<Int?, String?>> {
+            spinnerMarqueSet(it!!.values.toList(), it.keys.toList())
         })
         //Modele liste
-        model.getModele().observe(this, Observer<Map<Int?,String?>> {
-            spinnerModeleSet(it!!.values.toList(),it.keys.toList())
+        model.getModele().observe(this, Observer<Map<Int?, String?>> {
+            spinnerModeleSet(it!!.values.toList(), it.keys.toList())
         })
         //Version liste
-        model.getVersion().observe(this, Observer<Map<Int?,String?>> {
-            spinnerVersionSet(it!!.values.toList(),it.keys.toList())
+        model.getVersion().observe(this, Observer<Map<Int?, String?>> {
+            spinnerVersionSet(it!!.values.toList(), it.keys.toList())
         })
 
         // pour le upload des photos
@@ -161,11 +166,19 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
         // pour lancer le post request
         button_validate.setOnClickListener {
-            prixVehicule = input_prix.text.toString()
+            if (input_couleur.text.isNullOrBlank() || input_prix.text.isNullOrBlank() || input_km.text.isNullOrBlank())
+            {
+                Toast.makeText(this,"make sure to fill all the inputs (Color, Distance ...)",Toast.LENGTH_LONG).show()
+            } else if (codeVersion.isBlank()){
+                Toast.makeText(this,"make sure to choose a version",Toast.LENGTH_LONG).show()
+            } else if (carburantVehicule.isBlank()){
+                Toast.makeText(this,"make sure to choose a fuel type from the list",Toast.LENGTH_LONG).show()
+            }
+            else { prixVehicule = input_prix.text.toString()
             couleurVehicule = input_couleur.text.toString()
             descriptionVehicule = input_description.text.toString()
             kmVehicule = input_km.text.toString()
-            uploadImage()
+            uploadImage() }
         }
 
     }
@@ -208,7 +221,6 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
                 pickPhotoFromGallery()
             }
 
-
             //prendre une nouvelle photo
             mDialogView.dialogCancelBtn.setOnClickListener {
                 askCameraPermission()
@@ -237,12 +249,12 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
     }
 
 
-     /*****
+    /*****
      ** Pour la manipulation des composants de la GUI // Spinners
      *****/
 
-     //Spinner : Marque
-     private fun spinnerMarqueSet(listMarque: List<String?>, listCode: List<Int?>) {
+    //Spinner : Marque
+    private fun spinnerMarqueSet(listMarque: List<String?>, listCode: List<Int?>) {
 
         val arrayAdapter = ArrayAdapter(this, R.layout.spinner_item, listMarque)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -257,7 +269,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
                     modeles.isClickable = true
 
                     //get the models using the view model
-                    model.loadModele(idUser!!,listCode[position]!!)
+                    model.loadModele(idUser!!, listCode[position]!!)
 
                 } else {
                     modeles = findViewById(R.id.modele_spinner)
@@ -274,8 +286,8 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
     }
 
-     //Spinner : Modele
-     private fun spinnerModeleSet(listModele: List<String?>, listCode: List<Int?>) {
+    //Spinner : Modele
+    private fun spinnerModeleSet(listModele: List<String?>, listCode: List<Int?>) {
 
         val arrayAdapter = ArrayAdapter(this, R.layout.spinner_item, listModele)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -288,7 +300,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
                 if (listCode[position] != null) {
                     versions = findViewById(R.id.versions_spinner)
                     versions.isClickable = true
-                    model.loadVersion(idUser!!,listCode[position]!!)
+                    model.loadVersion(idUser!!, listCode[position]!!)
                 } else {
                     // Code to perform some action when nothing is selected
                     versions = findViewById(R.id.versions_spinner)
@@ -304,8 +316,8 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         }
     }
 
-     //Spinner : Version
-     private fun spinnerVersionSet(listVersion: List<String?>, listCode: List<Int?>) {
+    //Spinner : Version
+    private fun spinnerVersionSet(listVersion: List<String?>, listCode: List<Int?>) {
         val arrayAdapter = ArrayAdapter(this, R.layout.spinner_item, listVersion)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         versions.adapter = arrayAdapter
@@ -353,8 +365,6 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             }
         }
     }
-
-
 
 
     /** TO-DO
@@ -410,11 +420,6 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
     }
 
 
-
-
-
-
-
     // pour le telechargement de l'image et l'envoie du post request
     private fun uploadImage() {
 
@@ -445,7 +450,12 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         requestCall.enqueue(object : Callback<Annonce> {
             override fun onResponse(call: Call<Annonce>, response: Response<Annonce>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@AjouterAnnonceActivity, response.message(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@AjouterAnnonceActivity, "votre annonce a été bien sauvegardée", Toast.LENGTH_LONG).show()
+                    val intent = Intent()
+                    intent.putExtra("annonce", response.body())
+
+                    setResult(Activity.RESULT_OK , intent)
+                    finish()
                 } else {
                     Toast.makeText(this@AjouterAnnonceActivity, response.message(), Toast.LENGTH_LONG).show()
                 }
@@ -453,7 +463,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
             override fun onFailure(call: Call<Annonce>, t: Throwable) {
                 Toast.makeText(this@AjouterAnnonceActivity, "wait  " + t.message, Toast.LENGTH_LONG).show()
-                Log.i("thro","acti"+call.isExecuted, t)
+                Log.i("thro", "acti" + call.isExecuted, t)
             }
 
         })
@@ -471,12 +481,12 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        startActivityForResult(pickImageIntent, AppConstants.PICK_PHOTO_REQUEST)
+        startActivityForResult(pickImageIntent, PICK_PHOTO_REQUEST)
     }
 
     //override function that is called once the photo has been taken
     @SuppressLint("Recycle")
-    override fun onActivityResult( requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val picture = ImageView(this@AjouterAnnonceActivity)
         picture.setPadding(10, 10, 10, 10)
@@ -485,21 +495,25 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         picture.isClickable = true
 
         if (resultCode == Activity.RESULT_OK
-            && requestCode == AppConstants.TAKE_PHOTO_REQUEST
+            && requestCode == TAKE_PHOTO_REQUEST
         ) {
             //To get the File for further usage
             // val auxFile = File(mCurrentPhotoPath)
 
             @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-            postPath.add(mCurrentPhotoPath!!)
+            if (postPath.size < 5)
+            { postPath.add(mCurrentPhotoPath!!)
             Log.i("path capture", mCurrentPhotoPath)
 
             //ajouter la photo à un imageview en utilisant Picasso
             Picasso.get().load(fileUri).resize(300, 300).into(picture)
-            pictures_layout.addView(picture)
+            pictures_layout.addView(picture)}
+            else {
+                Toast.makeText(this,"You cant insert more than five pictures",Toast.LENGTH_LONG).show()
+            }
 
         } else if (resultCode == Activity.RESULT_OK
-            && requestCode == AppConstants.PICK_PHOTO_REQUEST
+            && requestCode == PICK_PHOTO_REQUEST
         ) {
 
             val selectedImage = data!!.data
@@ -517,10 +531,14 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             cursor.close()
 
             fileUri = data.data
+            if (postPath.size < 5){
             postPath.add(mediaPath)
 
             Picasso.get().load(fileUri).resize(300, 300).into(picture)
-            pictures_layout.addView(picture)
+            pictures_layout.addView(picture)}
+            else {
+                Toast.makeText(this,"You can't insert  more than five pictures",Toast.LENGTH_LONG).show()
+            }
 
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -539,13 +557,13 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         )
         fileUri = uri
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        startActivityForResult(intent, AppConstants.TAKE_PHOTO_REQUEST)
+        startActivityForResult(intent, TAKE_PHOTO_REQUEST)
     }
 
     @Throws(IOException::class)
     private fun createFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.FRANCE).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -614,11 +632,5 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
     }
 
 
-
 }
 
-
-object AppConstants {
-    const val TAKE_PHOTO_REQUEST: Int = 2
-    const val PICK_PHOTO_REQUEST: Int = 1
-}

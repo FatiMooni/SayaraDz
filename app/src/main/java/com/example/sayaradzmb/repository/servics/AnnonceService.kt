@@ -31,4 +31,7 @@ interface AnnonceService {
     @GET("vehicules/annonces/{id}")
     fun GetAnnounceAt(@Path("id") id: Int): Call<Annonce>
 
+    @PUT ("vehicules/annonces/{id}")
+    fun UpdateAnnounce(@Path("id") id: Int): Call<Annonce>
+
 }

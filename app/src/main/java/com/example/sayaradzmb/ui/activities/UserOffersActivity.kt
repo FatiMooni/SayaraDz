@@ -144,6 +144,10 @@ class UserOffersActivity : AppCompatActivity(), SharedPreferenceInterface {
 
 
         offerAdapter.setOnItemClickListener(object : CustomCardsAdapter.OnClickItemListener {
+            override fun onButtonClickItem(value: Comparable<*>, position: Int) {
+
+            }
+
             override fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int) {
                 val popup = PopupMenu(view.context, view.card_menu)
                 val inflater = popup.menuInflater
