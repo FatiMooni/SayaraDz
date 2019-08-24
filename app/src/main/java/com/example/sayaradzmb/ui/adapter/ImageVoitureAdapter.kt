@@ -27,7 +27,7 @@ class ImageVoitureAdapter(
      */
     init {
         couleurAdapter.attach(this)
-        this.imageList = couleurAdapter.getImages()
+        //this.imageList = couleurAdapter.getImages()
         Log.i("taille image init : ",this.imageList!!.size.toString())
     }
     private var currentImage :String? = null
@@ -40,8 +40,7 @@ class ImageVoitureAdapter(
 
     override fun onBindViewHolder(holder: ImageVoitureViewHolder, position: Int) {
         currentImage = this.imageList!![0]
-        Log.i("taille image bind : ",imageList!!.size.toString())
-        Log.i("image dans bind : ", currentImage)
+        println("l'image : $currentImage")
         Picasso.get().load(currentImage).resize(500,200).into(holder.imageview)
         holder.imageview.setOnClickListener {
             println("position $position")
@@ -59,7 +58,5 @@ class ImageVoitureAdapter(
     fun update(){
         this.imageList = couleurAdapter.getImages()
         notifyDataSetChanged()
-        Log.i("taille image : ",this.imageList!!.size.toString())
-        Log.i("image dans upadate : ", imageList!![0])
     }
 }

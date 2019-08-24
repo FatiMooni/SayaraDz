@@ -25,21 +25,35 @@
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:weightSum="2">
-                    <TextView
-                            android:id="@+id/compose_text_dispo"
+                    <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Disponible"
-                    />
+                    android:layout_weight="1"
+                    android:gravity="center">
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:id="@+id/compose_text_dispo_container">
+                            <TextView
+                                    android:id="@+id/compose_text_dispo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="18dp"
+                            />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
                     <TextView
                             android:id="@+id/compose_text_prix"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100000000 DA"
+                            android:textSize="18dp"
                     />
 
                 </LinearLayout>
@@ -103,6 +117,7 @@
                             android:layout_height="50dp"
                             android:text="Les Options"
                             android:gravity="center"
+                            android:textSize="15dp"
                     />
                     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                                             android:layout_height="match_parent"
@@ -124,6 +139,7 @@
                             android:textSize="13sp"
                             android:layout_marginTop="2dp"
                             android:textColor="@color/colorWhite"
+                            android:visibility="gone"
                     android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>

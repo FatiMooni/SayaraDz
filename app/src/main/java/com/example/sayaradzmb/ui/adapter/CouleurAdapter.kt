@@ -65,6 +65,7 @@ class CouleurAdapter(
         println(couleur)
 
         val imageVoiture = couleur.CheminImage
+        println("image voiture $imageVoiture")
         buttonColor = holder.couleurview
         var color = couleur.CodeHexa!!
         var drawable = buttonColor!!.background
@@ -79,7 +80,6 @@ class CouleurAdapter(
             imagePhoto.add(imageVoiture!!)
             setImages(imagePhoto)
             Log.i("image dans couleur : ", imagePhoto[0])
-
         }
         /**
          * quand on click sur une couleur
@@ -87,10 +87,12 @@ class CouleurAdapter(
         holder.couleurview.setOnClickListener {
             currentCouleur = couleur.CodeHexa
             imagePhoto.clear()
-            imagePhoto.add(imageVoiture!!)
+            if (imageVoiture != null) imagePhoto.add(imageVoiture!!)
             setImages(imagePhoto)
             Log.i("image dans couleur : ", imagePhoto[0])
-            notifyComposition(currentCouleur!!)
+            Log.i("current image : ", currentCouleur)
+            if(this.compoitionObsrver != null) notifyComposition(currentCouleur!!)
+
         }
     }
 
@@ -114,8 +116,12 @@ class CouleurAdapter(
      * set imagePhoto
      */
     fun setImages(images : ArrayList<String>){
-        this.imagePhoto = images
-        notifyObserver()
+        if(this.imageObserver != null) {
+            println("in observer")
+            this.imagePhoto = images
+            notifyObserver()
+        }
+
     }
 
     /**

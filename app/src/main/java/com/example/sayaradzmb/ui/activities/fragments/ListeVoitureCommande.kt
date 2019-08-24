@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.Repository.servics.StockService
@@ -30,12 +31,17 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
     private var listVoitureAdapter : ListeVoitureCommandeAdapter? = null
     private var listVoiture = ArrayList<VoitureCommande>()
     private var version : Version? = null
+    private var commande : Button? = null
 
     /**
      * On create
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_liste_voiture_commande, container, false)
+        listVoiture.clear()
+        /**
+         *
+         */
         /**
          * Avoir la version
          */
@@ -45,21 +51,21 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
          * Avoir les composant
          */
         nomVersion = v.findViewById(R.id.nom_version_voiture)
+        commande = v.findViewById(R.id.neuf_tech_card_commande_button)
 
-        /**
-         * Initialiser les composant
-         */
-        nomVersion!!.text = version!!.NomVersion
 
         /**
          * la requete d'avoir les voiture
          */
         avoirListVoiture(version!!.CodeVersion,v)
+        /**
+         * Initialiser les composant
+         */
 
         /**
          * Initialiser les recycle view
          */
-
+        Log.i("on create : ","in on create")
         return v
     }
 
@@ -69,7 +75,7 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
     fun avoirListVoiture(id : Int?,v : View){
         var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
         progress.setCancelable(false)
-        progress.setTitle("charger les marque")
+        progress.setTitle("charger la liste des Voitures")
         progress.show()
         val vService = ServiceBuilder.buildService(StockService::class.java)
         val requeteAppel = vService.avoirVoitureStock(13)
@@ -83,6 +89,8 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
                     }
                     //errore
                     Log.i("list Voiture", listVoiture!!.size.toString())
+                    if (listVoiture.size == 0)  nomVersion!!.text = "Pas de voiture ${version!!.NomVersion} Disponible"
+                    else nomVersion!!.text = "Voiture Disponible : ${version!!.NomVersion}"
                     InitialiserListeVoiture(v)
                     progress.dismiss()
                 }else{

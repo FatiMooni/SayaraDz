@@ -36,8 +36,10 @@ import android.content.Intent
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
+import android.widget.Toast
 import com.braintreepayments.api.dropin.DropInRequest
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.helper.FragmentHelper
 import kotlinx.android.synthetic.main.confirm_dialog.*
 
 
@@ -93,10 +95,12 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
             override fun onResponse(call: Call<Any>, response: Response<Any>) =
                 if(response.isSuccessful){
                     print(response.body()!!)
-                    creeResrvation()
                     progress.dismiss()
-                }else{
+                    creeResrvation()
 
+                }else{
+                    var toast : Toast = Toast.makeText(context,"La commande n'a pas été effecuer",Toast.LENGTH_LONG)
+                    toast.show()
                 }
             override fun onFailure(call: Call<Any>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
@@ -120,10 +124,13 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
                     Log.i("token",token)
                     onBraintreeSubmit(token)
                 }else{
-
+                    getClient()
+                    var toast : Toast = Toast.makeText(context,"Reservation échouee",Toast.LENGTH_LONG)
+                    toast.show()
                 }
             override fun onFailure(call: Call<PaimentToken>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
+                getClient()
             }
         })
         return token
@@ -135,8 +142,10 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
         if (versement!!.text.toString() != ""){
             Log.i("versement",versement!!.text.toString())
             val token = getClient()
-
-
+        }else{
+            var toast : Toast = Toast.makeText(context,"La commande est a été effecuer sans Reservation",Toast.LENGTH_LONG)
+            toast.show()
+            FragmentHelper.changeFragmentWithoutData(activity!!,NouveauRechercheCars(),"toRechercheCars",R.id.fragment_id)
         }
     }
 
@@ -163,6 +172,10 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
 
             } else if (resultCode == RESULT_CANCELED) {
                 // the user canceled
+                var toast : Toast = Toast.makeText(context," paiment non effectuee",Toast.LENGTH_LONG)
+                toast.show()
+                FragmentHelper.changeFragmentWithoutData(activity!!,NouveauRechercheCars(),"toRechercheCars",R.id.fragment_id)
+
             } else {
                 // handle errors here, an exception may be available in
                 val error = data!!.getSerializableExtra(DropInActivity.EXTRA_ERROR) as Exception
@@ -174,16 +187,28 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
      * paiment
      */
     private fun paiment(paiment : String,montant : String,commande : String){
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("attender pour le paiment")
+        progress.show()
         val requestAppel = pService.postNonceToServer(paiment,montant,commande)
         requestAppel.enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) =
                 if(response.isSuccessful){
+                    progress.dismiss()
+                    var toast : Toast = Toast.makeText(context,"La commande est a été effecuer avec Reservation ${montant} DA",Toast.LENGTH_LONG)
+                    toast.show()
                     println(response.body()!!)
-                }else{
-
+                    FragmentHelper.changeFragmentWithoutData(activity!!,NouveauRechercheCars(),"toRechercheCars",R.id.fragment_id)
+                  }else{
+                    paiment(paiment,montant, commande)
+                    var toast : Toast = Toast.makeText(context,"paiment non effectue",Toast.LENGTH_LONG)
+                    toast.show()
                 }
             override fun onFailure(call: Call<Any>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
+                progress.dismiss()
+                paiment(paiment,montant,commande)
             }
         })
     }

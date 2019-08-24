@@ -7,9 +7,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import com.example.sayaradzmb.R
-import com.example.sayaradzmb.ui.activities.fragments.ListeVoitureCommande
-import java.util.*
 
 class FragmentHelper {
     companion object{
@@ -17,20 +14,26 @@ class FragmentHelper {
             val bundel = Bundle()
             bundel.putParcelable(tagData,data)
             nextFragment.arguments = bundel
-            activity!!.supportFragmentManager.beginTransaction()
+            activity.supportFragmentManager.beginTransaction()
                 .replace(idFragment,nextFragment,tagFragment)
                 .addToBackStack(null)
                 .commit()
         }
 
+        fun changeFragmentWithoutData(activity : FragmentActivity,nextFragment : Fragment,tagFragment : String,idFragment : Int){
+            activity.supportFragmentManager.beginTransaction()
+                .replace(idFragment,nextFragment,tagFragment)
+                .addToBackStack(null)
+                .commit()
+        }
         fun switchActivity(contextSource : Context, contextDist:Class<*>, activity :Activity) {
             val intent = Intent(contextSource, contextDist)
             activity.startActivity(intent)
         }
-        fun switchActivityExtra(contextSource : Context,contextDist:Class<*>,activity :Activity,tag :String,parcel :Parcelable) {
+        fun switchActivityExtra(contextSource : Context,contextDist:Class<*>,activity :Activity,tag :String,parcel :Parcelable,requestCode : Int) {
             val intent = Intent(contextSource, contextDist)
             intent.putExtra(tag,parcel)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent,requestCode)
         }
     }
 }

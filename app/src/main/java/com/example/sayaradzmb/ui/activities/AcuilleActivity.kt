@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.ui.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 
@@ -25,10 +26,12 @@ import android.widget.Toast
 
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.activities.fragments.OccasionFragment
+import com.example.sayaradzmb.helper.FragmentHelper
 import kotlinx.android.synthetic.main.activity_accuille.*
 
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Version
+import com.example.sayaradzmb.model.VoitureCommande
 import com.example.sayaradzmb.ui.activities.fragments.*
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
@@ -53,14 +56,8 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
 
     /**
-     * la focntion qui aide a switche entre les fragment
+     * OnCreate
      */
-
-
-
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,13 +88,14 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
     }
 
-
-
     /**
      * Pour Deconnecter
      */
     private fun deconnecter(){
             val login = Intent(this@AcuilleActivity, LoginActivity::class.java)
+            /**
+            * vider sesion
+            */
             startActivity(login)
             this@AcuilleActivity.finish()
     }
@@ -291,7 +289,14 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true    }
-
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+                var fragment= NouveauCommandeFragment()
+                var voiture : VoitureCommande = data!!.getParcelableExtra("voitureCommande")
+                FragmentHelper.changeFragment(voiture,this@AcuilleActivity,fragment,"voitureCommande","toCommande",R.id.fragment_id)
+            }
+        }
 }
 
 

@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.sayaradzmb.ui.activities.CompositionActivity
 import com.example.sayaradzmb.helper.*
+import com.example.sayaradzmb.model.CheminImage
 import com.example.sayaradzmb.ui.adapter.CouleurAdapter
 import com.example.sayaradzmb.ui.adapter.ImageVoitureAdapter
 import com.example.sayaradzmb.ui.adapter.OptionAdapter
@@ -61,6 +62,9 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
         val context = v.context
+        couleurs.clear()
+        options.clear()
+        imagePhoto.clear()
         /**
          * Avoir la version choisie
          */
@@ -131,11 +135,16 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * gestion du prix
          */
-        if(version!!.lignetarif != null) prixVoiture!!.text = "${version!!.lignetarif!!.Prix.toString()} DA"
+        if(version!!.lignetarif != null) prixVoiture!!.text = "Prix de Base : ${version!!.lignetarif!!.Prix.toString()} DA"
         else prixVoiture!!.text = "price not defined"
 
         // var j'ai pas une liste de voiture mais pour chaque couleur j'ai une voiture
-        //if (version!!.images!!.isNotEmpty()) imagePhoto.addAll(version!!.images as ArrayList<CheminImage>)
+        /**if (version!!.couleurs!!.isNotEmpty()) {
+            version!!.couleurs!!.forEach {
+                it.CheminImage?.let { it1 -> imagePhoto.add(it1) }
+            }
+
+        }*/
         if (version!!.couleurs!!.isNotEmpty())couleurs.addAll(version!!.couleurs as ArrayList<Couleur>)
         if (version!!.options!!.isNotEmpty())options.addAll(version!!.options as ArrayList<Option>)
 
@@ -154,6 +163,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
         /**
          * fin initialisation
          */
+
         /**
          * Composer
          */
@@ -182,7 +192,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
     private fun composer(v : View){
        composerButton!!.setOnClickListener{
             FragmentHelper.switchActivityExtra(this.context!!,
-                CompositionActivity::class.java,this.activity!!,"version",version!! as Version)
+                CompositionActivity::class.java,this.activity!!,"version",version!! as Version,1)
        }
     }
 
@@ -208,7 +218,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      */
     override fun onStop() {
         super.onStop()
-        couleurs.clear()
+
     }
 
 }

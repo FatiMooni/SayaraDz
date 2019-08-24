@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.ui.activities
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -23,6 +24,11 @@ import com.example.sayaradzmb.ui.adapter.OptionAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.app.Activity
+import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.widget.LinearLayout
+
 
 class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
 
@@ -44,6 +50,8 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
     private var prixVoiture: TextView? = null
     private var commanderButton: Button? = null
     private var listVoiture = ArrayList<VoitureCommande>()
+    private var voitureSelectionne : VoitureCommande? = null
+    private var priceContainer : LinearLayout?=null
 
     /**
      * Comparison test
@@ -72,15 +80,17 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
         commanderButton = findViewById(R.id.compose_button)
         disponibilite = findViewById(R.id.compose_text_dispo)
         prixVoiture = findViewById(R.id.compose_text_prix)
+        priceContainer = findViewById(R.id.compose_text_dispo_container)
 
         /**
          * remplire les componnet
          */
-        if(version!!.lignetarif != null) prixVoiture!!.text = "${version!!.lignetarif!!.Prix.toString()} DZD"
-        else prixVoiture!!.text = "price not defined"
         if (version!!.couleurs!!.isNotEmpty())couleurs.addAll(version!!.couleurs as ArrayList<Couleur>)
         if (version!!.options!!.isNotEmpty())options.addAll(version!!.options as ArrayList<Option>)
-
+        /**
+         * initialisr current color and current option
+         */
+        currentColor = couleurs[0].CodeHexa
         /**
          * initier les recycle view
          */
@@ -95,6 +105,7 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
         /**
          * Commander
          */
+
         commander(view!!)
     }
 
@@ -104,7 +115,10 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
     private fun commander(v: View) {
 
         commanderButton!!.setOnClickListener {
-
+            val returnIntent = Intent()
+            returnIntent.putExtra("voitureCommande", voitureSelectionne)
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         }
     }
 
@@ -153,6 +167,7 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
                     }
                     Log.i("list Voiture",listVoiture.toString())
                     progress.dismiss()
+                    isDisponible()
                 }else{
 
                 }
@@ -187,6 +202,7 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
     private fun isDisponible(){
         // vas : current option / currentCouleur / version
         // savoir si il existe cette couleur
+        println("dans is Disponible")
         listVoiture.forEach { voiture ->
             var voitureOption = ArrayList<Int>()
             // price options
@@ -203,11 +219,17 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
             var priceTotal = priceBase+priceCouleur+priceOptions
             //avoir price
             if ((currentColor == voiture.Couleur!!.CodeHexa) && (existArray(currentOptions,voitureOption))){
+                Log.i("we have a match here : ",voitureOption.toString())
+                commanderButton!!.visibility = View.VISIBLE
                 disponibilite!!.text = "DISPONIBLE"
+                priceContainer!!.background = getDrawable(R.drawable.indiponible)
                 prixVoiture!!.text = "$priceTotal DA "
+                voitureSelectionne = voiture
                 return
             }else{
+                commanderButton!!.visibility = View.GONE
                 disponibilite!!.text = "NON DISPONIBLE"
+                priceContainer!!.background = getDrawable(R.drawable.disponible)
                 prixVoiture!!.text = " -- "
             }
         }

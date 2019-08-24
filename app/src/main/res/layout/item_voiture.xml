@@ -3,7 +3,8 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/card_item_cars">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         android:gravity="center"
+                       android:layout_margin="10dp"
                 >
                     <include
                             layout="@layout/item_couleur"
@@ -29,7 +31,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:text="@string/quantite"
+                            android:text="@string/quantite"/>
+                    <TextView
+                            android:id="@+id/text_voiture_prix"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:text="@string/price_sign"
                     />
                     <Button
                             android:id="@+id/button_voiture_options"
@@ -37,16 +45,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="@string/options"/>
-                    <Button
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/neuf_tech_card_commande_button"
-                            android:background="@drawable/item_button_commande"
-                            android:text="@string/commnader"
-                            android:textSize="13sp"
-                            android:layout_marginTop="2dp"
-                            android:textColor="@color/colorWhite" />
+
                 </LinearLayout>
 
             </LinearLayout>

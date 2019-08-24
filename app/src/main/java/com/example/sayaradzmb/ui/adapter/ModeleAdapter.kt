@@ -103,6 +103,7 @@ class ModeleAdapter(
             initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
         imageSuivi.setOnClickListener {
+            println("tag : "+imageSuivi.tag)
             if (imageSuivi.tag == "nonSuivi"){
 
                 /**
@@ -113,7 +114,9 @@ class ModeleAdapter(
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
-                            println(response.body().toString())
+                            println("apres abonnemet : "+response.body().toString())
+                            requeteVersion()
+                            processusSuivre(R.drawable.star,imageSuivi,"Suivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
 
@@ -122,8 +125,6 @@ class ModeleAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
-                requeteVersion()
             }else{
                 /**
                  * desabonner
@@ -133,7 +134,9 @@ class ModeleAdapter(
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
-                            println(response.body().toString())
+                            println("apres Desabonnement : "+response.body().toString())
+                            requeteVersion()
+                            processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
 
@@ -142,8 +145,8 @@ class ModeleAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
-                requeteVersion()
+
+
             }
         }
     }
@@ -178,7 +181,7 @@ class ModeleAdapter(
         versionList.clear()
         var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
         progress.setCancelable(false)
-        progress.setTitle("charger les marque")
+        progress.setTitle("charger les Version")
         progress.show()
         val vService =  ServiceBuilder.buildService(VersionService::class.java)
         val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)

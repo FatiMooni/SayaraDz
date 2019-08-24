@@ -72,10 +72,11 @@ class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,Sha
                     }
                     progress.dismiss()
                 }else{
-
+                    progress.dismiss()
                 }
             override fun onFailure(call: Call<List<Marque>>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
+                progress.dismiss()
                 requeteMarque()
             }
         })

@@ -85,6 +85,7 @@ class VersionAdapter(
                             val activity = context as FragmentActivity
                             activity.supportFragmentManager.beginTransaction()
                                 .replace(R.id.fragment_id, afficheFragment, "toAfficheFrag")
+                                .addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -105,6 +106,7 @@ class VersionAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println(response.body().toString())
+                            processusSuivre(R.drawable.star,imageSuivi,"Suivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
 
@@ -113,7 +115,7 @@ class VersionAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
+
             }else{
                 /**
                  * desabonner
@@ -124,6 +126,7 @@ class VersionAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println(response.body().toString())
+                            processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
                         }
@@ -131,7 +134,6 @@ class VersionAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
             }
         }
     }
