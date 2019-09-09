@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:ignore="MissingConstraints"
+        android:layout_height="300dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/colorGrey"
         app:cardBackgroundColor="@color/colorLightGrey"
         android:layout_margin="7dp"
 
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.design.circularreveal.CircularRevealRelativeLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <android.support.v7.widget.AppCompatImageView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
                 android:id="@+id/annonce_image"
-                android:padding="10dp"
+                android:padding="2dp"
+                android:scaleType="fitCenter"
                 android:background="@color/colorWhite"
                 android:src="@drawable/no_picture"
         />
         <Button
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/annonce_image"
-                android:layout_marginTop="200dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/annonce_price_info"
                 android:textAlignment="center"
+                android:layout_marginTop="-10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:id="@+id/offer_num"
-                android:text="00"
+                android:text="Offers"
+                android:textColor="@color/colorWhite"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                android:drawableTint="@color/colorWhite"
+                android:drawableEnd="@drawable/next_sign"
+                android:drawablePadding="10dp"
+
         />
 
         <ImageButton
@@ -38,8 +49,8 @@
                 android:id="@+id/delete_icon_btn"
                 android:src="@drawable/more_icon"
                 android:layout_marginTop="10dp"
-                android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-                android:background="@android:color/transparent"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@android:color/transparent"
         />
         <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -56,22 +67,60 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle"
                 android:padding="5dp"
+                android:drawablePadding="5dp"
+                android:layout_marginTop="5dp"
+                android:text="45000 dz"
+                android:textSize="@dimen/secondary_title"
+                android:textColor="@color/colorBlack"
+                android:drawableStart="@drawable/price_tag"
                 android:id="@+id/annonce_price_info"
                 android:layout_below="@+id/annonce_info"
-
         />
 
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Subtitle"
+                android:padding="5dp"
+                android:layout_alignBaseline="@id/annonce_price_info"
+                android:drawablePadding="5dp"
+                android:layout_toEndOf="@id/annonce_price_tag"
+                android:text="45000 dz"
+                android:textSize="@dimen/secondary_title"
+                android:textColor="@color/colorBlack"
+                android:layout_marginStart="15dp"
+                android:drawableStart="@drawable/offer_tag"
+                android:id="@+id/annonce_offer_info"
+                android:layout_below="@+id/annonce_info"
+        />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_alignBaseline="@id/annonce_price_info"
+                  android:layout_toEndOf="@id/annonce_price_info"
+                  android:text="@string/price_sign"
+                  android:id="@+id/annonce_price_tag"
+                  android:textSize="@dimen/notes_text"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_alignBaseline="@id/annonce_price_info"
+                  android:layout_toEndOf="@id/annonce_offer_info"
+                  android:text="@string/offre"
+                  android:textSize="@dimen/notes_text"
+                  android:layout_height="wrap_content"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/aperçu"
+                android:visibility="gone"
                 android:layout_below="@+id/annonce_info"
-                android:layout_marginStart="250dp"
                 android:layout_marginBottom="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:foregroundGravity="center"
                 android:id="@+id/button_apercu"
                 style="@style/Widget.ButtonSecondary"
 
         />
-    </android.support.design.circularreveal.CircularRevealRelativeLayout>
-
-        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -25,6 +25,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.MarqueService
 
 
+@Suppress("UNCHECKED_CAST")
 class NouveauRechercheCars: Fragment(),RecycleViewHelper,SearchViewInterface,SharedPreferenceInterface {
 
     private var marqueList = ArrayList<Marque>()

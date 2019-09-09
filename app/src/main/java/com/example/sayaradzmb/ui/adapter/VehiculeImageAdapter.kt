@@ -47,6 +47,8 @@ class VehiculeImageAdapter : PagerAdapter {
 
           Picasso.get()
               .load(images[position].CheminImage)
+              .centerCrop()
+              .fit()
               .into(img)
           container.addView(view)
 

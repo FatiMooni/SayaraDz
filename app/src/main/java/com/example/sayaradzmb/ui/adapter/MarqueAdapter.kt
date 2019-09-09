@@ -27,30 +27,31 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
 class MarqueAdapter(
     private var marqueList: ArrayList<Marque>,
     internal var context: Context,
-    internal var view : View,
-    private var marqueListFiltree : ArrayList<Marque>,
-    private val activity : FragmentActivity
-) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(), RecycleViewHelper,Filterable,SearchViewInterface,SharedPreferenceInterface {
+    internal var view: View,
+    private var marqueListFiltree: ArrayList<Marque>,
+    private val activity: FragmentActivity
+) : RecyclerView.Adapter<MarqueAdapter.MarqueViewHolder>(),
+    RecycleViewHelper,
+    Filterable, SearchViewInterface, SharedPreferenceInterface {
 
     /**
      * Declaration
      */
-    var marqueview : View? = null
+    var marqueview: View? = null
 
     //
     var frag = 1
 
-    private var  comm : ((Version) -> Unit)? = null
+    private var comm: ((Version) -> Unit)? = null
     var marqueDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_marque)
     var modeleDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_modele)
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
-    private var modeleAdapter : ModeleAdapter? = null
+    private var modeleAdapter: ModeleAdapter? = null
     private var modeleList = ArrayList<Modele>()
-    private var currentCodeMarque : Int = -1
+    private var currentCodeMarque: Int = -1
     var search = view.findViewById<Button>(R.id.search_button)
 
     /**
@@ -58,11 +59,10 @@ class MarqueAdapter(
      */
 
 
-
-
-
-    constructor(marqueList: ArrayList<Marque>, context: Context, view : View, marqueListFiltree : ArrayList<Marque>,
-                activity : FragmentActivity,listener: (Version) -> Unit) : this(marqueList,context,view,marqueListFiltree,activity) {
+    constructor(
+        marqueList: ArrayList<Marque>, context: Context, view: View, marqueListFiltree: ArrayList<Marque>,
+        activity: FragmentActivity, listener: (Version) -> Unit
+    ) : this(marqueList, context, view, marqueListFiltree, activity) {
         this.comm = listener
         frag = 0
     }
@@ -83,7 +83,7 @@ class MarqueAdapter(
         val marque = marqueListFiltree.get(position)
         holder.nomMarque.text = marque.NomMarque
 
-        if(marque.images!!.isNotEmpty()){
+        if (marque.images!!.isNotEmpty()) {
             Picasso.get().load(marque.images[0].CheminImage).into(holder.logoImage)
         }
         holder.item.setOnClickListener(View.OnClickListener {
@@ -97,26 +97,31 @@ class MarqueAdapter(
             //settings for each fragment
             when (frag) {
                 0 -> {
-                    Log.i("occasion",view.context.toString())
+                    Log.i("occasion", view.context.toString())
                     modeleDropDown.setOnClickListener {
                         if (modeleDropDown.isExpanded) modeleDropDown.collapse()
                         else modeleDropDown.expand()
                     }
-                    modeleAdapter = ModeleAdapter(modeleList,view.context,view,modeleList,activity,comm!!)
-                    initLineaire(view,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+                    modeleAdapter = ModeleAdapter(modeleList, view.context, view, modeleList, activity, comm!!)
+                    initLineaire(
+                        view,
+                        R.id.imd_rv_modele,
+                        LinearLayoutManager.VERTICAL,
+                        modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
+                    )
                 }
 
                 1 -> {
-                    search.visibility=View.GONE
+                    search.visibility = View.GONE
                     modeleDropDown.collapse()
-                    modeleDropDown.visibility=View.VISIBLE
-                    versionDropDown.visibility=View.GONE
+                    modeleDropDown.visibility = View.VISIBLE
+                    versionDropDown.visibility = View.GONE
                     init(view)
-                    if(marqueview == null) Log.i("marqueview","marqueview null")
-                    }
+                    if (marqueview == null) Log.i("marqueview", "marqueview null")
+                }
 
             }
-            initSearchView(activity,view,modeleAdapter!!,R.id.search_bar_modele)
+            initSearchView(activity, view, modeleAdapter!!, R.id.search_bar_modele)
             requeteModele()
 
 
@@ -128,16 +133,16 @@ class MarqueAdapter(
         return marqueListFiltree.size
     }
 
-    fun addAllwithclear(marqueLists : ArrayList<Marque>){
+    fun addAllwithclear(marqueLists: ArrayList<Marque>) {
         //marqueList.clear()
         marqueList.addAll(marqueLists)
         notifyDataSetChanged()
     }
 
     inner class MarqueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            internal var item = view.findViewById<LinearLayout>(R.id.item_marque)
-            internal var logoImage = view.findViewById<ImageView>(R.id.im_image_logomarque)
-            internal var nomMarque = view.findViewById<TextView>(R.id.im_text_nommarque)
+        internal var item = view.findViewById<LinearLayout>(R.id.item_marque)
+        internal var logoImage = view.findViewById<ImageView>(R.id.im_image_logomarque)
+        internal var nomMarque = view.findViewById<TextView>(R.id.im_text_nommarque)
     }
 
     /**
@@ -145,35 +150,47 @@ class MarqueAdapter(
      */
 
 
-    private fun init(v : View){
-        modeleAdapter = ModeleAdapter(modeleList,v.context,view,modeleList,activity)
-        initLineaire(v,R.id.imd_rv_modele, LinearLayoutManager.VERTICAL,modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+    private fun init(v: View) {
+        modeleAdapter = ModeleAdapter(modeleList, v.context, view, modeleList, activity)
+        initLineaire(
+            v,
+            R.id.imd_rv_modele,
+            LinearLayoutManager.VERTICAL,
+            modeleAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
+        )
     }
 
-    private fun requeteModele(){
+    private fun requeteModele() {
         modeleList.clear()
+
         var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
         progress.setCancelable(false)
         progress.setTitle("charger les modele")
         progress.show()
         val vService =  ServiceBuilder.buildService(ModeleService::class.java)
         val requeteAppel = vService.getModeles(avoirIdUser(this.context),currentCodeMarque)
+
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     print(response.body()!!)
                     var lesModele = response.body()!!
-                    lesModele.forEach{
-                            e->modeleList.add(e)
+                    lesModele.forEach { e ->
+                        modeleList.add(e)
                     }
+
                     progress.dismiss()
                 }else{
 
+
                 }
+
             override fun onFailure(call: Call<List<Modele>>, t: Throwable) {
+
                 Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                 progress.dismiss()
                 requeteModele()
+
             }
         })
     }
@@ -187,7 +204,7 @@ class MarqueAdapter(
                 val charString = charSequence.toString()
                 if (charString.isEmpty()) {
                     marqueListFiltree = marqueList
-                    Log.i("marquefiltree",marqueListFiltree.toString())
+                    Log.i("marquefiltree", marqueListFiltree.toString())
                 } else {
                     val filteredList = ArrayList<Marque>()
                     for (row in marqueList) {

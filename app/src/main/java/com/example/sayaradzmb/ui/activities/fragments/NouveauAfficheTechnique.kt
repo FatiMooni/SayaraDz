@@ -61,6 +61,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_tech,container,false)
+
         val context = v.context
         couleurs.clear()
         options.clear()
@@ -132,10 +133,12 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
             }
         }
 
+
         /**
          * gestion du prix
          */
         if(version!!.lignetarif != null) prixVoiture!!.text = "Prix de Base : ${version!!.lignetarif!!.Prix.toString()} DA"
+
         else prixVoiture!!.text = "price not defined"
 
         // var j'ai pas une liste de voiture mais pour chaque couleur j'ai une voiture

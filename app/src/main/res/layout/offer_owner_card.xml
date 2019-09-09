@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.design.card.MaterialCardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="7dp"
+        app:strokeWidth="0.5dp"
+        app:strokeColor="@color/colorGrey"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/person_name"
+                    android:layout_marginStart="10dp"
+                    android:text="name name"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/secondary_title"
+                    android:drawableStart="@drawable/person_sign"
+                    android:textStyle="bold"
+            />
+            <android.support.v7.widget.AppCompatButton
+                    android:layout_alignBaseline="@id/person_name"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@drawable/phone"
+                    android:drawableTint="@color/colorAccent"
+                    android:text="@string/appeler"
+                    android:drawablePadding="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/offre"
+                android:textSize="@dimen/notes_text"
+                android:textColor="@color/colorBlack"
+                android:id="@+id/title"
+                android:layout_below="@id/date"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_alignBaseline="@id/title"
+                android:layout_toEndOf="@id/title"
+                android:layout_marginStart="5dp"
+                android:text="4580000"
+                android:id="@+id/offer_price"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:textSize="@dimen/primary_title"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_alignBaseline="@id/title"
+                android:layout_toEndOf="@id/offer_price"
+                android:text="@string/price_sign"
+                android:layout_marginStart="5dp"
+                android:id="@+id/pricetag"
+                android:textSize="@dimen/notes_text"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_alignBaseline="@id/title"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:id="@+id/offer_state_accepted"
+                android:drawableStart="@drawable/sign_accept"
+                android:text="Offre Accepted"
+                android:visibility="gone"
+                android:textColor="#027E04"
+                android:textSize="@dimen/normal_text"
+                android:textAlignment="center"
+                android:drawablePadding="3dp"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_alignBaseline="@id/title"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:visibility="gone"
+                android:id="@+id/offer_state_refused"
+                android:drawableStart="@drawable/sign_declain"
+                android:text="Offre Declained"
+                android:textColor="#8E1417"
+                android:textSize="@dimen/normal_text"
+                android:textAlignment="center"
+                android:drawablePadding="3dp"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="On 27/45/2089"
+                android:textStyle="italic"
+                android:textSize="@dimen/notes_text"
+                android:id="@+id/date"
+                android:layout_below="@id/person_name"
+                android:layout_height="wrap_content"/>
+        <View android:layout_width="match_parent"
+              android:layout_below="@id/title"
+              android:layout_marginTop="10dp"
+              android:id="@+id/divider"
+              android:layout_marginStart="5dp"
+              android:layout_marginEnd="5dp"
+              android:background="@color/colorLightGrey"
+              android:layout_height="1dp"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:weightSum="100"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center_horizontal"
+                      android:layout_below="@id/divider"
+                      android:layout_height="wrap_content">
+
+            <Button android:layout_width="0dp"
+                    android:drawableStart="@drawable/accepted"
+                    android:background="@android:color/transparent"
+                    android:layout_weight="30"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Accepter"
+                    android:visibility="gone"
+                    android:textColor="#057212"
+                    android:textStyle="bold"
+                    android:id="@+id/btn_accept"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="wrap_content"/>
+
+            <Button android:layout_width="0dp"
+                    android:layout_marginStart="15dp"
+                    android:drawableStart="@drawable/canceld"
+                    android:background="@android:color/transparent"
+                    android:layout_weight="30"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:id="@+id/btn_declain"
+                    android:text="Refuser"
+                    android:visibility="gone"
+                    android:textColor="#B80404"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.design.card.MaterialCardView>

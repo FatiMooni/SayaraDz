@@ -36,7 +36,6 @@ class VersionAdapter(
     private var onSelectedItem : ((Version) -> Unit)? = null
 
     private var currentCodeVersion: Int = -1
-    private var listenerVariable : AdapterView.OnItemClickListener? = null
     var versionDropDown = view.findViewById<ExpandableCardView>(R.id.fnt_ecv_version)
     var search = view.findViewById<Button>(R.id.search_button)
     var frag = 1

@@ -16,8 +16,10 @@
     <application
             android:allowBackup="true"
             android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+            android:hardwareAccelerated="false"
             android:icon="@drawable/logo_sayaradz_mobile"
             android:label="@string/app_name"
+            android:largeHeap="true"
             android:roundIcon="@drawable/logo_sayaradz_mobile"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar"
@@ -25,8 +27,39 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:appComponentFactory"
             tools:targetApi="p">
+
         <activity android:name=".ui.activities.CompositionActivity"
         android:screenOrientation="landscape">
+        </activity>
+
+        <activity
+                android:name=".ui.activities.AnnonceOffersActivity"
+                android:label="@string/title_activity_annonce_offers"
+                android:parentActivityName=".ui.activities.AcuilleActivity"
+                android:theme="@style/AppTheme.NoActionBar.NoActionBar">
+            <intent-filter>
+                <action android:name="OpenOffers"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/path"/>
+        </provider>
+
+
+        <activity
+                android:name=".ui.activities.OffreActivity"
+                android:label="@string/title_activity_offre"
+                android:theme="@style/AppTheme.NoActionBar.NoActionBar">
         </activity>
         <activity
                 android:name=".ui.activities.AcuilleActivity"
@@ -36,9 +69,11 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.AjouterAnnonceActivity"
+                android:parentActivityName=".ui.activities.AcuilleActivity"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.activities.OffreActivity"
+                android:name=".ui.activities.AnnonceApercuActivity"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".ui.activities.MainActivity"
@@ -49,6 +84,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
@@ -61,6 +97,11 @@
                 <data android:scheme="${applicationId}.braintree"/>
             </intent-filter>
         </activity>
+
+
+        <activity android:name=".ui.activities.CommandesActivity"/>
+        <activity android:name=".ui.activities.UserOffersActivity"/>
+
 
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"

@@ -1,46 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context = ".ui.activities.OffreActivity">
+        tools:context=".ui.activities.OffreActivity">
 
-    <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
-            android:fitsSystemWindows="true"
+    <FrameLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/header"
 
-            <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    app:title="@string/year"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_width="match_parent"
-            />
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.CardView
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_bar"
-            android:id="@+id/commande_personal_info"
+                />
+
+    </FrameLayout>
+
+    <include
+            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/item_edit_versement"
-            android:layout_marginBottom="10dp">
+            layout="@layout/content_offre"/>
 
-    </android.support.v7.widget.CardView>
-    <include android:layout_height="wrap_content"
-             android:layout_width="match_parent"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/commande_personal_info"
-             layout="@layout/apercu_annonce_contenu"/>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

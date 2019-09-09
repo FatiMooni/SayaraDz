@@ -9,9 +9,9 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.Repository.servics.AnnonceService
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.annonce_view.view.*
@@ -57,6 +57,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
         var véhicule : String = ""
         lateinit var mDialogView : View
         lateinit var pAdapter : VehiculeImageAdapter
+        @SuppressLint("NewApi")
         var popup = PopupMenu(objet.context,objet.delete_icon_btn)
 
 
@@ -73,7 +74,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
 
              objet.button_apercu.setOnClickListener {
                 //Inflate the dialog --> ajouter le contenu en xml au dialog
-                val mDialogView = LayoutInflater.from(objet.context).inflate(R.layout.apercu_annonce_contenu, null)
+                //val mDialogView = LayoutInflater.from(objet.context).inflate(R.layout.apercu_annonce_contenu, null)
 
                 //AlertDialogBuilder
                 val mBuilder = AlertDialog.Builder(objet.context)

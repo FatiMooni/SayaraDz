@@ -1,33 +1,30 @@
 package com.example.sayaradzmb.ui.activities
 
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-
-import android.os.Bundle;
+import android.os.Build
+import android.os.Bundle
 import android.support.design.widget.NavigationView
-
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
-
-
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.activities.fragments.OccasionFragment
+import com.example.sayaradzmb.ui.activities.fragments.OccasionFragment
 import com.example.sayaradzmb.helper.FragmentHelper
 import kotlinx.android.synthetic.main.activity_accuille.*
+
 
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Version
@@ -38,32 +35,34 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.pusher.pushnotifications.PushNotifications
+import kotlinx.android.synthetic.main.activity_accuille.*
 import kotlinx.android.synthetic.main.toolbar_accuille.*
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
+
 class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
     {
 
 
     private var pref: SharedPreferencesHelper? = null
-    private var mGoogleSignInClient : GoogleSignInClient? = null
+    private var mGoogleSignInClient: GoogleSignInClient? = null
     var textCartItemCount: TextView? = null
     var mCartItemCount = 10
-
-
-
 
 
     /**
      * OnCreate
      */
 
+
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_side_menu)
         navigationTest()
-        val toolbar : Toolbar = findViewById(R.id.acc_toolbar)
+        val toolbar: Toolbar = findViewById(R.id.acc_toolbar)
         setSupportActionBar(toolbar)
 
 
@@ -77,16 +76,25 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         )
 
         val header = navView.inflateHeaderView(R.layout.nav_header_side_menu)
+        // TODO("no user fetched")
         header.findViewById<TextView>(R.id.UserName).text = "Abdiche Fatima Zahra"
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
 
+        //test notif
+        PushNotifications.start(this,"cdb4283c-b2a5-4469-85df-5dd6936e57c2")
+        PushNotifications.addDeviceInterest("hello")
+
         //////
-        chargerFagment(NouveauRechercheCars())
+        navigation_bar.selectedItemId = R.id.accuuille_voiture
+        findViewById<TextView>(R.id.titre_fonction).text = getString(R.string.acc)
+        header_holder.background = this.resources.getDrawable(R.drawable.background, null)
+        chargerFragment(AccuilleFragment())
 
     }
+
 
     /**
      * Pour Deconnecter
@@ -103,7 +111,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar_menu,menu)
+        inflater.inflate(R.menu.toolbar_menu, menu)
 
         val menuItem = menu!!.findItem(R.id.icon_notification)
 
@@ -119,24 +127,25 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     private fun setupBadge() {
 
         if (textCartItemCount != null) {
-            if (mCartItemCount === 0) {
-                if (textCartItemCount!!.visibility !== View.GONE) {
+            if (0 == mCartItemCount) {
+                if (textCartItemCount!!.visibility != View.GONE) {
                     textCartItemCount!!.visibility = View.GONE
                 }
             } else {
                 textCartItemCount!!.text = "12"
-                if (textCartItemCount!!.visibility !== View.VISIBLE) {
+                if (textCartItemCount!!.visibility != View.VISIBLE) {
                     textCartItemCount!!.visibility = View.VISIBLE
                 }
             }
         }
     }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        when(item!!.itemId){
+        when (item!!.itemId) {
             R.id.deconnecter -> {
-                facebookDeconnexion()
-                googleDeconnexion()
+                facebookDisconnection()
+                googleDisconnection()
             }
         }
 
@@ -146,22 +155,25 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * deconnection Facebook
      */
-    private fun facebookDeconnexion(){
+    private fun facebookDisconnection() {
         LoginManager.getInstance().logOut()
         AccessToken.setCurrentAccessToken(null)
-        pref = SharedPreferencesHelper(this@AcuilleActivity,"facebook")
-        pref!!.sharedPreferences.edit().clear().apply()
+        pref = SharedPreferencesHelper(this@AcuilleActivity, "facebook")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            pref!!.sharedPreferences.edit().clear().apply()
+        }
         deconnecter()
     }
 
     /**
      * deconnection Google
      */
-    private fun googleDeconnexion(){
+    @SuppressLint("NewApi")
+    private fun googleDisconnection() {
         //signIn out from the the google account
         mGoogleSignInClient!!.signOut()
             .addOnCompleteListener(this) {
-                pref = sharedPref(this@AcuilleActivity,"google")
+                pref = sharedPref(this@AcuilleActivity, "google")
                 pref!!.sharedPreferences.edit().clear().apply()
                 deconnecter()
             }
@@ -176,8 +188,8 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * creat sharedPreferenceHelper
      */
-    private fun sharedPref(context: Context, nomFichier : String) : SharedPreferencesHelper {
-        return SharedPreferencesHelper(context,nomFichier)
+    private fun sharedPref(context: Context, nomFichier: String): SharedPreferencesHelper {
+        return SharedPreferencesHelper(context, nomFichier)
     }
 
     /**
@@ -200,9 +212,9 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
      * le changement de fragement
      */
     @SuppressLint("CommitTransaction")
-    private fun chargerFagment(fragment: Fragment?):Boolean{
-        if(fragment != null){
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_id,fragment).commit()
+    fun chargerFragment(fragment: Fragment?): Boolean {
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_id, fragment).commit()
             return true
         }
         return false
@@ -211,38 +223,43 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * les tache a faire a partire de bottomNavigation View
      */
-    private fun navigationTest(){
-        navigation_bar.setOnNavigationItemSelectedListener{
+    fun navigationTest() {
+        navigation_bar.setOnNavigationItemSelectedListener {
             var fragment: Fragment? = null
-            var titre = findViewById<TextView>(R.id.titre_fonction)
+            val titre = findViewById<TextView>(R.id.titre_fonction)
+            header_holder.background = this.resources.getDrawable(R.drawable.header, null)
             when (it.itemId) {
                 R.id.nouelle_voiture -> {
                     fragment = NouveauRechercheCars()
-                    titre.text="Recherche"
+                    titre.text = getString(R.string.rech_acc)
 
                 }
                 R.id.occasion_voiture -> {
+
                     fragment = OccasionFragment()
-                    titre.text="Véhicules Occasions"
+                    titre.text = getString(R.string.occ_acc)
 
                 }
                 R.id.accuuille_voiture -> {
                     fragment = AccuilleFragment()
-                    titre.text="Acceuille"
+
+                    header_holder.background = this.resources.getDrawable(R.drawable.background, null)
+                    titre.text = getString(R.string.acc)
 
                 }
                 R.id.annoce_voiture -> {
                     fragment = AnnonceFragment()
-                    titre.text="Mes Annonces"
+                    titre.text = getString(R.string.announce_acc)
+
 
                 }
                 R.id.favoris_voiture -> {
                     fragment = FavorisFragment()
-                    titre.text="Favoris"
+                    titre.text = getString(R.string.fav_acc)
                 }
 
             }
-            return@setOnNavigationItemSelectedListener chargerFagment(fragment)
+            return@setOnNavigationItemSelectedListener chargerFragment(fragment)
         }
 
     }
@@ -258,10 +275,12 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 Toast.makeText(this, "profile", Toast.LENGTH_LONG).show()
             }
             R.id.nav_offer -> {
-
+                val intent = Intent(this@AcuilleActivity, UserOffersActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_command -> {
-
+                val intent = Intent(this@AcuilleActivity, CommandesActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_following -> {
 
@@ -282,12 +301,13 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
             }
             R.id.deconnect -> {
-                googleDeconnexion()
+                googleDisconnection()
                 deconnecter()
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
+
         return true    }
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             super.onActivityResult(requestCode, resultCode, data)
@@ -297,6 +317,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 FragmentHelper.changeFragment(voiture,this@AcuilleActivity,fragment,"voitureCommande","toCommande",R.id.fragment_id)
             }
         }
+
 }
 
 

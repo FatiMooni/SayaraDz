@@ -60,12 +60,14 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_neuf_commande,container,false)
+
         val context = v.context
         /**
          * Avoir la version choisie
          */
         voiture = arguments!!.getParcelable("voitureCommande") as VoitureCommande
         Log.i("voiture : ",voiture.toString())
+
         /**
          * initialisation
          */

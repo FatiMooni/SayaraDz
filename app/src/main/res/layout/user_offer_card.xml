@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_margin="7dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:id="@+id/root_card"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/offer_tag"
+                android:drawablePadding="2dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/primary_title"
+                android:text="car infos"
+                android:id="@+id/car_info"
+                android:layout_height="wrap_content"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:src="@drawable/more_icon"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/card_menu"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:theme="@style/Theme.MaterialComponents"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_height="wrap_content">
+        <android.support.design.chip.Chip
+                android:layout_width="wrap_content"
+                android:id="@+id/car_offer_state"
+                android:layout_marginEnd="8dp"
+                app:chipBackgroundColor="@android:color/holo_red_dark"
+                android:textColor="@color/bt_white_pressed"
+                android:textStyle="bold"
+                android:text="something"
+                android:layout_height="wrap_content"/>
+        </android.support.design.chip.ChipGroup>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/normal_text"
+                android:text="car owner"
+                android:layout_below="@id/car_info"
+                android:id="@+id/car_owner"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/notes_text"
+
+                android:textStyle="italic"
+                android:text="27/03/2017"
+
+                android:layout_below="@id/car_owner"
+                android:id="@+id/car_offer_date"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/normal_text"
+                android:text="Prix "
+                android:layout_below="@id/car_offer_date"
+                android:id="@+id/car_offer_price_title"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/primary_title"
+                android:text="car infos"
+                android:layout_alignBaseline="@id/car_offer_price_title"
+                android:layout_toEndOf="@id/car_offer_price_title"
+                android:layout_marginStart="10dp"
+                android:id="@+id/car_offer_price"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/normal_text"
+                android:text="Prix original"
+                android:layout_below="@id/car_offer_price_title"
+                android:id="@+id/car_price_title"
+                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/normal_text"
+                android:text="Prix original"
+                android:layout_marginStart="5dp"
+                android:layout_alignBaseline="@id/car_price_title"
+                android:layout_toEndOf="@id/car_price_title"                android:id="@+id/car_price"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+</android.support.design.card.MaterialCardView>

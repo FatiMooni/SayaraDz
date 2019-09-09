@@ -3,26 +3,24 @@ package com.example.sayaradzmb.ui.activities.fragments
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.transition.Slide
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.ui.adapter.OccasionCarsAdapter
+import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.VehiculeOccasion
 import com.example.sayaradzmb.model.VehiculeRechFilters
-import com.example.sayaradzmb.servics.OccasionService
+import com.example.sayaradzmb.repository.servics.OccasionService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
+
     //pour utiliser Linear Helper
-    private var annonceList = ArrayList<VehiculeOccasion>()
-    private var idUser : String = "44587"
-    private var annonceAdapter : OccasionCarsAdapter? = null
+    private var annonceList = ArrayList<Comparable<*>>()
+    private var annonceAdapter : CustomCardsAdapter? = null
 
 
     @Suppress("UNCHECKED_CAST")
@@ -31,14 +29,14 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
         layout.orientation = LinearLayoutManager.VERTICAL
         val adapter = v.findViewById<RecyclerView>(R.id.recyler_view_voiture_occasion)
         adapter.layoutManager = layout
-        annonceAdapter = OccasionCarsAdapter(v.context,annonceList )
+        annonceAdapter = CustomCardsAdapter(v.context,annonceList )
         adapter.adapter = annonceAdapter
     }
 
-    fun getAnnonceList(id: String, maView: View, filters: VehiculeRechFilters?){
+    fun getAnnonceList(id: String, filters: VehiculeRechFilters?){
         val service = prepareService()
         val requestCall = service.GetOccasionAnnouncement(id,
-            filters!!.minPrix, filters.maxPrix, filters.minAnnee,
+            filters!!.minPrix, filters.maxPrix, filters.maxAnnee,
             filters.minAnnee, filters.maxKm, filters.codeVersion)
 
         requestCall.enqueue(object : Callback<List<VehiculeOccasion>> {
@@ -53,7 +51,8 @@ open class CustomOccasionFragment : Fragment(), RecycleViewHelper {
                     for (e in response.body()!!){
                         annonceList.add(e)
                     }
-                    annonceAdapter!!.notifyDataSetChanged()
+                    //annonceAdapter!!.notifyDataSetChanged()
+                    annonceAdapter!!.swapData(annonceList)
                 }
                 else {
                     Log.i("response assert" , "couldn't get the data correctly")
