@@ -27,6 +27,7 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.pusher.pushnotifications.PushNotifications
 import kotlinx.android.synthetic.main.activity_accuille.*
 import kotlinx.android.synthetic.main.toolbar_accuille.*
 
@@ -46,31 +47,6 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * la focntion qui aide a switche entre les fragment
      */
-
-    fun envoyerFragment(int: Int) {
-        var fragment: Fragment? = null
-        when (int) {
-            2 -> {
-                fragment = NouveauCommandeFragment()
-                titre_fonction.text = getString(R.string.commander_acc)
-
-            }
-        }
-        chargerFragment(fragment)
-    }
-
-    fun envoyerFragment(int: Int, version: Version) {
-        var fragment: Fragment? = null
-        when (int) {
-            1 -> {
-               // fragment = NouveauAfficheTechnique(version)
-                titre_fonction.text = getString(R.string.fiche_acc)
-
-            }
-        }
-        chargerFragment(fragment)
-    }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,12 +74,20 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
         navView.setNavigationItemSelectedListener(this)
 
+        //test notif
+        PushNotifications.start(this,"cdb4283c-b2a5-4469-85df-5dd6936e57c2")
+        PushNotifications.addDeviceInterest("hello")
+
         //////
+        navigation_bar.selectedItemId = R.id.accuuille_voiture
+        findViewById<TextView>(R.id.titre_fonction).text = getString(R.string.acc)
         header_holder.background = this.resources.getDrawable(R.drawable.background, null)
         chargerFragment(AccuilleFragment())
 
     }
 
+        override fun onAttachFragment(fragment: Fragment?) {
+        }
 
     /**
      * Pour Deconnecter
@@ -215,7 +199,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
      * le changement de fragement
      */
     @SuppressLint("CommitTransaction")
-    private fun chargerFragment(fragment: Fragment?): Boolean {
+    fun chargerFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
             supportFragmentManager.beginTransaction().replace(R.id.fragment_id, fragment).commit()
             return true
@@ -226,7 +210,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * les tache a faire a partire de bottomNavigation View
      */
-    private fun navigationTest() {
+    fun navigationTest() {
         navigation_bar.setOnNavigationItemSelectedListener {
             var fragment: Fragment? = null
             val titre = findViewById<TextView>(R.id.titre_fonction)

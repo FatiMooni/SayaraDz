@@ -42,6 +42,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+import com.pusher.pushnotifications.PushNotifications
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_ajouter_annonce.*
 import kotlinx.android.synthetic.main.content_ajouter_annonce.*
@@ -450,7 +451,9 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         requestCall.enqueue(object : Callback<Annonce> {
             override fun onResponse(call: Call<Annonce>, response: Response<Annonce>) {
                 if (response.isSuccessful) {
+
                     Toast.makeText(this@AjouterAnnonceActivity, "votre annonce a été bien sauvegardée", Toast.LENGTH_LONG).show()
+                    PushNotifications.addDeviceInterest("ANNONCE_${response.body()!!.idAnnonce}")
                     val intent = Intent()
                     intent.putExtra("annonce", response.body())
 

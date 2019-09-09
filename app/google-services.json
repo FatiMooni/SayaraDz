@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "571474574390",
+    "firebase_url": "https://dz-sayara.firebaseio.com",
+    "project_id": "dz-sayara",
+    "storage_bucket": "dz-sayara.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571474574390:android:22f3cd56230c5d98a02c97",
+        "android_client_info": {
+          "package_name": "com.example.sayaradzmb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571474574390-tbnoj0p2u6cmnl2548l8c7if8pf0jeph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoSsju6OPurR4C69N-A34Nw134HFtrlxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571474574390-tbnoj0p2u6cmnl2548l8c7if8pf0jeph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.sayaradzmb.repository.servics.OffreService
 import com.example.sayaradzmb.model.Offre
 import com.example.sayaradzmb.servics.ServiceBuilder
+import com.pusher.pushnotifications.PushNotifications
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -39,6 +40,8 @@ class OffreViewModel : ViewModel() {
             override fun onResponse(call: Call<Offre>, response: Response<Offre>) {
                 if (response.isSuccessful) {
                     offre!!.value = response.body()
+                    PushNotifications.addDeviceInterest("OFFRE+${response.body()!!.idOffre}")
+
                 } else {
                     Log.e("Offre Adding","I got the response but not successful")
                     Log.i("Offre error ", response.message())

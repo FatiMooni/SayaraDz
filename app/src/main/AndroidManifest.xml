@@ -32,6 +32,12 @@
                 android:label="@string/title_activity_annonce_offers"
                 android:parentActivityName=".ui.activities.AcuilleActivity"
                 android:theme="@style/AppTheme.NoActionBar.NoActionBar">
+            <intent-filter>
+                <action android:name="OpenOffers"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
         </activity>
 
         <provider
