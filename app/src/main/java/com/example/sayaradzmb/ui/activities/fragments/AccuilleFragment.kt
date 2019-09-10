@@ -22,6 +22,7 @@ import com.example.sayaradzmb.viewmodel.AcceuilleViewModel
 import kotlinx.android.synthetic.main.fragement_accuille.view.*
 
 class AccuilleFragment : Fragment(), SharedPreferenceInterface {
+    internal var callback : OnAnotherFragmentSwitch? = null
     private var carsList = ArrayList<Comparable<*>>()
     private var usedList = ArrayList<Comparable<*>>()
     private var followedList = ArrayList<Comparable<*>>()
@@ -52,31 +53,24 @@ class AccuilleFragment : Fragment(), SharedPreferenceInterface {
 
         })
 
+        //Initialise the callback item
+
+
         carsList.add(1)
         carsList.add(5)
         carsList.add(5)
 
         //listeners for the buttons
         activityView.btn_frag_ann.setOnClickListener {
-            val nextFrag = AnnonceFragment()
-            activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit()
+            callback?.anotherFragmentSwitchHandler(3)
+
         }
         activityView.btn_frag_old.setOnClickListener {
-            val nextFrag = OccasionFragment()
-            activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit()
+            callback?.anotherFragmentSwitchHandler(2)
+
         }
         activityView.btn_frag_new.setOnClickListener {
-            val nextFrag = NouveauRechercheCars()
-            activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_id, nextFrag, "findThisFragment")
-                .addToBackStack(null)
-                .commit()
+            callback?.anotherFragmentSwitchHandler(1)
         }
 
         // preparer Recycler view
@@ -87,13 +81,7 @@ class AccuilleFragment : Fragment(), SharedPreferenceInterface {
             override fun OnCardButton(item: Comparable<*>?, itemType: Int) {
                 Toast.makeText(context, itemType.toString(), Toast.LENGTH_SHORT).show()
                 if (item == null && itemType == AcceuilleCardAdapter.TYPE_ITEM_NEW) {
-
-
-                    val nextFrag = NouveauRechercheCars()
-                    activity!!.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_id, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit()
+                    callback?.anotherFragmentSwitchHandler(1)
                 } else throw IllegalAccessException("Am getting a weird item here ! ")
             }
 
@@ -106,12 +94,8 @@ class AccuilleFragment : Fragment(), SharedPreferenceInterface {
                 Toast.makeText(context, itemType.toString(), Toast.LENGTH_SHORT).show()
                 if (item == null && itemType == AcceuilleCardAdapter.TYPE_ITEM_OCCASION) {
 
+                    callback?.anotherFragmentSwitchHandler(2)
 
-                    val nextFrag = OccasionFragment()
-                    activity!!.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_id, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit()
 
                 } else if (itemType == AcceuilleCardAdapter.TYPE_ITEM_OCCASION){
                     val intent = Intent(activityView.context, AnnonceApercuActivity::class.java)
@@ -167,6 +151,12 @@ class AccuilleFragment : Fragment(), SharedPreferenceInterface {
         rv.adapter = customFollowedAdapter
     }
 
+    interface OnAnotherFragmentSwitch {
+        fun anotherFragmentSwitchHandler(request : Int)
+    }
 
+    fun setOnFragmentSwitch(callback : OnAnotherFragmentSwitch){
+        this.callback = callback
+    }
 }
 

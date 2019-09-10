@@ -21,6 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:toolbarId="@+id/toolbar"
+                app:title="Ajouter annonce"
+                app:expandedTitleGravity="bottom"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="@color/colorPrimaryDark">
 
@@ -44,6 +46,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
+                    app:title="Ajouter Annonce"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
             />
 

@@ -27,7 +27,7 @@ class OccasionCarsViewHolder (private val view : View): BaseViewHolder<VehiculeO
         view.findViewById<TextView>(R.id.annonce_price_info).text = item.Prix
         view.findViewById<TextView>(R.id.annonce_annee).text = item.Annee
         view.findViewById<TextView>(R.id.annonce_km).text = item.Km
-        view.findViewById<TextView>(R.id.annonce_fuel).text = item.Carburant
+        view.findViewById<TextView>(R.id.annonce_fuel).text = item.Carburant.toString().replace("\\s".toRegex(), " ")
 
         val pAdapter = VehiculeImageAdapter(view.context, item.images!!)
         view.findViewById<ViewPager>(R.id.annonce_image).adapter = pAdapter

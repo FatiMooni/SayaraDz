@@ -13,6 +13,7 @@ data class Annonce(
     var version : VersionInfo?,
     var CodeCouleur: Int?,
     var Km: String,
+    var Annee : Int?,
     var Description: String,
     var NombreOffres : Int,
 var images: List<CheminImage>?
@@ -35,6 +36,7 @@ var images: List<CheminImage>?
         parcel.readParcelable(VersionInfo::class.java.classLoader),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
+        parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
         parcel.createTypedArrayList(CheminImage)

@@ -19,8 +19,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
-import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.ui.activities.fragments.*
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
@@ -29,13 +29,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.pusher.pushnotifications.PushNotifications
 import kotlinx.android.synthetic.main.activity_accuille.*
-import kotlinx.android.synthetic.main.toolbar_accuille.*
 
 
 @Suppress("CAST_NEVER_SUCCEEDS")
 
-class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener
-    {
+class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    AccuilleFragment.OnAnotherFragmentSwitch, SharedPreferenceInterface {
 
 
     private var pref: SharedPreferencesHelper? = null
@@ -67,15 +66,16 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         )
 
         val header = navView.inflateHeaderView(R.layout.nav_header_side_menu)
-        // TODO("no user fetched")
-        header.findViewById<TextView>(R.id.UserName).text = "Abdiche Fatima Zahra"
+        header.findViewById<TextView>(R.id.UserName).text =
+            avoirInfoUser(this).Nom.plus(" " + avoirInfoUser(this).Prenom)
+
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
 
         //test notif
-        PushNotifications.start(this,"cdb4283c-b2a5-4469-85df-5dd6936e57c2")
+        PushNotifications.start(this, "cdb4283c-b2a5-4469-85df-5dd6936e57c2")
         PushNotifications.addDeviceInterest("hello")
 
         //////
@@ -86,8 +86,32 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
     }
 
-        override fun onAttachFragment(fragment: Fragment?) {
+    override fun anotherFragmentSwitchHandler(request: Int) {
+        header_holder.background = this.resources.getDrawable(R.drawable.header, null)
+        when (request) {
+            1 -> {
+                navigation_bar.selectedItemId = R.id.nouelle_voiture
+                findViewById<TextView>(R.id.titre_fonction).text = getString(R.string.nouvelles_voitures)
+                chargerFragment(NouveauRechercheCars())
+            }
+            2 -> {
+                navigation_bar.selectedItemId = R.id.occasion_voiture
+                title = getString(R.string.occ_acc)
+                chargerFragment(OccasionFragment())
+            }
+            3 -> {
+                navigation_bar.selectedItemId = R.id.annoce_voiture
+                title = getString(R.string.announce_acc)
+                chargerFragment(AnnonceFragment())
+            }
         }
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) {
+        if (fragment is AccuilleFragment) {
+            fragment.setOnFragmentSwitch(this)
+        }
+    }
 
     /**
      * Pour Deconnecter
@@ -175,7 +199,7 @@ class AcuilleActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     /**
      * creat sharedPreferenceHelper
      */
-    private fun sharedPref(context: Context, nomFichier: String): SharedPreferencesHelper {
+    override fun sharedPref(context: Context, nomFichier: String): SharedPreferencesHelper {
         return SharedPreferencesHelper(context, nomFichier)
     }
 
