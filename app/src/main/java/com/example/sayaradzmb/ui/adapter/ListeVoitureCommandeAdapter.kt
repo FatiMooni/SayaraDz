@@ -79,6 +79,7 @@ class ListeVoitureCommandeAdapter(
         var priceTotal = priceBase+priceCouleur+priceOptions
 
         holder.price.text = "${priceTotal} DA"
+        voiture.prixTotal = priceTotal
         /**
          * options
          */

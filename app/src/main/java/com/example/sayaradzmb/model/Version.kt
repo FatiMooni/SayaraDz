@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Version(
     val CodeVersion : Int?,
     val CodeModele : Int?,
+    var CodeMarque : Int?,
     val NomVersion : String?,
     val options : List<Option>?,
     val couleurs : List<Couleur>?,

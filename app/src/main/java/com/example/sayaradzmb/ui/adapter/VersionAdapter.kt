@@ -20,6 +20,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
 import com.example.sayaradzmb.ui.activities.fragments.NouveauAfficheTechnique
+import com.pusher.pushnotifications.PushNotifications
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -105,6 +106,7 @@ class VersionAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println(response.body().toString())
+                            PushNotifications.addDeviceInterest("VERSION_${version.CodeVersion}")
                             processusSuivre(R.drawable.star,imageSuivi,"Suivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
@@ -125,6 +127,7 @@ class VersionAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println(response.body().toString())
+                            PushNotifications.removeDeviceInterest("VERSION_${version.CodeVersion}")
                             processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
                         }else{
                             println("la liste modele non reconnue ${response}")

@@ -12,7 +12,11 @@ data class VoitureCommande (
      var options: List<Option>,
      var quantite : Int,
      var Couleur : Couleur?,
-     var tarifBase : TarifBase?
+     var tarifBase : TarifBase?,
+     var codeMarque : Int?,
+     var nomVersion : String?,
+     var prixTotal : Int?,
+     var Image : String?
 ):Parcelable
 
 

@@ -78,14 +78,19 @@ class ListeVoitureCommande : Fragment(),RecycleViewHelper {
         progress.setTitle("charger la liste des Voitures")
         progress.show()
         val vService = ServiceBuilder.buildService(StockService::class.java)
-        val requeteAppel = vService.avoirVoitureStock(13)
+        val requeteAppel = vService.avoirVoitureStock(version!!.CodeVersion!!)
         requeteAppel.enqueue(object : Callback<List<VoitureCommande>> {
             override fun onResponse(call: Call<List<VoitureCommande>>, response: Response<List<VoitureCommande>>) =
                 if(response.isSuccessful){
                     print(response.body()!!)
                     var listStock = response.body()!!
                     listStock.forEach {
-                        e-> listVoiture.add(e)
+                        e->
+                        Log.i("version",version.toString())
+                        e.codeMarque = version!!.CodeMarque
+                        e.nomVersion = version!!.NomVersion
+                        e.Image = version!!.couleurs?.get(0)!!.CheminImage
+                        listVoiture.add(e)
                     }
                     //errore
                     Log.i("list Voiture", listVoiture!!.size.toString())

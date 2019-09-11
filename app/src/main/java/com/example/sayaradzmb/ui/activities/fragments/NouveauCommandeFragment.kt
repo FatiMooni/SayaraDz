@@ -10,18 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import com.example.sayaradzmb.Repository.servics.CommandeService
 import com.example.sayaradzmb.Repository.servics.PaimentService
 import com.example.sayaradzmb.Repository.servics.StockService
 import com.example.sayaradzmb.constatnte.CHANELLE_ID
 import com.example.sayaradzmb.constatnte.NOTIFICATION_ID
 import com.example.sayaradzmb.helper.NotificationHelper
-import com.example.sayaradzmb.model.Automobiliste
-import com.example.sayaradzmb.model.PaimentToken
-import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.model.VoitureCommande
 import com.example.sayaradzmb.servics.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,14 +30,19 @@ import android.content.Intent
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.widget.Toast
+import android.widget.*
 import com.braintreepayments.api.dropin.DropInRequest
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.FragmentHelper
+import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.model.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.confirm_dialog.*
+import kotlinx.android.synthetic.main.nav_header_side_menu.*
+import org.w3c.dom.Text
 
 
-class NouveauCommandeFragment : Fragment(),NotificationHelper{
+class NouveauCommandeFragment : Fragment(),NotificationHelper, SharedPreferenceInterface {
 
     /**
      *  declaration component
@@ -53,7 +52,11 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
     private var versement : EditText?=null
     val vService = ServiceBuilder.buildService(CommandeService::class.java)
     val pService = ServiceBuilder.buildService(PaimentService::class.java)
-
+    private var commandeCurrente : Commande? = null
+    private var nomCommande : TextView? = null
+    private var prixCommande : TextView?= null
+    private var profil : TextView?=null
+    private var image : ImageView?=null
 
     /**
      * on Create
@@ -62,6 +65,7 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
         val v = inflater.inflate(R.layout.fragment_neuf_commande,container,false)
 
         val context = v.context
+        val user = avoirInfoUser(context)
         /**
          * Avoir la version choisie
          */
@@ -73,12 +77,20 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
          */
         confirmer = v.findViewById(R.id.commande_conf_button)!!
         versement = v.findViewById(R.id.edit_text_versement)
-
+        nomCommande = v.findViewById(R.id.commande_nom_voiture)
+        prixCommande = v.findViewById(R.id.commande_prix)
+        profil = v.findViewById(R.id.commande_nom_profil)
+        image = v.findViewById(R.id.commande_prix_car)
         /**
          * Confirmer la commande
          */
+        nomCommande?.text = voiture?.nomVersion
+        prixCommande?.text = voiture?.prixTotal.toString()+" DZA"
+        profil?.text = user.Nom + " "+ user.Prenom
+        if(voiture?.Image != null)Picasso.get().load(voiture!!.Image).into(image)
+
         confirmer!!.setOnClickListener {
-            commandeSansReservation("199542354","110623972598370355824","33003","1")
+            commandeSansReservation(voiture!!.Montant.toString(),avoirIdUser(this.context!!).toString(),voiture!!.vehicules[0].NumChassis.toString(),voiture!!.codeMarque.toString())
         }
         return v
     }
@@ -93,18 +105,20 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
         progress.setTitle("effectuer la commande")
         progress.show()
         val requeteAppel = vService.creeCommande(montant,idAutomobiliste,chassis,fabricant)
-        requeteAppel.enqueue(object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) =
+        requeteAppel.enqueue(object : Callback<Commande> {
+            override fun onResponse(call: Call<Commande>, response: Response<Commande>) =
                 if(response.isSuccessful){
                     print(response.body()!!)
+                    commandeCurrente = response.body()
                     progress.dismiss()
                     creeResrvation()
 
                 }else{
                     var toast : Toast = Toast.makeText(context,"La commande n'a pas été effecuer",Toast.LENGTH_LONG)
                     toast.show()
+                    progress.dismiss()
                 }
-            override fun onFailure(call: Call<Any>, t: Throwable) {
+            override fun onFailure(call: Call<Commande>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
                 progress.dismiss()
                 commandeSansReservation(montant,idAutomobiliste,chassis,fabricant)
@@ -129,6 +143,7 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
                     getClient()
                     var toast : Toast = Toast.makeText(context,"Reservation échouee",Toast.LENGTH_LONG)
                     toast.show()
+
                 }
             override fun onFailure(call: Call<PaimentToken>, t: Throwable) {
                 Log.w("failConnexion","la liste marue non reconnue")
@@ -170,7 +185,7 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper{
                 // use the result to update your UI and send the payment method nonce to your server
                 val nonce = result.paymentMethodNonce
                 Log.i("nonce",nonce!!.nonce)
-                paiment(nonce.nonce,versement!!.text.toString(),"1")
+                paiment(nonce.nonce,versement!!.text.toString(),commandeCurrente!!.idCommande.toString())
 
             } else if (resultCode == RESULT_CANCELED) {
                 // the user canceled

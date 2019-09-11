@@ -24,50 +24,41 @@
                         android:orientation="vertical"
                         android:layout_margin="10dp"
                         android:weightSum="2">
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="12"
-                            >
-                        <ImageButton
-                                android:layout_width="wrap_content"
-                                android:layout_weight="0.2"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/neuf_tech_menu"
-                                android:src="@drawable/more_icon"
-                                android:layout_gravity="center"
-                                android:background="@android:color/transparent"
-
-                        />
-                        <TextView
-                                android:layout_width="0dp"
-                                android:layout_weight="11.8"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/neuf_tech_card_nom_car"
-                                android:text="nom_voiture"
-                                android:textSize="18dp"
-                                android:textColor="#000"
-                        />
-
-
-                    </LinearLayout>
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginStart="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="2">
+                            android:layout_marginLeft="20dp"
+                            android:orientation="horizontal"
+                            android:layout_weight="2">
                         <TextView
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:id="@+id/neuf_tech_card_description"
-                                android:text="some_description"
-                                android:textSize="12sp"
-                        android:layout_weight="1"/>
+                                android:textSize="12sp"/>
+                        <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_weight="0.02"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_menu"
+                                android:src="@drawable/more_icon"
+                                android:layout_gravity="center"
+                                android:background="@android:color/transparent"
+
+                                />
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="0.58"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_nom_car"
+                                android:text="nom_voiture"
+                                android:textSize="18dp"
+                                android:textColor="#000"
+                                />
+
+
                         <TextView
                                 android:textColor="@color/colorBlack"
                                 android:layout_width="0dp"
@@ -81,19 +72,30 @@
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:weightSum="10"
+                            android:weightSum="12"
+                            android:gravity="center"
                             >
 
-                            <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/neuf_tech_card_suivi"
-                                    android:src="@drawable/heart_empty"
-                                    android:tag="nonSuivi"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_weight="4"
-                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+
+                            >
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/neuf_tech_card_suivi"
+                                android:src="@drawable/heart_empty"
+                                android:tag="nonSuivi"
+                                android:layout_marginStart="2dp"
+                                android:layout_weight="1"
+                                />
+
 
 
 
@@ -111,7 +113,9 @@
                                 android:text="Commnader"
                                 android:textSize="13sp"
                                 android:layout_marginTop="2dp"
-                                android:textColor="@color/colorWhite" />
+                                android:textColor="@color/colorWhite"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"/>
                         <Button
                                 android:layout_width="0dp"
                                 android:layout_weight="5"
@@ -120,6 +124,8 @@
                                 android:background="@drawable/item_button_commande"
                                 android:text="Composer"
                                 android:textSize="13sp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
                                 android:layout_marginTop="2dp"
                                 android:textColor="@color/colorWhite" />
                     </LinearLayout>

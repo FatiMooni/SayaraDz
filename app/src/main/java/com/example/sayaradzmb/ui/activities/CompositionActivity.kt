@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.Repository.servics.StockService
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
@@ -28,6 +27,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.LinearLayout
+import com.example.sayaradzmb.Repository.servics.StockService
 
 
 class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
@@ -156,14 +156,17 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
         progress.setCancelable(false)
         progress.show()
         val vService = ServiceBuilder.buildService(StockService::class.java)
-        val requeteAppel = vService.avoirVoitureStock(13)
+        val requeteAppel = vService.avoirVoitureStock(version!!.CodeVersion!!)
         requeteAppel.enqueue(object : Callback<List<VoitureCommande>> {
             override fun onResponse(call: Call<List<VoitureCommande>>, response: Response<List<VoitureCommande>>) =
                 if(response.isSuccessful){
                     print(response.body()!!)
                     var listStock = response.body()!!
                     listStock.forEach {
-                            e-> listVoiture.add(e)
+                            e->
+                        e.nomVersion = version!!.NomVersion
+                        e.codeMarque = version!!.CodeMarque
+                        listVoiture.add(e)
                     }
                     Log.i("list Voiture",listVoiture.toString())
                     progress.dismiss()
@@ -217,6 +220,8 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
                 priceOptions+= it.tarifOption!!.Prix
             }
             var priceTotal = priceBase+priceCouleur+priceOptions
+            voiture.prixTotal = priceTotal
+            voiture.Image = version?.couleurs?.get(0)?.CheminImage
             //avoir price
             if ((currentColor == voiture.Couleur!!.CodeHexa) && (existArray(currentOptions,voitureOption))){
                 Log.i("we have a match here : ",voitureOption.toString())

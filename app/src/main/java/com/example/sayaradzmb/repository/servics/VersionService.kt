@@ -20,7 +20,7 @@ interface VersionService {
     @DELETE("automobiliste/{idAutomob}/versions/{id}")
     fun desuivreVersion(@Path("id") id : Int,@Path("idAutomob") automobiliste : BigInteger) : Call<Any>
 
-
-
+    @GET("Suivies/versions")
+    fun getFavoris(@Query("automobiliste") automobiliste : BigInteger, @Query("page") page : Int ) : Call<List<Version>>
 
 }

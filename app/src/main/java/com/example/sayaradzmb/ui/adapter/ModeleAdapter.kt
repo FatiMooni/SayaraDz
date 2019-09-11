@@ -3,6 +3,7 @@ package com.example.sayaradzmb.ui.adapter
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.ColorSpace
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
+import com.pusher.pushnotifications.PushNotifications
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,6 +75,7 @@ class ModeleAdapter(
     override fun onBindViewHolder(holder: ModeleViewHolder, position: Int) {
 
         val modele = modeleListFiltree.get(position)
+        val codeMarque = modele.CodeMarque
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
         toggleSuivi(modele.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
@@ -99,7 +102,7 @@ class ModeleAdapter(
                     initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
                 }
             }
-            requeteVersion()
+            requeteVersion(codeMarque!!,"")
             initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
         imageSuivi.setOnClickListener {
@@ -115,7 +118,7 @@ class ModeleAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println("apres abonnemet : "+response.body().toString())
-                            requeteVersion()
+                            requeteVersion(codeMarque!!,"s")
                             processusSuivre(R.drawable.star,imageSuivi,"Suivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
@@ -135,7 +138,7 @@ class ModeleAdapter(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println("apres Desabonnement : "+response.body().toString())
-                            requeteVersion()
+                            requeteVersion(codeMarque!!,"ns")
                             processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
@@ -177,7 +180,7 @@ class ModeleAdapter(
         initLineaire(v,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
-    private fun requeteVersion(){
+    private fun requeteVersion(codeMarque : Int,suivi : String){
         versionList.clear()
         var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
         progress.setCancelable(false)
@@ -192,7 +195,12 @@ class ModeleAdapter(
                     print(response.body()!!)
                     var lesVersion = response.body()!!
                     lesVersion.forEach{
-                            e->versionList.add(e)
+                            e->
+                        if (suivi == "s") PushNotifications.addDeviceInterest("VERSION_${e.CodeVersion}")
+                        else if (suivi == "ns") PushNotifications.removeDeviceInterest("VERSION_${e.CodeVersion}")
+                        Log.i("codeMarque",codeMarque.toString())
+                        e.CodeMarque = codeMarque
+                        versionList.add(e)
                     }
                     // avoir la liste des version de modele clique
                     modeleVersions.put(currentCodeModele,versionList)
@@ -204,7 +212,7 @@ class ModeleAdapter(
             override fun onFailure(call: Call<List<Version>>, t: Throwable) {
                 Log.w("failConnexion","la liste version non reconnue")
                 progress.dismiss()
-                requeteVersion()
+                requeteVersion(codeMarque,suivi)
             }
         })
     }

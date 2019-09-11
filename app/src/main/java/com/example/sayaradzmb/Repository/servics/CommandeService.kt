@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.Repository.servics
 
+import com.example.sayaradzmb.model.Commande
 import com.example.sayaradzmb.model.VoitureCommande
 import retrofit2.Call
 import retrofit2.http.Field
@@ -17,5 +18,5 @@ interface CommandeService {
     fun creeCommande(@Field("Montant") montant : String,
                           @Field("idAutomobiliste") idAutomb : String,
                           @Field("NumChassis") chassis : String,
-                          @Field("Fabricant") fabricant : String) : Call<Any>
+                          @Field("Fabricant") fabricant : String) : Call<Commande>
 }

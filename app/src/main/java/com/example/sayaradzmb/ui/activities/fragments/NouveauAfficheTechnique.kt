@@ -24,6 +24,7 @@ import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
+import com.pusher.pushnotifications.PushNotifications
 import com.squareup.picasso.Picasso
 import me.relex.circleindicator.CircleIndicator2
 import retrofit2.Call
@@ -100,6 +101,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
+                            PushNotifications.addDeviceInterest("VERSION_${version!!.CodeVersion}")
                             println(response.body().toString())
                         }else{
                             println("la liste version non reconnue ${response}")
@@ -120,6 +122,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
                             println(response.body().toString())
+                            PushNotifications.removeDeviceInterest("VERSION_${version!!.CodeVersion}")
                         }else{
                             println("la liste version non reconnue ${response}")
 

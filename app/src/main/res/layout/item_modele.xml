@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:id="@+id/item_modele"
-android:layout_marginLeft="20dp"
-android:layout_marginRight="20dp">
-
-    <TextView
-            android:id="@+id/im_text_nommodele"
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:id="@+id/item_modele"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+    <LinearLayout
             android:layout_width="0dp"
             android:layout_height="46dp"
             android:layout_weight="3"
-            android:gravity="left|center"
-            android:textSize="15sp"
-            />
-    <ImageView
-            android:id="@+id/im_image_suivimodele"
+            android:gravity="center">
+        <TextView
+                android:id="@+id/im_text_nommodele"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:textSize="15sp"
+                />
+    </LinearLayout>
+    <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="15dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/star_vide"
-            android:layout_gravity="center_vertical"
-            android:tag="nonSuivi"
-            />
+            android:gravity="center">
+        <ImageView
+                android:id="@+id/im_image_suivimodele"
+                android:layout_width="50dp"
+                android:layout_height="15dp"
+                android:src="@drawable/star_vide"
+                android:layout_gravity="center_vertical"
+                android:tag="nonSuivi"
+                />
+    </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
 
-</LinearLayout>
+
+
+
+
