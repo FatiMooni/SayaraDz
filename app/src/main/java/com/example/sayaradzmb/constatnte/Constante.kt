@@ -8,3 +8,4 @@ const val LETTRE_FACEBOOK_AUTH="F"
 const val NOTIFICATION_ID = 1
 const val CHANELLE_ID = "ch1"
 const val GROUP_KEY_WORK_EMAIL = "work_email"
+const val REQUEST_CODE = 1233

@@ -33,7 +33,7 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
+                            android:layout_marginBottom="15dp">
                         <ImageButton
                                 android:id="@+id/commande_3point"
                                 android:layout_width="wrap_content"
@@ -45,24 +45,23 @@
                                 android:id="@+id/commande_nom_voiture"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="DACIA LOGAN MCV"
+
                                 android:textColor="#000"
                                 android:textSize="18dp"/>
                     </LinearLayout>
-                <TextView
-                        android:id="@+id/commande_car_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="some brief description about main option"
-                android:layout_marginBottom="20dp"/>
-                <TextView
-                        android:id="@+id/commande_prix"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="150.000.00 DZA"
-                        android:textColor="#000"
-                        android:textSize="18dp"/>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+                        <TextView
+                                android:id="@+id/commande_prix"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:textColor="#000"
+                                android:textSize="18dp"/>
+                    </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                     android:layout_width="0dp"
@@ -120,25 +119,21 @@
                             android:id="@+id/commande_nom_profil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="Client Someone"/>
+                        android:textSize="12dp"/>
                     <TextView
                             android:id="@+id/commande_location"
                             android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="Alger,Algeria"/>
+                        android:textSize="12dp"/>
                     <TextView
                         android:id="@+id/commande_mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="email@mailto.com"/>
+                        android:textSize="12dp"/>
                     <TextView
                         android:id="@+id/commande_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="07582396114"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -213,6 +208,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/item_edit_versement">
                     <EditText
+                            android:id="@+id/edit_text_versement"
                             android:background="@drawable/item_edit_versement"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

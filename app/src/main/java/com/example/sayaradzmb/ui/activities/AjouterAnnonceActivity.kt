@@ -32,7 +32,7 @@ import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Carburant
 import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.model.fuel_type
-import com.example.sayaradzmb.repository.servics.AnnonceService
+import com.example.sayaradzmb.Repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.OptionService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.ui.adapter.FuelSpinnerAdapter

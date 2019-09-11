@@ -1,4 +1,4 @@
-package com.example.sayaradzmb.repository.servics
+package com.example.sayaradzmb.Repository.servics
 
 import com.example.sayaradzmb.model.Annonce
 import okhttp3.MultipartBody

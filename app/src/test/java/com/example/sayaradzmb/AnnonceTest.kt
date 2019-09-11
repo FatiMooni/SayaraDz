@@ -1,7 +1,7 @@
 package com.example.sayaradzmb
 
 
-import com.example.sayaradzmb.repository.servics.AnnonceService
+import com.example.sayaradzmb.Repository.servics.AnnonceService
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import okhttp3.mockwebserver.MockResponse

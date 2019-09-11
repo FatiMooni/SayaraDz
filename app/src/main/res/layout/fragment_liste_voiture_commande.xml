@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+android:id="@+id/root_layout">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="70dp"
     >
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+        >
             <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nom_version_voiture"/>
+                    android:id="@+id/nom_version_voiture"
+                    android:textSize="18dp"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -25,7 +32,20 @@
                     android:id="@+id/liste_voiture_commande"
             />
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/neuf_tech_card_commande_button"
+            android:background="@drawable/item_button_commande"
+            android:text="@string/commnader"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true" android:layout_marginBottom="20dp"
+    android:visibility="gone"/>
 
 </RelativeLayout>

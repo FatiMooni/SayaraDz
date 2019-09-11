@@ -17,6 +17,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    androidExtensions {
+        experimental = true
+    }
     buildTypes {
         release {
 
@@ -100,7 +103,9 @@ dependencies {
     // BrainTree
     implementation 'com.braintreepayments.api:drop-in:3.7.1'
 
+
     //notif
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.pusher:push-notifications-android:1.4.3'
+
 }

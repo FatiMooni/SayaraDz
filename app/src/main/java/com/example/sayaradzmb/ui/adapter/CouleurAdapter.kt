@@ -1,6 +1,7 @@
 package com.example.sayaradzmb.ui.adapter
 
 import android.content.Context
+import android.content.SyncStatusObserver
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
@@ -12,6 +13,7 @@ import android.widget.Button
 import com.example.sayaradzmb.R
 
 import com.example.sayaradzmb.model.Couleur
+import com.example.sayaradzmb.ui.activities.CompositionActivity
 
 /**
  *  probleme :
@@ -24,8 +26,29 @@ class CouleurAdapter(
     private val couleurList: ArrayList<Couleur>,
     internal var context: Context
 ) : RecyclerView.Adapter<CouleurAdapter.CouleurViewHolder>() {
+
+
+    /**
+     * Private varibale
+     */
     private var view : View?=null
     private var buttonColor :Button?=null
+
+    /**
+     * observer
+     */
+    private var imageObserver : ImageVoitureAdapter?=null
+    private var compoitionObsrver : CompositionActivity?=null
+
+    /**
+     * change in observer
+     */
+    private var imagePhoto  = ArrayList<String>()
+    private var currentCouleur  : String ? =null
+
+    /**
+     * on create view
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CouleurViewHolder {
         //inflate the layout file
         val couleurView =
@@ -34,17 +57,42 @@ class CouleurAdapter(
         return CouleurViewHolder(couleurView)
     }
 
+    /**
+     * le bind view
+     */
     override fun onBindViewHolder(holder: CouleurViewHolder, position: Int) {
-        buttonColor = view!!.findViewById(R.id.item_couleur_button)
-        var color = couleurList[position].CodeHexa!!
+        val couleur = couleurList[position]
+        println(couleur)
+
+        val imageVoiture = couleur.CheminImage
+        println("image voiture $imageVoiture")
+        buttonColor = holder.couleurview
+        var color = couleur.CodeHexa!!
         var drawable = buttonColor!!.background
-        Log.i("classe name",drawable::class.toString())
         if(drawable is GradientDrawable){
             drawable.setColor(Color.parseColor(color))
-            Log.i("is shape : ", "yes")
         }
+        /**
+         * quand on est a l'image 0
+         */
+        if (position == 0){
+            imagePhoto.clear()
+            imagePhoto.add(imageVoiture!!)
+            setImages(imagePhoto)
+            Log.i("image dans couleur : ", imagePhoto[0])
+        }
+        /**
+         * quand on click sur une couleur
+         */
         holder.couleurview.setOnClickListener {
-            println("position $position")
+            currentCouleur = couleur.CodeHexa
+            imagePhoto.clear()
+            if (imageVoiture != null) imagePhoto.add(imageVoiture!!)
+            setImages(imagePhoto)
+            Log.i("image dans couleur : ", imagePhoto[0])
+            Log.i("current image : ", currentCouleur)
+            if(this.compoitionObsrver != null) notifyComposition(currentCouleur!!)
+
         }
     }
 
@@ -53,8 +101,50 @@ class CouleurAdapter(
     }
 
     inner class CouleurViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         internal var couleurview: Button = view.findViewById(R.id.item_couleur_button)
 
     }
+
+    /**
+     * get ImagePhoto
+     */
+    fun getImages() : ArrayList<String>?{
+        return this.imagePhoto
+    }
+
+    /**
+     * set imagePhoto
+     */
+    fun setImages(images : ArrayList<String>){
+        if(this.imageObserver != null) {
+            println("in observer")
+            this.imagePhoto = images
+            notifyObserver()
+        }
+
+    }
+
+    /**
+     * attach an observer
+     */
+    fun attach(imageVoitureAdapter: ImageVoitureAdapter){
+        this.imageObserver = imageVoitureAdapter
+    }
+
+    fun attachComposition(composition :CompositionActivity){
+        this.compoitionObsrver = composition
+    }
+    /**
+     * notify the observer
+     */
+    private fun notifyObserver() {
+        imageObserver!!.update()
+    }
+
+    private fun notifyComposition(couleur : String){
+        this.compoitionObsrver!!.update(couleur)
+    }
+
+
+
 }

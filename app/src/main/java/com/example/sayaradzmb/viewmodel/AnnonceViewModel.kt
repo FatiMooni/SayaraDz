@@ -5,10 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.example.sayaradzmb.model.Annonce
-import com.example.sayaradzmb.model.Commande
-import com.example.sayaradzmb.model.Offre
-import com.example.sayaradzmb.repository.servics.AnnonceService
-import com.example.sayaradzmb.repository.servics.CommandesServices
+import com.example.sayaradzmb.Repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback

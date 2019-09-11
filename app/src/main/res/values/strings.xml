@@ -67,6 +67,10 @@
     <string name="check_the_website">Check the website</string>
     <string name="menu_deconect">Log Out</string>
     <string name="recherche_avanc_e">Recherche Avancée</string>
+
+    <string name="commnader">Commnader</string>
+    <string name="quantite">quantite</string>
+
     <string name="owner_information">Owner Information</string>
     <string name="offer_request">Faire un Offre</string>
     <string name="_07582396114">07582396114</string>

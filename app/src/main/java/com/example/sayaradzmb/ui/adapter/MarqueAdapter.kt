@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.ui.adapter
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -161,8 +162,14 @@ class MarqueAdapter(
 
     private fun requeteModele() {
         modeleList.clear()
-        val vService = ServiceBuilder.buildService(ModeleService::class.java)
-        val requeteAppel = vService.getModeles(avoirIdUser(this.context), currentCodeMarque)
+
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("charger les modele")
+        progress.show()
+        val vService =  ServiceBuilder.buildService(ModeleService::class.java)
+        val requeteAppel = vService.getModeles(avoirIdUser(this.context),currentCodeMarque)
+
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =
                 if (response.isSuccessful) {
@@ -171,12 +178,19 @@ class MarqueAdapter(
                     lesModele.forEach { e ->
                         modeleList.add(e)
                     }
-                } else {
+
+                    progress.dismiss()
+                }else{
+
 
                 }
 
             override fun onFailure(call: Call<List<Modele>>, t: Throwable) {
-                Log.w("failConnexion", "la liste modele non reconnue ${t.message}")
+
+                Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                progress.dismiss()
+                requeteModele()
+
             }
         })
     }

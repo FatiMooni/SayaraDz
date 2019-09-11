@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/favoris_card"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        app:cardCornerRadius="7dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="15dp">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:weightSum="2">
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="12"
+                    >
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/neuf_tech_menu"
+                        android:src="@drawable/more_icon"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+
+                        />
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="11.8"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/favoris_name_car"
+                        android:text="nom_voiture"
+                        android:textSize="18dp"
+                        android:textColor="#000"
+                        />
+
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                <TextView
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/favoris_price"
+                        android:text="Prix Base : 500000 DA"
+                        android:textSize="16sp"
+                        android:layout_weight="1"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:weightSum="1"
+                android:gravity="center">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/favoris_image_car">
+
+                </ImageView>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -8,7 +8,7 @@ import android.util.Log
 import com.example.sayaradzmb.model.Marque
 import com.example.sayaradzmb.model.Modele
 import com.example.sayaradzmb.model.Version
-import com.example.sayaradzmb.repository.servics.AnnonceService
+import com.example.sayaradzmb.Repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.*
 import retrofit2.Call
 import retrofit2.Callback

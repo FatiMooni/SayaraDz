@@ -27,6 +27,11 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:appComponentFactory"
             tools:targetApi="p">
+
+        <activity android:name=".ui.activities.CompositionActivity"
+        android:screenOrientation="landscape">
+        </activity>
+
         <activity
                 android:name=".ui.activities.AnnonceOffersActivity"
                 android:label="@string/title_activity_annonce_offers"
@@ -47,6 +52,7 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/path"/>
         </provider>
+
 
         <activity
                 android:name=".ui.activities.OffreActivity"
@@ -76,12 +82,35 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+                android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+                android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="${applicationId}.braintree"/>
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".ui.activities.CommandesActivity"/>
         <activity android:name=".ui.activities.UserOffersActivity"/>
+
 
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>
+
+
+        <service android:name=".ui.activities.NotificationsMessagingService">
+            <intent-filter android:priority="1">
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

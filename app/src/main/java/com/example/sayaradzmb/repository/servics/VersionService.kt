@@ -17,10 +17,10 @@ interface VersionService {
     @POST("suivies/versions/{id}")
     fun suivreVersion(@Path("id") id : Int,@Body automobiliste : Automobiliste) : Call<Any>
 
-    @DELETE("automobiliste/{idAutomob}/modeles/{id}")
+    @DELETE("automobiliste/{idAutomob}/versions/{id}")
     fun desuivreVersion(@Path("id") id : Int,@Path("idAutomob") automobiliste : BigInteger) : Call<Any>
 
-
-
+    @GET("Suivies/versions")
+    fun getFavoris(@Query("automobiliste") automobiliste : BigInteger, @Query("page") page : Int ) : Call<List<Version>>
 
 }

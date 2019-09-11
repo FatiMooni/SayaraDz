@@ -1,7 +1,9 @@
 package com.example.sayaradzmb.ui.adapter
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.ColorSpace
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -22,6 +24,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
+import com.pusher.pushnotifications.PushNotifications
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,6 +75,7 @@ class ModeleAdapter(
     override fun onBindViewHolder(holder: ModeleViewHolder, position: Int) {
 
         val modele = modeleListFiltree.get(position)
+        val codeMarque = modele.CodeMarque
         var imageSuivi = holder.suivieImage
         holder.nomModele.text = modele.NomModele
         toggleSuivi(modele.suivie,imageSuivi,R.drawable.star,R.drawable.star_vide)
@@ -98,10 +102,11 @@ class ModeleAdapter(
                     initLineaire(view,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
                 }
             }
-            requeteVersion()
+            requeteVersion(codeMarque!!,"")
             initSearchView(activity!!,view,versionAdapter!!,R.id.search_bar_version)
         })
         imageSuivi.setOnClickListener {
+            println("tag : "+imageSuivi.tag)
             if (imageSuivi.tag == "nonSuivi"){
 
                 /**
@@ -112,7 +117,9 @@ class ModeleAdapter(
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
-                            println(response.body().toString())
+                            println("apres abonnemet : "+response.body().toString())
+                            requeteVersion(codeMarque!!,"s")
+                            processusSuivre(R.drawable.star,imageSuivi,"Suivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
 
@@ -121,8 +128,6 @@ class ModeleAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star,imageSuivi,"Suivi")
-                requeteVersion()
             }else{
                 /**
                  * desabonner
@@ -132,7 +137,9 @@ class ModeleAdapter(
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
-                            println(response.body().toString())
+                            println("apres Desabonnement : "+response.body().toString())
+                            requeteVersion(codeMarque!!,"ns")
+                            processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
                         }else{
                             println("la liste modele non reconnue ${response}")
 
@@ -141,8 +148,8 @@ class ModeleAdapter(
                         Log.w("failConnexion","la liste modele non reconnue ${t.message}")
                     }
                 })
-                processusSuivre(R.drawable.star_vide,imageSuivi,"nonSuivi")
-                requeteVersion()
+
+
             }
         }
     }
@@ -173,8 +180,12 @@ class ModeleAdapter(
         initLineaire(v,R.id.imd_rv_version, LinearLayoutManager.VERTICAL,versionAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
-    private fun requeteVersion(){
+    private fun requeteVersion(codeMarque : Int,suivi : String){
         versionList.clear()
+        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+        progress.setCancelable(false)
+        progress.setTitle("charger les Version")
+        progress.show()
         val vService =  ServiceBuilder.buildService(VersionService::class.java)
         val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)
         requeteAppel.enqueue(object : Callback<List<Version>> {
@@ -184,16 +195,24 @@ class ModeleAdapter(
                     print(response.body()!!)
                     var lesVersion = response.body()!!
                     lesVersion.forEach{
-                            e->versionList.add(e)
+                            e->
+                        if (suivi == "s") PushNotifications.addDeviceInterest("VERSION_${e.CodeVersion}")
+                        else if (suivi == "ns") PushNotifications.removeDeviceInterest("VERSION_${e.CodeVersion}")
+                        Log.i("codeMarque",codeMarque.toString())
+                        e.CodeMarque = codeMarque
+                        versionList.add(e)
                     }
                     // avoir la liste des version de modele clique
                     modeleVersions.put(currentCodeModele,versionList)
                     print("allez")
+                    progress.dismiss()
                 }else{
 
                 }
             override fun onFailure(call: Call<List<Version>>, t: Throwable) {
                 Log.w("failConnexion","la liste version non reconnue")
+                progress.dismiss()
+                requeteVersion(codeMarque,suivi)
             }
         })
     }
