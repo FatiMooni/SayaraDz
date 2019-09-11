@@ -96,4 +96,11 @@
     <string name="title_activity_annonce_offers">AnnonceOffersActivity</string>
     <string name="offre">Offre</string>
     <string name="nouvelles_voitures">Nouvelles Versions</string>
+    <string name="add_your_pics_here">add Your pics here</string>
+    <string name="valider_annonce">Valider l\'annonce</string>
+    <string name="ajouter_une_description">Ajouter une description</string>
+    <string name="other_information">Autres Information</string>
+    <string name="price">Prix minimal</string>
+    <string name="pay_hint">0.00 DA</string>
+    <string name="km_hint">0.0 Kms</string>
 </resources>

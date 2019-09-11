@@ -296,10 +296,12 @@
         <Button android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#fff"
-                android:padding="15dp"
+                android:padding="17dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/item_button_commande"
                 android:text="@string/offer_request"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"/>
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>

@@ -40,7 +40,7 @@ class OffreViewModel : ViewModel() {
             override fun onResponse(call: Call<Offre>, response: Response<Offre>) {
                 if (response.isSuccessful) {
                     offre!!.value = response.body()
-                    PushNotifications.addDeviceInterest("OFFRE+${response.body()!!.idOffre}")
+                    PushNotifications.addDeviceInterest("OFFRE_${response.body()!!.idOffre}")
 
                 } else {
                     Log.e("Offre Adding","I got the response but not successful")

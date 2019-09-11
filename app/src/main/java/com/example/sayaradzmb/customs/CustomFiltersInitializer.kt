@@ -62,6 +62,9 @@ interface CustomFiltersInitializer {
         spinYearS.adapter = adapter
         spinYearE.adapter = adapter
 
+        spinYearE.setSelection(0,false)
+        spinYearS.setSelection(0,false)
+
         spinYearE.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {

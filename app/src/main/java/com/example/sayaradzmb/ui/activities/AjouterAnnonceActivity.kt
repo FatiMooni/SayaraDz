@@ -87,6 +87,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
     //pour le post request
     private var idUser: BigInteger? = null
+    private var year : String = ""
     private var codeVersion: String = ""
     private var prixVehicule: String = ""
     private var couleurVehicule: String = ""
@@ -138,6 +139,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
 
         //initialisation du spinner
         initCarburantSpinner(this)
+        initYearsSpinner(this@AjouterAnnonceActivity)
 
         // initialiser la liste des marque
         marques = findViewById(R.id.marque_spinner)
@@ -436,6 +438,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         val col = RequestBody.create(MediaType.parse("text/plain"), couleurVehicule)
         val dist = RequestBody.create(MediaType.parse("text/plain"), kmVehicule)
         val carb = RequestBody.create(MediaType.parse("text/plain"), carburantVehicule)
+        val ann = RequestBody.create(MediaType.parse("text/plain"), year)
 
         postPath.forEach {
             //creation d'une instance fichier pour l'image séléctionnée
@@ -445,7 +448,7 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             album.add(file)
         }
         //post request
-        val requestCall = vService.CreateAnnouncemet(idAu, code, price, desc, col, dist, carb, album)
+        val requestCall = vService.CreateAnnouncemet(idAu, code, price, desc, col, dist, carb, ann ,album)
 
         //evaluaton de la réponse
         requestCall.enqueue(object : Callback<Annonce> {
@@ -496,6 +499,18 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
         picture.adjustViewBounds = true
         picture.cropToPadding = true
         picture.isClickable = true
+        picture.setOnLongClickListener {
+            val index = pictures_layout.indexOfChild(it!!)
+            postPath.removeAt(index)
+            pictures_layout.removeView(it)
+            Toast.makeText(this,"A picture has been deleted", Toast.LENGTH_SHORT).show()
+            true
+        }
+        picture.setOnClickListener {
+            Toast.makeText(this,"Long Click on the picture to delete", Toast.LENGTH_SHORT).show()
+
+        }
+
 
         if (resultCode == Activity.RESULT_OK
             && requestCode == TAKE_PHOTO_REQUEST
@@ -542,6 +557,8 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             else {
                 Toast.makeText(this,"You can't insert  more than five pictures",Toast.LENGTH_LONG).show()
             }
+
+
 
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -633,6 +650,32 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
             })
             .check()
     }
+
+    fun  initYearsSpinner(context : Context){
+        val years = ArrayList<String>()
+        val thisYear = Calendar.getInstance().get(Calendar.YEAR)
+        for (i in 1990..thisYear) {
+            years.add(Integer.toString(i))
+        }
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, years)
+
+        val spinYearS = findViewById<Spinner>(R.id.years_picker)
+        spinYearS.adapter = adapter
+
+
+        spinYearS.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                year = years[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Code to perform some action when nothing is selected
+            }
+        }
+
+    }
+
 
 
 }

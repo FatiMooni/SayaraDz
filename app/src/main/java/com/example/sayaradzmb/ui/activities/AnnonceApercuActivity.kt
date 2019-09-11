@@ -84,7 +84,7 @@ class AnnonceApercuActivity : AppCompatActivity(), SharedPreferenceInterface {
         findViewById<TextView>(R.id.prix_specification).text = annonce.Prix
         findViewById<TextView>(R.id.KM_title).text = annonce.Km
         findViewById<TextView>(R.id.color_title).text = annonce.Couleur
-        findViewById<TextView>(R.id.year_title).text = "jan 2018"
+        findViewById<TextView>(R.id.year_title).text = annonce.Annee.toString()
         findViewById<TextView>(R.id.type_title).text = annonce.Carburant
         findViewById<TextView>(R.id.text_description).text = annonce.Description
         findViewById<ViewPager>(R.id.images_viewer).adapter = pAdapter
@@ -104,7 +104,7 @@ class AnnonceApercuActivity : AppCompatActivity(), SharedPreferenceInterface {
         findViewById<TextView>(R.id.prix_specification).text = annonce.Prix
         findViewById<TextView>(R.id.KM_title).text = annonce.Km
         findViewById<TextView>(R.id.color_title).text = annonce.Couleur
-        findViewById<TextView>(R.id.year_title).text = "jan 2018"
+        findViewById<TextView>(R.id.year_title).text = annonce.Annee.toString()
         findViewById<TextView>(R.id.type_title).text = annonce.Carburant
         findViewById<TextView>(R.id.text_description).text = annonce.Description
         findViewById<ViewPager>(R.id.images_viewer).adapter = pAdapter

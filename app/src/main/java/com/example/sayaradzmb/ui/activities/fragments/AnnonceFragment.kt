@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
@@ -26,7 +27,6 @@ import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
 import com.example.sayaradzmb.viewmodel.UserAnnonceViewModel
 import kotlinx.android.synthetic.main.annonce_view.view.*
-import kotlinx.android.synthetic.main.user_offer_card.view.*
 
 class AnnonceFragment : Fragment(), SharedPreferenceInterface {
 
@@ -72,18 +72,40 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
             }
 
             override fun onPopupMenuRequested(value: Comparable<*>, view: View, position: Int) {
-                Toast.makeText(context,"jjjjjjjj",Toast.LENGTH_LONG).show()
                 val popup = PopupMenu(view.context, view.delete_icon_btn)
                 val inflat: MenuInflater = popup.menuInflater
                 inflat.inflate(R.menu.card_menu, popup.menu)
-                popup.setOnMenuItemClickListener {item ->
+                popup.setOnMenuItemClickListener { item ->
                     //do your things in each of the following cases
                     when (item.itemId) {
                         R.id.delete_annonce -> {
-                            model.supprimerAnnonce((value as Annonce).idAnnonce!!)
+                            model.supprimerAnnonce((value as Annonce).idAnnonce!!, position)
                             true
                         }
                         R.id.edit_annonce -> {
+                            //Inflate the dialog --> ajouter le contenu en xml au dialog
+                            val mDialogView =
+                                LayoutInflater.from(context).inflate(R.layout.edit_price_annonce, null)
+                            //AlertDialogBuilder
+                            val mBuilder = AlertDialog.Builder(context!!)
+                                .setView(mDialogView)
+                                .setIcon(R.drawable.cancel)
+
+                            mBuilder.setNegativeButton("Annuler") { dialog, which ->
+                                // Do something when user press the positive button
+                                Toast.makeText(context, "the price hasn't been changed", Toast.LENGTH_SHORT).show()
+                            }
+
+                            mBuilder.setPositiveButton("Confirmer") { dialog, which ->
+                                val price = mDialogView.findViewById<TextInputEditText>(R.id.prix_edit).text.toString()
+                                model.UpdateAnnoncePrice((value as Annonce).idAnnonce!!, price)
+                                // Do something when user press the positive button
+                                Toast.makeText(context, "the price has successfully changed", Toast.LENGTH_SHORT).show()
+                            }
+
+                            mBuilder.create()
+                            mBuilder.show()
+
                             true
                         }
                         R.id.apercu_annonce -> {

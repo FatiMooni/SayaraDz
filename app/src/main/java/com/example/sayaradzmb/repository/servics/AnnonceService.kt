@@ -19,6 +19,7 @@ interface AnnonceService {
         @Part("Couleur") Couleur: RequestBody,
         @Part("Km") Km: RequestBody,
         @Part("Carburant") Carburant: RequestBody,
+        @Part("Annee") Annee : RequestBody,
         @Part imageAnnonce: List<MultipartBody.Part>
     ): Call<Annonce>
 
@@ -31,7 +32,8 @@ interface AnnonceService {
     @GET("vehicules/annonces/{id}")
     fun GetAnnounceAt(@Path("id") id: Int): Call<Annonce>
 
+    @FormUrlEncoded
     @PUT ("vehicules/annonces/{id}")
-    fun UpdateAnnounce(@Path("id") id: Int): Call<Annonce>
+    fun UpdateAnnounce(@Path("id") id: Int , @Field("Prix") Prix : String): Call<Annonce>
 
 }

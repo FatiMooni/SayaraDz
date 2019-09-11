@@ -44,7 +44,7 @@ class UserAnnonceViewModel: ViewModel() {
         })
     }
 
-    fun supprimerAnnonce(id: Int) {
+    fun supprimerAnnonce(id: Int , index : Int) {
         val service = ServiceBuilder.buildService(AnnonceService::class.java)
         val deleteReq = service.DeleteAnnouncement(id)
 
@@ -56,6 +56,10 @@ class UserAnnonceViewModel: ViewModel() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
 
+                    val list = annonce!!.value!!.toMutableList()
+                    list.removeAt(getPosition(id))
+                    annonce!!.value = list
+
                 } else {
                     Log.w("delete annonce", "the req passed nut Something went wrong")
 
@@ -63,6 +67,47 @@ class UserAnnonceViewModel: ViewModel() {
             }
 
         })
+
+    }
+    fun getPosition(id : Int) : Int{
+        val list = annonce!!.value
+        var index = -1
+        list!!.forEach {
+            if (it.idAnnonce == id) {
+                index = list.indexOf(it)
+            }
+        }
+        return index
+    }
+
+    fun UpdateAnnoncePrice(id : Int , price : String){
+        val service = ServiceBuilder.buildService(AnnonceService::class.java)
+        val updateReq = service.UpdateAnnounce(id,price)
+
+        updateReq.enqueue(object : Callback<Annonce> {
+            override fun onFailure(call: Call<Annonce>, t: Throwable) {
+                Log.e("update annonce", "the req didnt pass nut Something went wrong")
+
+            }
+
+            override fun onResponse(call: Call<Annonce>, response: Response<Annonce>) {
+                if (response.isSuccessful) {
+
+                    val list = annonce!!.value!!.toMutableList()
+                     val index = getPosition(id)
+                    val item = list[index]
+                    item.Prix = response.body()!!.Prix
+                    list.set(index, item)
+                    annonce!!.value = list
+
+                } else {
+                    Log.w("update annonce", "the req passed nut Something went wrong")
+
+                }
+            }
+
+        })
+
 
     }
 
