@@ -29,6 +29,7 @@ import android.content.Intent
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.widget.*
 import com.braintreepayments.api.dropin.DropInRequest
@@ -90,7 +91,21 @@ class NouveauCommandeFragment : Fragment(),NotificationHelper, SharedPreferenceI
         if(voiture?.Image != null)Picasso.get().load(voiture!!.Image).into(image)
 
         confirmer!!.setOnClickListener {
-            commandeSansReservation(voiture!!.Montant.toString(),avoirIdUser(this.context!!).toString(),voiture!!.vehicules[0].NumChassis.toString(),voiture!!.codeMarque.toString())
+            var builder : AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setMessage("Effecter cette commande ?")
+            builder.setPositiveButton("OUI"){dialog, which ->
+                commandeSansReservation(voiture!!.Montant.toString(),avoirIdUser(this.context!!).toString(),voiture!!.vehicules[0].NumChassis.toString(),voiture!!.codeMarque.toString())
+
+            }
+            builder.setNegativeButton("NON"){dialog,which ->
+                var toast = Toast.makeText(context,"commande Annulee",Toast.LENGTH_SHORT)
+                toast.show()
+            }
+            // Finally, make the alert dialog using builder
+            val dialog: AlertDialog = builder.create()
+
+            // Display the alert dialog on app interface
+            dialog.show()
         }
         return v
     }
