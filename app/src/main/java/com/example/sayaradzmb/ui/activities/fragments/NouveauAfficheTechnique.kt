@@ -87,7 +87,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
          * initialisation
          */
         toggleSuivi(version!!.suivie,suiviImage!!,R.drawable.heart,R.drawable.heart_empty)
-        nomVoiture!!.text = version!!.NomVersion
+        nomVoiture!!.text = version!!.modele!!.NomModele.plus( version!!.NomVersion)
         /**
          * gestion de l'abbonnement
          */

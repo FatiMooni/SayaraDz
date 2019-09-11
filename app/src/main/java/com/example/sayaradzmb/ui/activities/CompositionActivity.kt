@@ -113,7 +113,6 @@ class CompositionActivity : AppCompatActivity(),RecycleViewHelper {
      * fonction commander
      */
     private fun commander(v: View) {
-
         commanderButton!!.setOnClickListener {
             val returnIntent = Intent()
             returnIntent.putExtra("voitureCommande", voitureSelectionne)

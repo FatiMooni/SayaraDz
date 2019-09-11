@@ -2,6 +2,7 @@ package com.example.sayaradzmb.ui.activities
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,8 +20,10 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.helper.FragmentHelper
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
+import com.example.sayaradzmb.model.VoitureCommande
 import com.example.sayaradzmb.ui.activities.fragments.*
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
@@ -319,6 +322,15 @@ class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            var fragment= NouveauCommandeFragment()
+            var voiture : VoitureCommande = data!!.getParcelableExtra("voitureCommande")
+            FragmentHelper.changeFragment(voiture,this@AcuilleActivity,fragment,"voitureCommande","toCommande",R.id.fragment_id)
+        }
     }
 
 }
