@@ -11,13 +11,29 @@ data class Annonce(
     var Couleur : String?,
     var Carburant : String?,
     var version : VersionInfo?,
-    var CodeCouleur: Int?,
-    var Km: String,
+    var Km: String?,
     var Annee : Int?,
-    var Description: String,
-    var NombreOffres : Int,
+    var Description: String?,
+    var NombreOffres : Int?,
 var images: List<CheminImage>?
-) : Parcelable ,Comparable<Annonce>{
+) : Comparable<Annonce>, Parcelable {
+
+
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readParcelable(VersionInfo::class.java.classLoader),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.createTypedArrayList(CheminImage)
+    ) {
+    }
+
     /**
      * Compares this object with the specified object for order. Returns zero if this object is equal
      * to the specified [other] object, a negative number if it's less than [other], or a positive number
@@ -27,22 +43,6 @@ var images: List<CheminImage>?
         return 0
     }
 
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readParcelable(VersionInfo::class.java.classLoader),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.createTypedArrayList(CheminImage)
-    ) {
-    }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(idAnnonce)
         parcel.writeString(Prix)
@@ -50,10 +50,10 @@ var images: List<CheminImage>?
         parcel.writeString(Couleur)
         parcel.writeString(Carburant)
         parcel.writeParcelable(version, flags)
-        parcel.writeValue(CodeCouleur)
         parcel.writeString(Km)
+        parcel.writeValue(Annee)
         parcel.writeString(Description)
-        parcel.writeInt(NombreOffres)
+        parcel.writeValue(NombreOffres)
         parcel.writeTypedList(images)
     }
 
@@ -70,4 +70,6 @@ var images: List<CheminImage>?
             return arrayOfNulls(size)
         }
     }
+
+
 }

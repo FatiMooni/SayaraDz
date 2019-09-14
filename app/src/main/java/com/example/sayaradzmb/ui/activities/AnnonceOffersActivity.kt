@@ -3,6 +3,7 @@ package com.example.sayaradzmb.ui.activities
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -46,16 +47,21 @@ class AnnonceOffersActivity : AppCompatActivity() {
             }
 
             override fun onClickItem(id: Int, state: String, position: Int) {
-                Toast.makeText(this@AnnonceOffersActivity, "you did it :::", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@AnnonceOffersActivity, "you did it :::", Toast.LENGTH_LONG)
+                    .show()
                 model.updateOffersList(id, state, position)
+                if (state == "accepter") {
+                    Snackbar.make(rv_offers, "you have been accepeted", Snackbar.LENGTH_LONG).show()
+
+                }
             }
         })
 
         model = ViewModelProviders.of(this).get(AnnonceOffersViewModel::class.java)
         model.getUsedCars().observe(this,
             Observer<List<Offre>> { t ->
-                        offerAdapter!!.swapData(t!!)
-                Toast.makeText(this@AnnonceOffersActivity,t.toString(),Toast.LENGTH_LONG).show()
+                offerAdapter!!.swapData(t!!)
+                Toast.makeText(this@AnnonceOffersActivity, t.toString(), Toast.LENGTH_LONG).show()
 
             })
 
@@ -71,22 +77,26 @@ class AnnonceOffersActivity : AppCompatActivity() {
             extraInfoLoader()
         }
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0 , ItemTouchHelper.ANIMATION_TYPE_SWIPE_CANCEL){
-            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
-                Toast.makeText(this@AnnonceOffersActivity,"UP",Toast.LENGTH_LONG).show()
+       /** ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.ANIMATION_TYPE_SWIPE_CANCEL) {
+            override fun onMove(
+                p0: RecyclerView,
+                p1: RecyclerView.ViewHolder,
+                p2: RecyclerView.ViewHolder
+            ): Boolean {
+                Toast.makeText(this@AnnonceOffersActivity, "UP", Toast.LENGTH_LONG).show()
                 return true
             }
 
             override fun onSwiped(holder: RecyclerView.ViewHolder, p1: Int) {
                 val item = offerAdapter!!.getItemAt(holder.adapterPosition)
                 if (item is Offre)
-                   model.updateOffersList(item.idOffre,"refuser" , holder.adapterPosition)
+                    model.updateOffersList(item.idOffre, "refuser", holder.adapterPosition)
                 else throw IllegalArgumentException("Invalid view type")
             }
 
         }).attachToRecyclerView(rv_offers)
-
-
+**/
 
     }
 
@@ -94,8 +104,10 @@ class AnnonceOffersActivity : AppCompatActivity() {
         when {
             expandable_layout.isExpanded -> expandable_layout.collapse()
             car_img_viewer.isExpanded -> car_img_viewer.collapse()
-            else -> {expandable_layout.expand()
-                      car_img_viewer.expand()}
+            else -> {
+                expandable_layout.expand()
+                car_img_viewer.expand()
+            }
         }
     }
 
@@ -110,14 +122,15 @@ class AnnonceOffersActivity : AppCompatActivity() {
 
     private fun setAnnounceData(item: Annonce) {
         val version = item.version!!
-        car_announce_title.text = version.NomMarque.plus(" " + version.NomModele).plus(" " + version.NomVersion)
-        car_announce_price.text = item.Prix
-        car_announce_offer.text = item.NombreOffres.toString()
+        car_announce_title.text =
+            version.NomMarque.plus(" " + version.NomModele).plus(" " + version.NomVersion)
+        car_announce_price.text = item.Prix.plus(" DZ")
+        car_announce_offer.text = item.NombreOffres.toString().plus(" offres")
         KM_title.text = item.Km
         findViewById<TextView>(R.id.color_title).text = item.Couleur
-        findViewById<TextView>(R.id.year_title).text = "2002"
+        findViewById<TextView>(R.id.year_title).text = item.Annee.toString()
         findViewById<TextView>(R.id.type_title).text = item.Carburant
-        val pAdapter = VehiculeImageAdapter(this, annonce!!.images!!)
+        val pAdapter = VehiculeImageAdapter(this, item.images!!)
         findViewById<ViewPager>(R.id.img_viewer).adapter = pAdapter
 
     }

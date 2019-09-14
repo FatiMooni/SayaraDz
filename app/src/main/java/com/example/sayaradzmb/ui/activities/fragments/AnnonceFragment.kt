@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
@@ -37,6 +39,7 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
     private lateinit var customAdapter: CustomCardsAdapter
     private lateinit var activityView: View
     private lateinit var model: UserAnnonceViewModel
+    var idUser : String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -49,7 +52,7 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
         // preparer Recycler view
         intialiserRecyclerView()
 
-        val idUser = avoirIdUser(activityView.context).toString()
+        idUser = avoirIdUser(activityView.context).toString()
         //Recuperer les annonces
         model = ViewModelProviders.of(this).get(UserAnnonceViewModel::class.java)
 
@@ -64,7 +67,7 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
             // preparé l'activité d'ajout
             val intent = Intent(activityView.context, AjouterAnnonceActivity::class.java)
             // lancer l'activité
-            startActivity(intent)
+            startActivityForResult(intent,123)
         }
         customAdapter.setOnItemClickListener(object : CustomCardsAdapter.OnClickItemListener {
             override fun onClickItem(id: Int, state: String, position: Int) {
@@ -128,8 +131,8 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
                             mDialogView.findViewById<TextView>(R.id.prix_specification).text = (value as Annonce).Prix
                             mDialogView.findViewById<TextView>(R.id.KM_title).text = (value as Annonce).Km
                             mDialogView.findViewById<TextView>(R.id.color_title).text =
-                                (value as Annonce).CodeCouleur.toString()
-                            mDialogView.findViewById<TextView>(R.id.year_title).text = "jan 2018"
+                                (value as Annonce).Couleur
+                            mDialogView.findViewById<TextView>(R.id.year_title).text = value.Annee.toString()
                             mDialogView.findViewById<TextView>(R.id.type_title).text = (value as Annonce).Carburant
                             mDialogView.findViewById<TextView>(R.id.text_description).text =
                                 (value as Annonce).Description
@@ -164,6 +167,15 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+            Log.i("results" , requestCode.toString() + resultCode.toString())
+        if (requestCode == 123 && resultCode == Activity.RESULT_OK ){
+            if (data!!.hasExtra("annonce")){
+            model.loadAnnounces(idUser)
+            }
+            else {
+                Toast.makeText(context, "Wrong data received",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun intialiserRecyclerView() {
@@ -176,6 +188,8 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
         rv.adapter = customAdapter
 
     }
+
+
 
 
 }

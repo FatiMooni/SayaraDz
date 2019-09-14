@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.Repository.servics.StockService
+import com.example.sayaradzmb.repository.servics.StockService
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.model.VoitureCommande

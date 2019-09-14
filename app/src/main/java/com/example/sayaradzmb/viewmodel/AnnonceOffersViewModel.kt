@@ -64,39 +64,15 @@ class AnnonceOffersViewModel : ViewModel() {
             override fun onResponse(call: Call<Offre>, response: Response<Offre>) {
                 if (response.isSuccessful) {
                     val el = response.body()!!
-                    usedcars!!.value!![index].Etat = el.Etat
-                    usedcars!!.value = usedcars!!.value
+                    val list = usedcars!!.value!!.toMutableList()
+                    list[index].Etat = el.Etat
+                    usedcars!!.value = list
                 }
             }
 
         })
     }
 
-  /***  fun deleteOffer(offer: Offre, position: Int) {
-        val service = ServiceBuilder.buildService(OffreService::class.java)
-        val deleteReq = service.DeleteOffer(offer.idOffre)
-
-        deleteReq.enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("delete annonce", "Something went wrong", t)
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-
-                    val list = usedcars!!.value!!.toMutableList()
-                    list.removeAt(position)
-                    usedcars!!.value = list
-
-                } else {
-                    Log.w("delete annonce", "the req passed nut Something went wrong")
-
-                }
-            }
-
-        })
-
-    }***/
 
 }
 

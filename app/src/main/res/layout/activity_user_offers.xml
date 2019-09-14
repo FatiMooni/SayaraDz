@@ -39,12 +39,13 @@
             android:id="@+id/rv_offers"
             tools:listitem="@layout/user_offer_card"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline4">
 
     </android.support.v7.widget.RecyclerView>
 
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline4" app:layout_constraintGuide_begin="87dp"
+                                          android:id="@+id/guideline4" app:layout_constraintGuide_begin="100dp"
                                           android:orientation="horizontal"/>
 
 

@@ -8,6 +8,7 @@ import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
@@ -43,7 +44,7 @@ class OffreActivity : AppCompatActivity(), SharedPreferenceInterface {
         val intent = intent
         if (intent.hasExtra("annonce")) {
             annonce = intent.getParcelableExtra("annonce")
-            Toast.makeText(this, annonce.toString(), Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, annonce.toString(), Toast.LENGTH_LONG).show()
             setInfo(annonce!!)
         } else {
             Log.e("intent", "You can't get the data you are looking for")
@@ -60,8 +61,7 @@ class OffreActivity : AppCompatActivity(), SharedPreferenceInterface {
                     montant_offer,
                     "Your offre has been added",
                     Snackbar.LENGTH_LONG
-                )                    .show()
-                finish()
+                )  .setAction("Okay") { finish() }.show()
             }
         })
 
@@ -79,7 +79,7 @@ class OffreActivity : AppCompatActivity(), SharedPreferenceInterface {
                         montant_offer,
                         "Make sure that You Inserted a bigger Ammount of Money than the announced pice",
                         Snackbar.LENGTH_LONG
-                    ).show()
+                    )                        .show()
                 } else {
                     model.postOffre(user.idAutomobiliste!!, annonce!!.idAnnonce, price)
                 }

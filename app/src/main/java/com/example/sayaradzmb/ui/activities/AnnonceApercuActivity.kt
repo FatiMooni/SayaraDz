@@ -51,9 +51,10 @@ class AnnonceApercuActivity : AppCompatActivity(), SharedPreferenceInterface {
                 annonce = intent.getParcelableExtra(EXTRA_ANNOUNCE)
                 Toast.makeText(this, annonce.toString(), Toast.LENGTH_LONG).show()
                 setData(annonce)
+
             }
             intent.hasExtra(EXTRA_ANNONCE_ID) && intent.hasExtra(EXTRA_AUTOMOBILISTE) -> {
-                var annonce : Annonce? = null
+                var annonce : Annonce?
                 val id = intent.getIntExtra(EXTRA_ANNONCE_ID, -1)
                 val automobile = intent.getParcelableExtra<Automobiliste>(EXTRA_AUTOMOBILISTE)
                 val version = intent.getStringExtra(EXTRA_ANNONCE_NAME)

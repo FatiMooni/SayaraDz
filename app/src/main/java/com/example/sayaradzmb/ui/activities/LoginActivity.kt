@@ -136,12 +136,11 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
                 if(response.isSuccessful){
                     dejaConnecte()
                 }else
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
                 }
-
-            }
+            
             override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
-                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
+                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG).show()
             }
         })
 
