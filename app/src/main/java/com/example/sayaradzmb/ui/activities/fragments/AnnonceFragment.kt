@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TextInputEditText
@@ -17,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
@@ -25,9 +27,13 @@ import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.ui.activities.AjouterAnnonceActivity
 import com.example.sayaradzmb.ui.activities.AnnonceOffersActivity
+import com.example.sayaradzmb.ui.adapter.CarImageSliderAdapter
 import com.example.sayaradzmb.ui.adapter.CustomCardsAdapter
 import com.example.sayaradzmb.ui.adapter.VehiculeImageAdapter
 import com.example.sayaradzmb.viewmodel.UserAnnonceViewModel
+import com.smarteist.autoimageslider.IndicatorAnimations
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.annonce_view.view.*
 
 class AnnonceFragment : Fragment(), SharedPreferenceInterface {
@@ -136,8 +142,20 @@ class AnnonceFragment : Fragment(), SharedPreferenceInterface {
                             mDialogView.findViewById<TextView>(R.id.type_title).text = (value as Annonce).Carburant
                             mDialogView.findViewById<TextView>(R.id.text_description).text =
                                 (value as Annonce).Description
-                            mDialogView.findViewById<ViewPager>(R.id.images_viewer).adapter = pAdapter
-
+                            mDialogView.findViewById<Button>(R.id.btn_offer).visibility = View.GONE
+                            val adapter = CarImageSliderAdapter(mBuilder.context, value.images!!)
+                            val sliderView = mDialogView.findViewById<SliderView>(R.id.images_viewer)
+                            sliderView.sliderAdapter = adapter
+                            sliderView.startAutoCycle()
+                            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM)
+                            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+                            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+                            sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
+                            sliderView.indicatorSelectedColor = Color.rgb(30,94,162)
+                            sliderView.indicatorUnselectedColor = Color.GRAY
+                            sliderView.scrollTimeInSec = 7 //set scroll delay in seconds :
+                            sliderView.startAutoCycle()
 
                             //afficher le dialog
                             mBuilder.show()

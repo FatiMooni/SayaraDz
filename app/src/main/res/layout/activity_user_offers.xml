@@ -31,19 +31,21 @@
         />
 
     </FrameLayout>
-
+<android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline4">
     <android.support.v7.widget.RecyclerView
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:id="@+id/rv_offers"
             tools:listitem="@layout/user_offer_card"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline4">
-
+            >
     </android.support.v7.widget.RecyclerView>
-
+</android.support.v4.widget.NestedScrollView>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline4" app:layout_constraintGuide_begin="100dp"
                                           android:orientation="horizontal"/>

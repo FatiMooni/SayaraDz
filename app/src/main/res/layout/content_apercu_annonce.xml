@@ -21,9 +21,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v4.view.ViewPager
+                    <com.smarteist.autoimageslider.SliderView
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
+                            android:layout_height="300dp"
                             android:id="@+id/images_viewer"
                     />
 
@@ -298,6 +298,7 @@
                 android:textColor="#fff"
                 android:padding="17dp"
                 android:layout_marginTop="10dp"
+                android:id="@+id/btn_offer"
                 android:background="@drawable/item_button_commande"
                 android:text="@string/offer_request"
                 android:textStyle="bold"

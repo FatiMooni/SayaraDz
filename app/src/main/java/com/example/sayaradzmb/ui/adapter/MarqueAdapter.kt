@@ -1,6 +1,6 @@
 package com.example.sayaradzmb.ui.adapter
 
-import android.app.ProgressDialog
+import android.app.AlertDialog
 import android.content.Context
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.*
 import com.alespero.expandablecardview.ExpandableCardView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.ui.activities.fragments.NouveauRechercheCars
 import com.example.sayaradzmb.helper.RecycleViewHelper
 import com.example.sayaradzmb.helper.SearchViewInterface
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
@@ -22,6 +21,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.squareup.picasso.Picasso
+import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,8 +60,12 @@ class MarqueAdapter(
 
 
     constructor(
-        marqueList: ArrayList<Marque>, context: Context, view: View, marqueListFiltree: ArrayList<Marque>,
-        activity: FragmentActivity, listener: (Version) -> Unit
+        marqueList: ArrayList<Marque>,
+        context: Context,
+        view: View,
+        marqueListFiltree: ArrayList<Marque>,
+        activity: FragmentActivity,
+        listener: (Version) -> Unit
     ) : this(marqueList, context, view, marqueListFiltree, activity) {
         this.comm = listener
         frag = 0
@@ -102,7 +106,8 @@ class MarqueAdapter(
                         if (modeleDropDown.isExpanded) modeleDropDown.collapse()
                         else modeleDropDown.expand()
                     }
-                    modeleAdapter = ModeleAdapter(modeleList, view.context, view, modeleList, activity, comm!!)
+                    modeleAdapter =
+                        ModeleAdapter(modeleList, view.context, view, modeleList, activity, comm!!)
                     initLineaire(
                         view,
                         R.id.imd_rv_modele,
@@ -163,12 +168,19 @@ class MarqueAdapter(
     private fun requeteModele() {
         modeleList.clear()
 
-        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
-        progress.setCancelable(false)
-        progress.setTitle("charger les modele")
-        progress.show()
-        val vService =  ServiceBuilder.buildService(ModeleService::class.java)
-        val requeteAppel = vService.getModeles(avoirIdUser(this.context),currentCodeMarque)
+        var progress: AlertDialog = SpotsDialog.Builder()
+            .setContext(context)
+            .setMessage("charger les marque")
+            .build()
+            .apply {
+                show()
+            }
+        /*ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+    progress.setCancelable(false)
+    progress.setTitle("charger les modele")
+    progress.show()*/
+        val vService = ServiceBuilder.buildService(ModeleService::class.java)
+        val requeteAppel = vService.getModeles(avoirIdUser(this.context), currentCodeMarque)
 
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =
@@ -180,14 +192,14 @@ class MarqueAdapter(
                     }
 
                     progress.dismiss()
-                }else{
+                } else {
 
 
                 }
 
             override fun onFailure(call: Call<List<Modele>>, t: Throwable) {
 
-                Log.w("failConnexion","la liste modele non reconnue ${t.message}")
+                Log.w("failConnexion", "la liste modele non reconnue ${t.message}")
                 progress.dismiss()
                 requeteModele()
 
@@ -223,7 +235,10 @@ class MarqueAdapter(
                 return filterResults
             }
 
-            protected override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+            protected override fun publishResults(
+                charSequence: CharSequence,
+                filterResults: FilterResults
+            ) {
                 marqueListFiltree = filterResults.values as ArrayList<Marque>
                 notifyDataSetChanged()
             }

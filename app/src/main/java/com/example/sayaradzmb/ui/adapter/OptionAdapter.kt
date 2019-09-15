@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.model.Couleur
 import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.ui.activities.CompositionActivity
 
@@ -20,54 +19,56 @@ import com.example.sayaradzmb.ui.activities.CompositionActivity
 class OptionAdapter(
     private val optionList: ArrayList<Option>,
     private var context: Context,
-    private val typeOption : Int
+    private val typeOption: Int
 ) : RecyclerView.Adapter<OptionAdapter.OptionViewHolder>() {
 
     /**
      * private Variable
      */
-    private var view : View?=null
+    private var view: View? = null
 
     /**
      * observer
      */
-    private var compoitionObsrver : CompositionActivity?=null
+    private var compoitionObsrver: CompositionActivity? = null
 
     /**
      * change in observer
      */
     private var currentOptions = ArrayList<Int>()
+
     /**
      * On create variable
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionViewHolder {
-        var optionView : View?=null
+        var optionView: View? = null
         //inflate the layout file
-        if(typeOption == 0){
+        if (typeOption == 0) {
             optionView =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_checkbox, parent, false)
-        }else{
+        } else {
             optionView =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_option_list, parent, false)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_option_list, parent, false)
         }
-        view=optionView
-        return OptionViewHolder(optionView,typeOption)
+        view = optionView
+        return OptionViewHolder(optionView, typeOption)
     }
 
     override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
         val option = optionList[position]
-        if (typeOption == 0){
+        if (typeOption == 0) {
             val optionHoler = holder.optionview
             optionHoler!!.text = option.NomOption
             optionHoler.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked){
+                if (isChecked) {
                     currentOptions.add(option.CodeOption!!)
-                }else{
+                } else {
                     currentOptions.remove(option.CodeOption!!)
                 }
                 notifyComposition(currentOptions)
             }
-        }else{
+        } else {
             val optionHolder = holder.optionviewText
             optionHolder!!.text = option.NomOption
         }
@@ -77,13 +78,14 @@ class OptionAdapter(
         return optionList.size
     }
 
-    inner class OptionViewHolder(view: View,typeOption : Int) : RecyclerView.ViewHolder(view) {
-        internal var optionview: CheckBox?=null
-        internal var optionviewText : TextView?=null
+    inner class OptionViewHolder(view: View, typeOption: Int) : RecyclerView.ViewHolder(view) {
+        internal var optionview: CheckBox? = null
+        internal var optionviewText: TextView? = null
+
         init {
-            if (typeOption == 0){
+            if (typeOption == 0) {
                 optionview = view.findViewById(R.id.option_checkbox)
-            }else{
+            } else {
                 optionviewText = view.findViewById(R.id.item_option_text)
             }
         }
@@ -93,13 +95,14 @@ class OptionAdapter(
     /**
      * attach an observer
      */
-    fun attachComposition(composition :CompositionActivity){
+    fun attachComposition(composition: CompositionActivity) {
         this.compoitionObsrver = composition
     }
+
     /**
      * notify the observer
      */
-    private fun notifyComposition(optionList: ArrayList<Int>){
+    private fun notifyComposition(optionList: ArrayList<Int>) {
         this.compoitionObsrver!!.updateOption(optionList)
     }
 }
