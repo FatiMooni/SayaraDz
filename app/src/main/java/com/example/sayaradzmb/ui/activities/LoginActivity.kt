@@ -69,13 +69,12 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
      * test the next connection facebook
      */
     public fun dejaConnecteFacebook(){
-        if(AccessToken.getCurrentAccessToken() == null) {
+        if(avoirIdUser(this@LoginActivity) == null) {
             val call = facebookInit()
             if (call != null) {
                 facebookAuth(call)
             }
         }else{
-            loginInformationUtilisateur(AccessToken.getCurrentAccessToken())
             dejaConnecte()
         }
     }
