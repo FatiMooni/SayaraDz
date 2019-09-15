@@ -1,9 +1,7 @@
 package com.example.sayaradzmb.helper
 
-import android.R.id.edit
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import com.example.sayaradzmb.model.Automobiliste
 import java.math.BigInteger
@@ -33,10 +31,9 @@ class SharedPreferencesHelper(internal var context: Context,nom_fichier : String
         return Automobiliste(id,nom,prenom,null)
     }
 
-    fun avoirIdUser() : BigInteger{
+    fun avoirIdUser() : BigInteger?{
         val pref = sharedPreferences
-        val id = pref.getString("idUser",null)
-        return id!!.toBigInteger()
+        return pref.getString("idUser",null)?.toBigInteger()
     }
 
     /**

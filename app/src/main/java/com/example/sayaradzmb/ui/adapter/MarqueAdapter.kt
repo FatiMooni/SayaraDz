@@ -168,7 +168,7 @@ class MarqueAdapter(
         progress.setTitle("charger les modele")
         progress.show()
         val vService =  ServiceBuilder.buildService(ModeleService::class.java)
-        val requeteAppel = vService.getModeles(avoirIdUser(this.context),currentCodeMarque)
+        val requeteAppel = vService.getModeles(avoirIdUser(this.context)!!,currentCodeMarque)
 
         requeteAppel.enqueue(object : Callback<List<Modele>> {
             override fun onResponse(call: Call<List<Modele>>, response: Response<List<Modele>>) =

@@ -133,7 +133,7 @@ class ModeleAdapter(
                  * desabonner
                  */
                 val vService =  ServiceBuilder.buildService(ModeleService::class.java)
-                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirIdUser(this.context))
+                val requeteAppel = vService.desuivreModele(modele.CodeModele!!,avoirIdUser(this.context)!!)
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
@@ -187,7 +187,7 @@ class ModeleAdapter(
         progress.setTitle("charger les Version")
         progress.show()
         val vService =  ServiceBuilder.buildService(VersionService::class.java)
-        val requeteAppel = vService.getVersions(avoirIdUser(this.context),currentCodeModele)
+        val requeteAppel = vService.getVersions(avoirIdUser(this.context)!!,currentCodeModele)
         requeteAppel.enqueue(object : Callback<List<Version>> {
             override fun onResponse(call: Call<List<Version>>, response: Response<List<Version>>) =
                 if(response.isSuccessful){

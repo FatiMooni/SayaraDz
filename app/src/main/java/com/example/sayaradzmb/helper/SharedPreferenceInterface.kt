@@ -23,7 +23,7 @@ interface SharedPreferenceInterface {
     }
 
 
-    public fun avoirIdUser(context: Context) : BigInteger{
+    public fun avoirIdUser(context: Context) : BigInteger?{
         val pref = sharedPref(context, NOM_FICHER_LOGIN)
         return pref.avoirIdUser()
     }

@@ -19,6 +19,7 @@ import android.util.Base64
 import android.widget.Toast
 import com.example.sayaradzmb.R
 import com.example.sayaradzmb.constatnte.*
+import com.example.sayaradzmb.helper.DialogHelper
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.Automobiliste
 import com.example.sayaradzmb.servics.AuthService
@@ -74,6 +75,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
                 facebookAuth(call)
             }
         }else{
+            loginInformationUtilisateur(AccessToken.getCurrentAccessToken())
             dejaConnecte()
         }
     }
@@ -122,27 +124,32 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
         /**
          * avoir id prenom nom
          */
-        saveInfoGoogle(account)
+
         val automobiliste = Automobiliste(account.id!!,account.givenName!!,account.familyName!!,null)
 
         /**
          * la requete de retrofit
          */
-
+        val progress = DialogHelper.showProgressBar(this@LoginActivity,"",false)
         val authService = ServiceBuilder.buildService(AuthService::class.java)
         val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_GOOGLE_AUTH} ${token}",automobiliste)
         requestCall.enqueue(object : Callback<Automobiliste> {
+            override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
+                progress.dismiss()
+                Toast.makeText(this@LoginActivity, "Failed to connect : $t",Toast.LENGTH_LONG).show()
+            }
+
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){
+                    saveInfoGoogle(account)
+                    progress.dismiss()
                     dejaConnecte()
-                }else
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
+                }else{
+                    progress.dismiss()
+                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
                 }
+            }
 
-            }
-            override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
-                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG)
-            }
         })
 
 
@@ -158,7 +165,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
         Log.w("tag", "signInResult:failed code=" + e.printStackTrace())
         if(e.statusCode == 12500) {
             println(12500)
-         Toast.makeText(this@LoginActivity,"Update your Google play Account",Toast.LENGTH_LONG)
+         Toast.makeText(this@LoginActivity,"Update your Google play Account",Toast.LENGTH_LONG).show()
     }
         googleButtonVisible()
         facebookButtonVisible()
@@ -181,9 +188,8 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        if (account != null) {
+        if (avoirIdUser(this@LoginActivity) != null) {
             println("account google ${account.toString()}")
-            saveInfoGoogle(account)
             dejaConnecte()
         }
         google_button.setOnClickListener {
@@ -204,7 +210,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
      */
     fun connexionSuccessFace(loginResult : LoginResult){
         val token =loginResult.accessToken
-        loginInformationUtilisateur(token)
+
         val authService = ServiceBuilder.buildService(AuthService::class.java)
         /**
          *
@@ -214,19 +220,23 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
          *
          */
         val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_FACEBOOK_AUTH} ${token.token}",automobiliste)
-
+        var progress = DialogHelper.showProgressBar(this@LoginActivity,"",false)
         requestCall.enqueue(object : Callback<Automobiliste> {
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
                 if(response.isSuccessful){
+                    loginInformationUtilisateur(token)
+                    progress.dismiss()
                     dejaConnecte()
 
                 }else{
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG)
-                    Log.w("response !success","la connexion echouee"+response)
+                    progress.dismiss()
+                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
+                    Log.w("response !success", "la connexion echouee $response")
                 }
 
             }
             override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
+                progress.dismiss()
                 Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG).show()
                 Log.w("facebook failure",t.message)
             }

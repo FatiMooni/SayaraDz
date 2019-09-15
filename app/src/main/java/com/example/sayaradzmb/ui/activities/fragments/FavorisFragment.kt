@@ -44,7 +44,7 @@ class FavorisFragment : Fragment(),SharedPreferenceInterface,RecycleViewHelper{
         progress.setTitle("charger la liste des Voitures")
         progress.show()
         val vService = ServiceBuilder.buildService(VersionService::class.java)
-        val request = vService.getFavoris(avoirIdUser(this.context!!),0)
+        val request = vService.getFavoris(avoirIdUser(this.context!!)!!,0)
         request.enqueue(object : Callback<List<Version>> {
             override fun onResponse(call: Call<List<Version>>, response: Response<List<Version>>) =
                 if(response.isSuccessful){

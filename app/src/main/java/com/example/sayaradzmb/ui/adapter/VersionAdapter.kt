@@ -122,7 +122,7 @@ class VersionAdapter(
                  * desabonner
                  */
                 val vService =  ServiceBuilder.buildService(VersionService::class.java)
-                val requeteAppel = vService.desuivreVersion(version.CodeVersion!!,avoirIdUser(this.context))
+                val requeteAppel = vService.desuivreVersion(version.CodeVersion!!,avoirIdUser(this.context)!!)
                 requeteAppel.enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>): Unit =
                         if(response.isSuccessful){
