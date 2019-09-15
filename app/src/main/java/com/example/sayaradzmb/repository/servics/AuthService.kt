@@ -8,6 +8,6 @@ import retrofit2.http.POST
 
 interface AuthService {
 
-    @POST("api/auth")
+    @POST("/auth/automob")
     fun setToken(@Header("Authorization") authorization:String, @Body idAutomobilste: Automobiliste) : Call<Automobiliste>
 }
