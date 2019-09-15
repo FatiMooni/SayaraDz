@@ -1,12 +1,10 @@
-package com.example.sayaradzmb.Repository.servics
+package com.example.sayaradzmb.repository.servics
 
 import com.example.sayaradzmb.model.Commande
-import com.example.sayaradzmb.model.VoitureCommande
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface CommandeService {
 

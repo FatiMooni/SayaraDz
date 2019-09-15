@@ -1,5 +1,6 @@
 package com.example.sayaradzmb.ui.adapter
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.support.v4.app.FragmentActivity
@@ -22,6 +23,7 @@ import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.squareup.picasso.Picasso
+import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -163,10 +165,17 @@ class MarqueAdapter(
     private fun requeteModele() {
         modeleList.clear()
 
-        var progress = ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
-        progress.setCancelable(false)
-        progress.setTitle("charger les modele")
-        progress.show()
+        var progress: AlertDialog = SpotsDialog.Builder()
+            .setContext(context)
+            .setMessage("charger les marque")
+            .build()
+            .apply {
+                show()
+            }
+        /*ProgressDialog(context,android.R.style.Theme_DeviceDefault_Dialog)
+    progress.setCancelable(false)
+    progress.setTitle("charger les modele")
+    progress.show()*/
         val vService =  ServiceBuilder.buildService(ModeleService::class.java)
         val requeteAppel = vService.getModeles(avoirIdUser(this.context)!!,currentCodeMarque)
 

@@ -25,6 +25,7 @@ import com.example.sayaradzmb.servics.ModeleService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.servics.VersionService
 import com.pusher.pushnotifications.PushNotifications
+import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -103,8 +103,6 @@
 
 
 
-
-
                     </LinearLayout>
                     <LinearLayout android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
@@ -156,7 +154,7 @@
         >
             <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:id="@+id/neuf_tech_rv"
                     android:layout_marginBottom="50dp"
                     android:layout_gravity="center"/>
@@ -178,7 +176,7 @@
                  />
                 <android.support.v7.widget.RecyclerView
                         android:layout_width="0dp"
-                        android:layout_weight="40"
+                        android:layout_weight="30"
                         tools:listitem="@layout/item_couleur"
                         android:orientation="horizontal"
                         tools:itemCount="5"

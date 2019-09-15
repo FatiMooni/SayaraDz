@@ -1,26 +1,19 @@
 package com.example.sayaradzmb.ui.activities.fragments
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sayaradzmb.Repository.servics.CommandeService
-import com.example.sayaradzmb.Repository.servics.PaimentService
-import com.example.sayaradzmb.Repository.servics.StockService
-import com.example.sayaradzmb.constatnte.CHANELLE_ID
-import com.example.sayaradzmb.constatnte.NOTIFICATION_ID
+import com.example.sayaradzmb.repository.servics.CommandeService
+import com.example.sayaradzmb.repository.servics.PaimentService
 import com.example.sayaradzmb.helper.NotificationHelper
 import com.example.sayaradzmb.servics.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.content.Intent.getIntent
 
 import com.example.sayaradzmb.constatnte.REQUEST_CODE
 import com.braintreepayments.api.dropin.DropInActivity
@@ -38,9 +31,6 @@ import com.example.sayaradzmb.helper.FragmentHelper
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.model.*
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.confirm_dialog.*
-import kotlinx.android.synthetic.main.nav_header_side_menu.*
-import org.w3c.dom.Text
 
 
 class NouveauCommandeFragment : Fragment(),NotificationHelper, SharedPreferenceInterface {

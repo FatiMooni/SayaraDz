@@ -39,9 +39,9 @@ class ImageVoitureAdapter(
     }
 
     override fun onBindViewHolder(holder: ImageVoitureViewHolder, position: Int) {
-        currentImage = this.imageList!![0]
+        currentImage = this.imageList!![position]
         println("l'image : $currentImage")
-        Picasso.get().load(currentImage).resize(500,200).into(holder.imageview)
+        Picasso.get().load(currentImage).resize(500,400).into(holder.imageview)
         holder.imageview.setOnClickListener {
             println("position $position")
         }

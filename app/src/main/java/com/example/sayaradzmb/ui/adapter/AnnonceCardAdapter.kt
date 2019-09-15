@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import com.example.sayaradzmb.R
-import com.example.sayaradzmb.Repository.servics.AnnonceService
+import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Version
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -88,7 +88,7 @@ class AnnonceCardAdapter(val context : Context, val annonces : ArrayList<Annonce
                 mDialogView.findViewById<TextView>(R.id.marque_title).text = véhicule
                 mDialogView.findViewById<TextView>(R.id.prix_specification).text = annonce.Prix
                 mDialogView.findViewById<TextView>(R.id.KM_title).text = annonce.Km
-                mDialogView.findViewById<TextView>(R.id.color_title).text = annonce.CodeCouleur.toString()
+                mDialogView.findViewById<TextView>(R.id.color_title).text = annonce.Couleur
                 mDialogView.findViewById<TextView>(R.id.year_title).text = "jan 2018"
                 mDialogView.findViewById<TextView>(R.id.type_title).text = annonce.Carburant
                 mDialogView.findViewById<TextView>(R.id.text_description).text = annonce.Description

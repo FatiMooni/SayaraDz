@@ -32,7 +32,7 @@ import com.example.sayaradzmb.model.Annonce
 import com.example.sayaradzmb.model.Carburant
 import com.example.sayaradzmb.model.Option
 import com.example.sayaradzmb.model.fuel_type
-import com.example.sayaradzmb.Repository.servics.AnnonceService
+import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.OptionService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import com.example.sayaradzmb.ui.adapter.FuelSpinnerAdapter
@@ -459,7 +459,6 @@ class AjouterAnnonceActivity : AppCompatActivity(), SharedPreferenceInterface {
                     PushNotifications.addDeviceInterest("ANNONCE_${response.body()!!.idAnnonce}")
                     val intent = Intent()
                     intent.putExtra("annonce", response.body())
-
                     setResult(Activity.RESULT_OK , intent)
                     finish()
                 } else {

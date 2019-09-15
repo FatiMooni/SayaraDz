@@ -1,11 +1,13 @@
 package com.example.sayaradzmb.viewmodel
 
+import android.R
+import android.app.ProgressDialog
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.example.sayaradzmb.model.Annonce
-import com.example.sayaradzmb.Repository.servics.AnnonceService
+import com.example.sayaradzmb.repository.servics.AnnonceService
 import com.example.sayaradzmb.servics.ServiceBuilder
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -78,6 +80,12 @@ class UserAnnonceViewModel: ViewModel() {
             }
         }
         return index
+    }
+
+    fun addAnnonce(ann : Annonce){
+        val list = annonce!!.value
+        list!!.plus(ann)
+        annonce!!.value = list
     }
 
     fun UpdateAnnoncePrice(id : Int , price : String){

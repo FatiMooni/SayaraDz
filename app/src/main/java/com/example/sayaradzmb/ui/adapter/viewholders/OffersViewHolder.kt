@@ -34,19 +34,19 @@ class OffersViewHolder(private val view: View , val listener: CustomCardsAdapter
                 btnRefuse.visibility = View.VISIBLE
 
                 btnAccept.setOnClickListener {
-                    Snackbar.make(view, "you have been accepeted", Snackbar.LENGTH_LONG).show()
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        listener.onClickItem(item.idOffre, "accepter", adapterPosition)
-                    }
 
                     val builder = AlertDialog.Builder(view.context)
-                    builder.setTitle("Androidly Alert")
-                    builder.setMessage("We have a message")
+                    builder.setTitle("Alert")
+                    builder.setIcon(R.drawable.offer_tag)
+                    builder.setMessage("You sure you want to accept this offer")
                     //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
                     builder.setPositiveButton(android.R.string.yes) { _, which ->
                         Toast.makeText(view.context,
                             android.R.string.yes, Toast.LENGTH_SHORT).show()
+                        if (adapterPosition != RecyclerView.NO_POSITION) {
+                            listener.onClickItem(item.idOffre, "accepter", adapterPosition)
+                        }
                     }
 
                     builder.setNegativeButton(android.R.string.no) { _, which ->
@@ -54,10 +54,6 @@ class OffersViewHolder(private val view: View , val listener: CustomCardsAdapter
                             android.R.string.no, Toast.LENGTH_SHORT).show()
                     }
 
-                    builder.setNeutralButton("Maybe") { _, which ->
-                        Toast.makeText(view.context,
-                            "Maybe", Toast.LENGTH_SHORT).show()
-                    }
                     builder.show()
                 }
 

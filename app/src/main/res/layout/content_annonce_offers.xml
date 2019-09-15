@@ -1,301 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_annonce_offers"
-        tools:context=".ui.activities.AnnonceOffersActivity">
+        tools:context=".ui.activities.AnnonceOffersActivity"
+        tools:showIn="@layout/activity_annonce_offers">
+
     <android.support.design.card.MaterialCardView
+            android:id="@+id/card_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="10dp"
+            android:layout_margin="10dp"
             android:elevation="10dp"
-            android:id="@+id/card_holder"
+            app:cardCornerRadius="10dp"
             app:layout_constraintTop_toTopOf="parent"
-    >
-        <RelativeLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent">
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="0.3dp">
 
-            <TextView android:layout_width="wrap_content"
-                      android:textColor="@color/colorBlack"
-                      android:textSize="@dimen/primary_title"
-                      android:textStyle="bold"
-                      android:layout_margin="5dp"
-                      android:drawableStart="@drawable/star"
-                      android:drawablePadding="10dp"
-                      android:id="@+id/car_announce_title"
-                      android:text="Offre"
-                      android:layout_height="wrap_content"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/car_announce_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableStart="@drawable/star"
+                    android:drawablePadding="10dp"
+                    android:text="Offre"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/primary_title"
+                    android:textStyle="bold" />
+
             <net.cachapa.expandablelayout.ExpandableLayout
                     android:id="@+id/car_img_viewer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:el_duration="1000"
-                    android:elevation="10dp"
-                    app:el_expanded="false"
                     android:layout_below="@id/car_announce_title"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:el_parallax="0.5">
-            <android.support.v4.view.ViewPager
-                      android:layout_width="match_parent"
-                      android:id="@+id/img_viewer"
-                      android:layout_height="150dp"/>
+                    android:layout_marginBottom="15dp"
+                    android:elevation="10dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <!--android.support.v4.view.ViewPager
+                        android:id="@+id/img_viewer"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp" /-->
+                <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/imageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                     />
             </net.cachapa.expandablelayout.ExpandableLayout>
 
-            <TextView android:layout_width="wrap_content"
-                      android:drawableStart="@drawable/price_tag"
-                      android:drawablePadding="10dp"
-                      android:gravity="center_horizontal"
-                      android:id="@+id/car_announce_price"
-                      android:layout_below="@id/car_img_viewer"
-                      android:text="25932000 DZA"
-                      android:layout_marginStart="5dp"
-                      android:textColor="@color/colorBlack"
-                      android:textSize="@dimen/secondary_title"
-                      android:layout_height="wrap_content"/>
-
-            <TextView android:layout_width="wrap_content"
-                      android:layout_marginStart="30dp"
-                      android:drawableStart="@drawable/offer_tag"
-                      android:layout_alignBaseline="@id/car_announce_price"
-                      android:layout_toEndOf="@id/car_announce_price"
-                      android:drawablePadding="10dp"
-                      android:text="2 offre"
-                      android:textColor="@color/colorBlack"
-                      android:textSize="@dimen/secondary_title"
-                      android:id="@+id/car_announce_offer"
-                      android:layout_height="wrap_content"/>
-            <android.support.v7.widget.AppCompatButton
+            <TextView
+                    android:id="@+id/car_announce_price"
                     android:layout_width="wrap_content"
-                    android:text="more"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/car_img_viewer"
+                    android:layout_marginStart="5dp"
+                    android:drawableStart="@drawable/price_tag"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="25932000 DZA"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/secondary_title" />
+
+            <TextView
+                    android:id="@+id/car_announce_offer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/car_announce_price"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@id/car_announce_price"
+                    android:drawableStart="@drawable/offer_tag"
+                    android:drawablePadding="10dp"
+                    android:text="2 offre"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/secondary_title" />
+
+            <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/expand_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/car_announce_price"
                     android:layout_alignParentEnd="true"
-                    android:id="@+id/expand_btn"
                     android:layout_margin="10dp"
-                    android:layout_height="wrap_content"/>
-        <net.cachapa.expandablelayout.ExpandableLayout
-                android:layout_below="@id/expand_btn"
-                android:id="@+id/expandable_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:el_duration="1000"
-                android:elevation="10dp"
-                app:el_expanded="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:el_parallax="0.5">
+                    android:text="more"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
 
-            <android.support.design.card.MaterialCardView
+            <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandable_layout"
                     android:layout_width="match_parent"
-                    android:layout_margin="1dp"
-                    android:padding="20dp"
-                    android:layout_height="wrap_content">
-                 <RelativeLayout android:layout_width="match_parent"
-                                 android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/expand_btn"
+                    android:elevation="10dp"
+                    app:el_duration="1000"
+                    app:el_expanded="false"
+                    app:el_parallax="0.5"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                     <LinearLayout
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_marginEnd="5dp"
-                             android:layout_marginStart="5dp"
-                             android:id="@+id/layout_other_info"
-                             android:weightSum="100"
-                     >
-                         <android.support.design.circularreveal.CircularRevealRelativeLayout
-                                 android:layout_width="100dp"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="50"
-                                 android:textAlignment="center"
-                                 android:gravity="center"
-                                 android:layout_marginHorizontal="5dp"
-                         >
+                <android.support.design.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:padding="20dp">
 
-                             <ImageView
-                                     android:layout_width="40dp"
-                                     android:layout_height="40dp"
-                                     android:src="@drawable/kelom"
-                                     android:id="@+id/image_icon"
-                                     android:layout_marginTop="15dp"
-                                     android:foregroundGravity="center"
-                                     android:layout_centerHorizontal="true"
-                                     android:contentDescription="@string/aperçu"/>
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                             <android.support.v7.widget.AppCompatTextView
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:text="56 000 00"
-                                     android:id="@+id/KM_title"
-                                     android:layout_centerHorizontal="true"
-                                     android:layout_below="@+id/image_icon"
-                                     android:textAppearance="@android:style/TextAppearance"
-                             />
-                             <android.support.v7.widget.AppCompatTextView
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/Km_specification"
-                                     android:layout_centerHorizontal="true"
-                                     android:text="@string/distance_sign"
-                                     android:layout_below="@id/KM_title"
-                             />
-                         </android.support.design.circularreveal.CircularRevealRelativeLayout>
-                         <View android:layout_width="0.5dp"
-                               android:layout_height="match_parent"
-                               android:layout_marginTop="15dp"
-                               android:background="@color/colorGrey"
-                         />
+                        <LinearLayout
+                                android:id="@+id/layout_other_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:weightSum="100">
 
-                         <android.support.design.circularreveal.CircularRevealRelativeLayout
-                                 android:layout_width="100dp"
-                                 android:layout_height="wrap_content"
-                                 android:layout_marginHorizontal="5dp"
-                                 android:textAlignment="center"
-                                 android:gravity="center"
-                                 android:layout_weight="50"
-                         >
+                            <android.support.design.circularreveal.CircularRevealRelativeLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:textAlignment="center">
 
-                             <ImageView
-                                     android:layout_width="40dp"
-                                     android:layout_height="40dp"
-                                     android:id="@+id/image_icon_color"
-                                     android:layout_marginTop="15dp"
-                                     android:foregroundGravity="center"
-                                     android:layout_centerHorizontal="true"
-                                     android:src="@drawable/paint"
-                             />
-                             <android.support.v7.widget.AppCompatTextView
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:text="noir"
-                                     android:id="@+id/color_title"
-                                     android:layout_centerHorizontal="true"
-                                     android:layout_below="@+id/image_icon_color"
-                                     android:textAppearance="@android:style/TextAppearance"
-                             />
-                             <android.support.v7.widget.AppCompatTextView
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/color_specification"
-                                     android:layout_centerHorizontal="true"
-                                     android:text="@string/colors"
-                                     android:layout_below="@id/color_title"
-                             />
-                         </android.support.design.circularreveal.CircularRevealRelativeLayout>
+                                <ImageView
+                                        android:id="@+id/image_icon"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="15dp"
+                                        android:contentDescription="@string/aperçu"
+                                        android:foregroundGravity="center"
+                                        android:src="@drawable/kelom" />
 
-                     </LinearLayout>
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/KM_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/image_icon"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="56 000 00"
+                                        android:textAppearance="@android:style/TextAppearance" />
 
-                     <View android:layout_width="match_parent"
-                           android:layout_height="0.3dp"
-                           android:layout_below="@id/layout_other_info"
-                           android:layout_marginTop="10dp"
-                           android:layout_marginBottom="10dp"
-                           android:layout_marginHorizontal="20dp"
-                           android:background="@color/colorGrey"
-                     />
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/Km_specification"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/KM_title"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="@string/distance_sign" />
+                            </android.support.design.circularreveal.CircularRevealRelativeLayout>
 
-                     <LinearLayout
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_marginEnd="5dp"
-                             android:layout_marginStart="5dp"
-                             android:layout_marginTop="10dp"
-                             android:layout_below="@+id/layout_other_info"
-                             android:id="@+id/layout_other_info_extra"
-                             android:weightSum="100"
-                     >
-                     <android.support.design.circularreveal.CircularRevealRelativeLayout
-                             android:layout_width="100dp"
-                             android:layout_height="wrap_content"
-                             android:layout_marginHorizontal="5dp"
-                             android:textAlignment="center"
-                             android:gravity="center"
-                             android:layout_weight="50"
-                     >
+                            <View
+                                    android:layout_width="0.5dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/colorGrey" />
 
-                         <ImageView
-                                 android:layout_width="40dp"
-                                 android:layout_height="40dp"
-                                 android:src="@drawable/year"
-                                 android:id="@+id/image_icon_year"
-                                 android:layout_marginTop="15dp"
-                                 android:foregroundGravity="center"
-                                 android:layout_centerHorizontal="true"
-                         />
-                         <android.support.v7.widget.AppCompatTextView
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:text="Mazout"
-                                 android:id="@+id/year_title"
-                                 android:layout_centerHorizontal="true"
-                                 android:layout_below="@+id/image_icon_year"
-                                 android:textAppearance="@android:style/TextAppearance"
-                         />
-                         <android.support.v7.widget.AppCompatTextView
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:id="@+id/year_specification"
-                                 android:layout_centerHorizontal="true"
-                                 android:text="@string/year"
-                                 android:layout_below="@id/year_title"
-                         />
-                     </android.support.design.circularreveal.CircularRevealRelativeLayout>
-                     <View android:layout_width="0.5dp"
-                           android:layout_height="match_parent"
-                           android:layout_marginTop="15dp"
-                           android:background="@color/colorGrey"
-                     />
+                            <android.support.design.circularreveal.CircularRevealRelativeLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:textAlignment="center">
 
-                     <android.support.design.circularreveal.CircularRevealRelativeLayout
-                             android:layout_width="100dp"
-                             android:layout_height="wrap_content"
-                             android:layout_marginHorizontal="6dp"
-                             android:textAlignment="center"
-                             android:layout_weight="50"
-                             android:gravity="center"
-                     >
+                                <ImageView
+                                        android:id="@+id/image_icon_color"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="15dp"
+                                        android:foregroundGravity="center"
+                                        android:src="@drawable/paint" />
 
-                     <ImageView
-                             android:layout_width="40dp"
-                             android:layout_height="40dp"
-                             android:src="@drawable/fuel"
-                             android:id="@+id/image_icon_type"
-                             android:layout_marginTop="15dp"
-                             android:foregroundGravity="center"
-                             android:layout_centerHorizontal="true"
-                     />
-                     <android.support.v7.widget.AppCompatTextView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:text="Jan 2018"
-                             android:id="@+id/type_title"
-                             android:layout_centerHorizontal="true"
-                             android:layout_below="@+id/image_icon_type"
-                             android:textAppearance="@android:style/TextAppearance"
-                     />
-                     <android.support.v7.widget.AppCompatTextView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/type_specification"
-                             android:layout_centerHorizontal="true"
-                             android:text="@string/Fuel"
-                             android:layout_below="@id/type_title"
-                     />
-                     </android.support.design.circularreveal.CircularRevealRelativeLayout>
-                     </LinearLayout>
-                 </RelativeLayout>
-            </android.support.design.card.MaterialCardView>
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/color_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/image_icon_color"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="noir"
+                                        android:textAppearance="@android:style/TextAppearance" />
 
-        </net.cachapa.expandablelayout.ExpandableLayout>
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/color_specification"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/color_title"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="@string/colors" />
+                            </android.support.design.circularreveal.CircularRevealRelativeLayout>
+
+                        </LinearLayout>
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.3dp"
+                                android:layout_below="@id/layout_other_info"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@color/colorGrey" />
+
+                        <LinearLayout
+                                android:id="@+id/layout_other_info_extra"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/layout_other_info"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:weightSum="100">
+
+                            <android.support.design.circularreveal.CircularRevealRelativeLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:textAlignment="center">
+
+                                <ImageView
+                                        android:id="@+id/image_icon_year"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="15dp"
+                                        android:foregroundGravity="center"
+                                        android:src="@drawable/year" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/year_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/image_icon_year"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="Mazout"
+                                        android:textAppearance="@android:style/TextAppearance" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/year_specification"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/year_title"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="@string/year" />
+                            </android.support.design.circularreveal.CircularRevealRelativeLayout>
+
+                            <View
+                                    android:layout_width="0.5dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/colorGrey" />
+
+                            <android.support.design.circularreveal.CircularRevealRelativeLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="6dp"
+                                    android:layout_weight="50"
+                                    android:gravity="center"
+                                    android:textAlignment="center">
+
+                                <ImageView
+                                        android:id="@+id/image_icon_type"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="15dp"
+                                        android:foregroundGravity="center"
+                                        android:src="@drawable/fuel" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/type_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/image_icon_type"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="Jan 2018"
+                                        android:textAppearance="@android:style/TextAppearance" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/type_specification"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/type_title"
+                                        android:layout_centerHorizontal="true"
+                                        android:text="@string/Fuel" />
+                            </android.support.design.circularreveal.CircularRevealRelativeLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </android.support.design.card.MaterialCardView>
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
         </RelativeLayout>
     </android.support.design.card.MaterialCardView>
 
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/rv_offers"
-            tools:listitem="@layout/offer_owner_card"
+    <TextView
+            android:id="@+id/title_for"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:text="Les offres"
+            android:drawablePadding="5dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/primary_title"
+            android:drawableStart="@drawable/offer_tag"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_holder"
-            android:layout_height="wrap_content"/>
+            app:layout_goneMarginBottom="7dp" />
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_offers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_for"
+            tools:listitem="@layout/offer_owner_card" />
 
 </android.support.constraint.ConstraintLayout>

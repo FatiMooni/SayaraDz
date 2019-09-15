@@ -1,7 +1,6 @@
 package com.example.sayaradzmb.ui.activities
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -25,9 +24,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.widget.LinearLayout
-import com.example.sayaradzmb.Repository.servics.StockService
+import com.example.sayaradzmb.repository.servics.StockService
 
 
 class CompositionActivity : AppCompatActivity(),RecycleViewHelper {

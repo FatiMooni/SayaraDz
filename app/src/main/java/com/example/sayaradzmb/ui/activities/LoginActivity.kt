@@ -139,15 +139,18 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
             }
 
             override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     saveInfoGoogle(account)
                     progress.dismiss()
                     dejaConnecte()
-                }else{
+
+                } else {
                     progress.dismiss()
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity, "Failed to connect", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
+
 
         })
 

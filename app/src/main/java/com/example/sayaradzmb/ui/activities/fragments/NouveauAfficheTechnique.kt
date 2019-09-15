@@ -207,7 +207,7 @@ class NouveauAfficheTechnique @SuppressLint("ValidFragment") constructor(
      */
     private fun initVoituresImage(v : View){
         voitureAdapter = ImageVoitureAdapter(imagePhoto,v.context,couleurAdapter!!)
-        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.VERTICAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        initLineaire(v,R.id.neuf_tech_rv,LinearLayoutManager.HORIZONTAL, adapter = voitureAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
     private fun initCouleurs(v : View){
         couleurAdapter = CouleurAdapter(couleurs,v.context)
