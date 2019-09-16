@@ -21,6 +21,7 @@ import com.example.sayaradzmb.R
 import com.example.sayaradzmb.constatnte.*
 import com.example.sayaradzmb.helper.DialogHelper
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
+import com.example.sayaradzmb.helper.SharedPreferencesHelper
 import com.example.sayaradzmb.model.Automobiliste
 import com.example.sayaradzmb.servics.AuthService
 import com.example.sayaradzmb.servics.ServiceBuilder
@@ -213,36 +214,12 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
     fun connexionSuccessFace(loginResult : LoginResult){
         val token =loginResult.accessToken
 
-        val authService = ServiceBuilder.buildService(AuthService::class.java)
+
         /**
          *
          */
-        val automobiliste = avoirInfoUser(this@LoginActivity)
-        /**
-         *
-         */
-        val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_FACEBOOK_AUTH} ${token.token}",automobiliste)
-        var progress = DialogHelper.showProgressBar(this@LoginActivity,"",false)
-        requestCall.enqueue(object : Callback<Automobiliste> {
-            override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
-                if(response.isSuccessful){
-                    loginInformationUtilisateur(token)
-                    progress.dismiss()
-                    dejaConnecte()
+        loginInformationUtilisateur(token)
 
-                }else{
-                    progress.dismiss()
-                    Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
-                    Log.w("response !success", "la connexion echouee $response")
-                }
-
-            }
-            override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
-                progress.dismiss()
-                Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG).show()
-                Log.w("facebook failure",t.message)
-            }
-        })
     }
 
     /**
@@ -315,7 +292,7 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
     private fun facebookAuth(callbackManager: CallbackManager){
         facebook_button.setOnClickListener {
 
-            Toast.makeText(this@LoginActivity,"Try to connect",Toast.LENGTH_LONG).show()
+
             login_button.performClick()
             login_button.registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
@@ -357,12 +334,46 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
     private fun loginInformationUtilisateur(token : AccessToken){
         val requete = newMeRequest(token) { jsonObject, response ->
             if (jsonObject != null) {
+                val authService = ServiceBuilder.buildService(AuthService::class.java)
                 println("json $jsonObject")
                 val id = jsonObject.getString("id")
                 val listnom = jsonObject.getString("name").split(' ')
-                val nom = listnom[0]
-                val prenom = listnom[1]
+
+                val prenom = listnom[0]
+                val nom = listnom[1]
+                Log.i("nom", "$nom $prenom")
                 saveInfoFacebook(id,prenom,nom)
+                val automobiliste = avoirInfoUser(this@LoginActivity)
+                Log.i("succesFace",automobiliste.toString())
+                /**
+                 *
+                 */
+                val requestCall = authService.setToken("${NOM_INIT_AUTH} ${LETTRE_FACEBOOK_AUTH} ${token.token}",automobiliste)
+                var progress = DialogHelper.showProgressBar(this@LoginActivity,"",false)
+                requestCall.enqueue(object : Callback<Automobiliste> {
+                    override fun onResponse(call: Call<Automobiliste>, response: Response<Automobiliste>) {
+                        if(response.isSuccessful){
+
+                            progress.dismiss()
+                            dejaConnecte()
+                            Toast.makeText(this@LoginActivity,"Succes",Toast.LENGTH_LONG).show()
+                        }else{
+                            progress.dismiss()
+                            Toast.makeText(this@LoginActivity,"Failed to connect",Toast.LENGTH_LONG).show()
+                            Log.w("response !success", "la connexion echouee $response")
+                            val pref = SharedPreferencesHelper(this@LoginActivity, NOM_FICHER_LOGIN)
+                            pref.sharedPreferences.edit().clear().apply()
+                        }
+
+                    }
+                    override fun onFailure(call: Call<Automobiliste>, t: Throwable) {
+                        progress.dismiss()
+                        Toast.makeText(this@LoginActivity,"Failed",Toast.LENGTH_LONG).show()
+                        Log.w("facebook failure",t.message)
+                        val pref = SharedPreferencesHelper(this@LoginActivity, NOM_FICHER_LOGIN)
+                        pref.sharedPreferences.edit().clear().apply()
+                    }
+                })
             }
         }
         val parametre = Bundle()
@@ -384,12 +395,18 @@ class LoginActivity : AppCompatActivity(), SharedPreferenceInterface {
 
     private fun saveInfoGoogle(account: GoogleSignInAccount) {
         val pref = sharedPref(this@LoginActivity, NOM_FICHER_LOGIN)
+        Log.i("name",account.id!!.toString())
+        Log.i("name",account.givenName.toString())
+        Log.i("name",account.familyName.toString())
+        Log.i("name",account.displayName.toString())
+
         pref.setLoginDetails(account.id!!, account.givenName!!, account.familyName!!)
     }
 
     private fun saveInfoFacebook(id:String,nom:String,prenom:String) {
         val pref = sharedPref(this@LoginActivity, NOM_FICHER_LOGIN)
         pref.setLoginDetails(id, prenom, nom)
+        Log.i("infoFacebbok",avoirInfoUser(this@LoginActivity).toString())
     }
 
 

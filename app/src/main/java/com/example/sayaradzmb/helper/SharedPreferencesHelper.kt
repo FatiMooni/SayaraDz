@@ -26,7 +26,7 @@ class SharedPreferencesHelper(internal var context: Context,nom_fichier : String
     fun getAutomobilste() : Automobiliste{
         val pref = sharedPreferences
         val id = pref.getString("idUser",null)
-        val nom = pref.getString("userName",null)
+        val nom = pref.getString("userNom",null)
         val prenom = pref.getString("userPrenom",null)
         return Automobiliste(id,nom,prenom,null)
     }

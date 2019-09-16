@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.example.sayaradzmb.R
+import com.example.sayaradzmb.constatnte.NOM_FICHER_LOGIN
 import com.example.sayaradzmb.helper.FragmentHelper
 import com.example.sayaradzmb.helper.SharedPreferenceInterface
 import com.example.sayaradzmb.helper.SharedPreferencesHelper
@@ -120,6 +121,7 @@ class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
      * Pour Deconnecter
      */
     private fun deconnecter() {
+        println("dans decconeecter")
         val login = Intent(this@AcuilleActivity, LoginActivity::class.java)
         startActivity(login)
         this@AcuilleActivity.finish()
@@ -175,7 +177,7 @@ class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun facebookDisconnection() {
         LoginManager.getInstance().logOut()
         AccessToken.setCurrentAccessToken(null)
-        pref = SharedPreferencesHelper(this@AcuilleActivity, "facebook")
+        pref = SharedPreferencesHelper(this@AcuilleActivity, NOM_FICHER_LOGIN)
         pref!!.sharedPreferences.edit().clear().apply()
         deconnecter()
     }
@@ -187,8 +189,9 @@ class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         //signIn out from the the google account
         mGoogleSignInClient!!.signOut()
             .addOnCompleteListener(this) {
-                pref = sharedPref(this@AcuilleActivity, "google")
+                pref = sharedPref(this@AcuilleActivity, NOM_FICHER_LOGIN)
                 pref!!.sharedPreferences.edit().clear().apply()
+                println("signOut")
                 deconnecter()
             }
 
@@ -316,7 +319,6 @@ class AcuilleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
             R.id.deconnect -> {
                 googleDisconnection()
-                deconnecter()
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
